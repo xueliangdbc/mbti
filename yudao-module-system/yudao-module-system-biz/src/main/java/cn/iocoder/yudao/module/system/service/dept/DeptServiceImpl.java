@@ -67,19 +67,19 @@ public class DeptServiceImpl implements DeptService {
     public synchronized void initLocalCache() {
         // 注意：忽略自动多租户，因为要全局初始化缓存
 //        TenantUtils.executeIgnore(() -> {
-//            // 第一步：查询数据
-//            List<DeptDO> depts = deptMapper.selectList();
-//            log.info("[initLocalCache][缓存部门，数量为:{}]", depts.size());
-//
-//            // 第二步：构建缓存
-//            ImmutableMap.Builder<Long, DeptDO> builder = ImmutableMap.builder();
-//            ImmutableMultimap.Builder<Long, DeptDO> parentBuilder = ImmutableMultimap.builder();
-//            depts.forEach(deptDO -> {
-//                builder.put(deptDO.getId(), deptDO);
-//                parentBuilder.put(deptDO.getParentId(), deptDO);
-//            });
-//            deptCache = builder.build();
-//            parentDeptCache = parentBuilder.build();
+            // 第一步：查询数据
+            List<DeptDO> depts = deptMapper.selectList();
+            log.info("[initLocalCache][缓存部门，数量为:{}]", depts.size());
+
+            // 第二步：构建缓存
+            ImmutableMap.Builder<Long, DeptDO> builder = ImmutableMap.builder();
+            ImmutableMultimap.Builder<Long, DeptDO> parentBuilder = ImmutableMultimap.builder();
+            depts.forEach(deptDO -> {
+                builder.put(deptDO.getId(), deptDO);
+                parentBuilder.put(deptDO.getParentId(), deptDO);
+            });
+            deptCache = builder.build();
+            parentDeptCache = parentBuilder.build();
 //        });
     }
 

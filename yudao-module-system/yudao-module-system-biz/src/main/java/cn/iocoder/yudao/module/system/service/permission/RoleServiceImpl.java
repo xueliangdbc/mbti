@@ -71,12 +71,12 @@ public class RoleServiceImpl implements RoleService {
     public void initLocalCache() {
         // 注意：忽略自动多租户，因为要全局初始化缓存
 //        TenantUtils.executeIgnore(() -> {
-//            // 第一步：查询数据
-//            List<RoleDO> roleList = roleMapper.selectList();
-//            log.info("[initLocalCache][缓存角色，数量为:{}]", roleList.size());
-//
-//            // 第二步：构建缓存
-//            roleCache = convertMap(roleList, RoleDO::getId);
+            // 第一步：查询数据
+            List<RoleDO> roleList = roleMapper.selectList();
+            log.info("[initLocalCache][缓存角色，数量为:{}]", roleList.size());
+
+            // 第二步：构建缓存
+            roleCache = convertMap(roleList, RoleDO::getId);
 //        });
     }
 
