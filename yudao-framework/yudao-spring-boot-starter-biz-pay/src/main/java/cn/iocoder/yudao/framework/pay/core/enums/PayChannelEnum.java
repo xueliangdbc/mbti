@@ -20,7 +20,7 @@ public enum PayChannelEnum {
     WX_PUB("wx_pub", "微信 JSAPI 支付", WXPayClientConfig.class), // 公众号网页
     WX_LITE("wx_lite", "微信小程序支付", WXPayClientConfig.class),
     WX_APP("wx_app", "微信 App 支付", WXPayClientConfig.class),
-    WX_NATIVE("wx_native", "微信 native 支付", WXPayClientConfig.class),
+    WX_NATIVE("wx_native", "微信 native 支付", WXPayClientConfig.class),//Native支付是指商户系统按微信支付协议生成支付二维码，用户再用微信“扫一扫”完成支付的模式
 
     ALIPAY_PC("alipay_pc", "支付宝 PC 网站支付", AlipayPayClientConfig.class),
     ALIPAY_WAP("alipay_wap", "支付宝 Wap 网站支付", AlipayPayClientConfig.class),

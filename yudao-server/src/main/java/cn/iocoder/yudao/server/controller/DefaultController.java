@@ -1,10 +1,25 @@
 package cn.iocoder.yudao.server.controller;
 
 import cn.iocoder.yudao.framework.common.pojo.CommonResult;
+import cn.iocoder.yudao.module.pay.controller.admin.demo.vo.PayDemoOrderCreateReqVO;
+import cn.iocoder.yudao.module.pay.controller.admin.order.vo.PayOrderSubmitReqVO;
+import cn.iocoder.yudao.module.pay.controller.admin.order.vo.PayOrderSubmitRespVO;
+import cn.iocoder.yudao.module.pay.service.demo.PayDemoOrderService;
+import cn.iocoder.yudao.module.pay.service.order.PayOrderService;
+import io.swagger.v3.oas.annotations.Operation;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
+import javax.validation.Valid;
+
 import static cn.iocoder.yudao.framework.common.exception.enums.GlobalErrorCodeConstants.NOT_IMPLEMENTED;
+import static cn.iocoder.yudao.framework.common.pojo.CommonResult.success;
+import static cn.iocoder.yudao.framework.common.util.servlet.ServletUtils.getClientIP;
+import static cn.iocoder.yudao.framework.security.core.util.SecurityFrameworkUtils.getLoginUserId;
 
 /**
  * 默认 Controller，解决部分 module 未开启时的 404 提示。
@@ -14,6 +29,26 @@ import static cn.iocoder.yudao.framework.common.exception.enums.GlobalErrorCodeC
  */
 @RestController
 public class DefaultController {
+    @Resource
+    private PayOrderService payOrderService;
+    @Resource
+    private PayDemoOrderService payDemoOrderService;
+
+    @PostMapping("/app-api/bpm1/create")
+    @Operation(summary = "创建示例订单")
+    public CommonResult<Long> createDemoOrder(@Valid @RequestBody PayDemoOrderCreateReqVO createReqVO) {
+        return success(payDemoOrderService.createDemoOrder(getLoginUserId(), createReqVO));
+    }
+
+    @PostMapping("/app-api/bpm1/submit")
+    @Operation(summary = "提交支付订单")
+    public CommonResult<PayOrderSubmitRespVO> submitPayOrder(@RequestBody PayOrderSubmitReqVO reqVO) {
+
+        PayOrderSubmitRespVO respVO = payOrderService.submitPayOrder(reqVO, getClientIP());
+        return success(respVO);
+    }
+
+
 
     @RequestMapping("/admin-api/bpm/**")
     public CommonResult<Boolean> bpm404() {

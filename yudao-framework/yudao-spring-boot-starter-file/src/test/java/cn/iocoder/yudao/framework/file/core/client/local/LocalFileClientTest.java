@@ -2,10 +2,17 @@ package cn.iocoder.yudao.framework.file.core.client.local;
 
 import cn.hutool.core.io.resource.ResourceUtil;
 import cn.hutool.core.util.IdUtil;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
+
+import javax.annotation.Resource;
 
 public class LocalFileClientTest {
+
+
 
     @Test
     @Disabled

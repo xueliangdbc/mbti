@@ -36,6 +36,7 @@ public class SecurityConfiguration{
                 .antMatchers("/auth/login-by-code").permitAll()
                 .antMatchers("/auth/refresh-token").permitAll()
                 .antMatchers("/auth/logout").permitAll()
+                .antMatchers("/app-api").permitAll()
                 // last. 兜底规则，必须认证
                 .and().authorizeRequests()
                 .anyRequest().authenticated();

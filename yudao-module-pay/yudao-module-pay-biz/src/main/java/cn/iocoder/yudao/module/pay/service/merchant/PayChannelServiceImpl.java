@@ -8,7 +8,6 @@ import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.framework.pay.core.client.PayClientConfig;
 import cn.iocoder.yudao.framework.pay.core.client.PayClientFactory;
 import cn.iocoder.yudao.framework.pay.core.enums.PayChannelEnum;
-import cn.iocoder.yudao.framework.tenant.core.util.TenantUtils;
 import cn.iocoder.yudao.module.pay.controller.admin.merchant.vo.channel.PayChannelCreateReqVO;
 import cn.iocoder.yudao.module.pay.controller.admin.merchant.vo.channel.PayChannelExportReqVO;
 import cn.iocoder.yudao.module.pay.controller.admin.merchant.vo.channel.PayChannelPageReqVO;
@@ -63,7 +62,7 @@ public class PayChannelServiceImpl implements PayChannelService {
     @PostConstruct
     public void initLocalCache() {
         // 注意：忽略自动多租户，因为要全局初始化缓存
-        TenantUtils.executeIgnore(() -> {
+
             // 第一步：查询数据
             List<PayChannelDO> channels = channelMapper.selectList();
             log.info("[initLocalCache][缓存支付渠道，数量为:{}]", channels.size());
@@ -71,7 +70,7 @@ public class PayChannelServiceImpl implements PayChannelService {
             // 第二步：构建缓存：创建或更新支付 Client
             channels.forEach(payChannel -> payClientFactory.createOrUpdatePayClient(payChannel.getId(),
                     payChannel.getCode(), payChannel.getConfig()));
-        });
+
     }
 
     @Override

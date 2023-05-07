@@ -86,6 +86,9 @@ public class PayDemoOrderServiceImpl implements PayDemoOrderService {
         PayDemoOrderDO demoOrder = new PayDemoOrderDO().setUserId(userId)
                 .setSpuId(createReqVO.getSpuId()).setSpuName(spuName)
                 .setPrice(price).setPayed(false).setRefundPrice(0);
+        if(null==demoOrder.getUserId()){
+            demoOrder.setUserId(1L);
+        }
         payDemoOrderMapper.insert(demoOrder);
 
         // 2.1 创建支付单

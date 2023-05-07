@@ -5,7 +5,7 @@ import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.iocoder.yudao.framework.common.enums.CommonStatusEnum;
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
-import cn.iocoder.yudao.framework.tenant.core.util.TenantUtils;
+
 import cn.iocoder.yudao.module.system.controller.admin.permission.vo.role.RoleCreateReqVO;
 import cn.iocoder.yudao.module.system.controller.admin.permission.vo.role.RoleExportReqVO;
 import cn.iocoder.yudao.module.system.controller.admin.permission.vo.role.RolePageReqVO;
@@ -70,14 +70,14 @@ public class RoleServiceImpl implements RoleService {
     @PostConstruct
     public void initLocalCache() {
         // 注意：忽略自动多租户，因为要全局初始化缓存
-        TenantUtils.executeIgnore(() -> {
-            // 第一步：查询数据
-            List<RoleDO> roleList = roleMapper.selectList();
-            log.info("[initLocalCache][缓存角色，数量为:{}]", roleList.size());
-
-            // 第二步：构建缓存
-            roleCache = convertMap(roleList, RoleDO::getId);
-        });
+//        TenantUtils.executeIgnore(() -> {
+//            // 第一步：查询数据
+//            List<RoleDO> roleList = roleMapper.selectList();
+//            log.info("[initLocalCache][缓存角色，数量为:{}]", roleList.size());
+//
+//            // 第二步：构建缓存
+//            roleCache = convertMap(roleList, RoleDO::getId);
+//        });
     }
 
     @Override

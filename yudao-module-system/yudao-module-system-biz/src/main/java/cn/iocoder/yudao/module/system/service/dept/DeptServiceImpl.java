@@ -2,8 +2,6 @@ package cn.iocoder.yudao.module.system.service.dept;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.iocoder.yudao.framework.common.enums.CommonStatusEnum;
-import cn.iocoder.yudao.framework.tenant.core.context.TenantContextHolder;
-import cn.iocoder.yudao.framework.tenant.core.util.TenantUtils;
 import cn.iocoder.yudao.module.system.controller.admin.dept.vo.dept.DeptCreateReqVO;
 import cn.iocoder.yudao.module.system.controller.admin.dept.vo.dept.DeptListReqVO;
 import cn.iocoder.yudao.module.system.controller.admin.dept.vo.dept.DeptUpdateReqVO;
@@ -68,21 +66,21 @@ public class DeptServiceImpl implements DeptService {
     @PostConstruct
     public synchronized void initLocalCache() {
         // 注意：忽略自动多租户，因为要全局初始化缓存
-        TenantUtils.executeIgnore(() -> {
-            // 第一步：查询数据
-            List<DeptDO> depts = deptMapper.selectList();
-            log.info("[initLocalCache][缓存部门，数量为:{}]", depts.size());
-
-            // 第二步：构建缓存
-            ImmutableMap.Builder<Long, DeptDO> builder = ImmutableMap.builder();
-            ImmutableMultimap.Builder<Long, DeptDO> parentBuilder = ImmutableMultimap.builder();
-            depts.forEach(deptDO -> {
-                builder.put(deptDO.getId(), deptDO);
-                parentBuilder.put(deptDO.getParentId(), deptDO);
-            });
-            deptCache = builder.build();
-            parentDeptCache = parentBuilder.build();
-        });
+//        TenantUtils.executeIgnore(() -> {
+//            // 第一步：查询数据
+//            List<DeptDO> depts = deptMapper.selectList();
+//            log.info("[initLocalCache][缓存部门，数量为:{}]", depts.size());
+//
+//            // 第二步：构建缓存
+//            ImmutableMap.Builder<Long, DeptDO> builder = ImmutableMap.builder();
+//            ImmutableMultimap.Builder<Long, DeptDO> parentBuilder = ImmutableMultimap.builder();
+//            depts.forEach(deptDO -> {
+//                builder.put(deptDO.getId(), deptDO);
+//                parentBuilder.put(deptDO.getParentId(), deptDO);
+//            });
+//            deptCache = builder.build();
+//            parentDeptCache = parentBuilder.build();
+//        });
     }
 
     @Override
@@ -166,11 +164,11 @@ public class DeptServiceImpl implements DeptService {
         if (CollUtil.isEmpty(depts)) {
             return;
         }
-        // 针对多租户，过滤掉非当前租户的部门
-        Long tenantId = TenantContextHolder.getTenantId();
-        if (tenantId != null) {
-            depts = CollUtil.filterNew(depts, dept -> tenantId.equals(dept.getTenantId()));
-        }
+//        // 针对多租户，过滤掉非当前租户的部门
+//        Long tenantId = TenantContextHolder.getTenantId();
+//        if (tenantId != null) {
+//            depts = CollUtil.filterNew(depts, dept -> tenantId.equals(dept.getTenantId()));
+//        }
         result.addAll(depts);
 
         // 继续递归

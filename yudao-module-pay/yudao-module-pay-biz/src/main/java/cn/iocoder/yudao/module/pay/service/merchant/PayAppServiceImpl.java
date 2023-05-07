@@ -20,6 +20,7 @@ import cn.iocoder.yudao.module.pay.enums.ErrorCodeConstants;
 import cn.iocoder.yudao.module.pay.enums.order.PayOrderStatusEnum;
 import cn.iocoder.yudao.module.pay.enums.refund.PayRefundStatusEnum;
 import com.google.common.annotations.VisibleForTesting;
+import org.apache.ibatis.javassist.bytecode.stackmap.BasicBlock;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
@@ -174,6 +175,7 @@ public class PayAppServiceImpl implements PayAppService {
 
     @Override
     public PayAppDO validPayApp(Long id) {
+
         PayAppDO app = appMapper.selectById(id);
         // 校验是否存在
         if (app == null) {
@@ -183,7 +185,10 @@ public class PayAppServiceImpl implements PayAppService {
         if (CommonStatusEnum.DISABLE.getStatus().equals(app.getStatus())) {
             throw ServiceExceptionUtil.exception(ErrorCodeConstants.PAY_APP_IS_DISABLE);
         }
+
         return app;
-    }
+        }
+
+
 
 }

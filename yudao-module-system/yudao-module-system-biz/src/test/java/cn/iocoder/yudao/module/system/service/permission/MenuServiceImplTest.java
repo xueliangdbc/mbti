@@ -9,7 +9,6 @@ import cn.iocoder.yudao.module.system.dal.dataobject.permission.MenuDO;
 import cn.iocoder.yudao.module.system.dal.mysql.permission.MenuMapper;
 import cn.iocoder.yudao.module.system.enums.permission.MenuTypeEnum;
 import cn.iocoder.yudao.module.system.mq.producer.permission.MenuProducer;
-import cn.iocoder.yudao.module.system.service.tenant.TenantService;
 import com.google.common.collect.LinkedListMultimap;
 import com.google.common.collect.Multimap;
 import org.junit.jupiter.api.Test;
@@ -47,8 +46,7 @@ public class MenuServiceImplTest extends BaseDbUnitTest {
     private PermissionService permissionService;
     @MockBean
     private MenuProducer menuProducer;
-    @MockBean
-    private TenantService tenantService;
+
 
     @Test
     public void testInitLocalCache_success() {
@@ -204,10 +202,10 @@ public class MenuServiceImplTest extends BaseDbUnitTest {
         menuMapper.insert(menu102);
         // mock 过滤菜单
         Set<Long> menuIds = asSet(100L, 101L);
-        doNothing().when(tenantService).handleTenantMenu(argThat(handler -> {
-            handler.handle(menuIds);
-            return true;
-        }));
+//        doNothing().when(tenantService).handleTenantMenu(argThat(handler -> {
+//            handler.handle(menuIds);
+//            return true;
+//        }));
         // 准备参数
         MenuListReqVO reqVO = new MenuListReqVO().setStatus(CommonStatusEnum.ENABLE.getStatus());
 

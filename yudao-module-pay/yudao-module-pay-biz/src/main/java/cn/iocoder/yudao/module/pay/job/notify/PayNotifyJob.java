@@ -1,7 +1,6 @@
 package cn.iocoder.yudao.module.pay.job.notify;
 
 import cn.iocoder.yudao.framework.quartz.core.handler.JobHandler;
-import cn.iocoder.yudao.framework.tenant.core.job.TenantJob;
 import cn.iocoder.yudao.module.pay.service.notify.PayNotifyService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -15,7 +14,7 @@ import javax.annotation.Resource;
  * @author 芋道源码
  */
 @Component
-@TenantJob // 多租户
+
 @Slf4j
 public class PayNotifyJob implements JobHandler {
 

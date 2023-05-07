@@ -7,7 +7,6 @@ import cn.hutool.http.HttpUtil;
 import cn.iocoder.yudao.framework.common.pojo.CommonResult;
 import cn.iocoder.yudao.framework.common.util.date.DateUtils;
 import cn.iocoder.yudao.framework.common.util.json.JsonUtils;
-import cn.iocoder.yudao.framework.tenant.core.util.TenantUtils;
 import cn.iocoder.yudao.module.pay.api.notify.dto.PayOrderNotifyReqDTO;
 import cn.iocoder.yudao.module.pay.api.notify.dto.PayRefundNotifyReqDTO;
 import cn.iocoder.yudao.module.pay.dal.dataobject.notify.PayNotifyLogDO;
@@ -223,7 +222,6 @@ public class PayNotifyServiceImpl implements PayNotifyService {
         }
         // 拼接 header 参数
         Map<String, String> headers = new HashMap<>();
-        TenantUtils.addTenantHeader(headers);
 
         // 发起请求
         try (HttpResponse response = HttpUtil.createPost(task.getNotifyUrl())
