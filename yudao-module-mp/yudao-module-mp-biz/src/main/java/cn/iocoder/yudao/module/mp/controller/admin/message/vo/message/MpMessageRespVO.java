@@ -25,7 +25,7 @@ public class MpMessageRespVO {
     private String appId;
 
     @Schema(description = "公众号粉丝编号", required = true, example = "2048")
-    private Long userId;
+    private String userId;
     @Schema(description = "公众号粉丝标志", required = true, example = "o6_bmjrPTlm6_2sgVt7hMZOPfL2M")
     private String openid;
 

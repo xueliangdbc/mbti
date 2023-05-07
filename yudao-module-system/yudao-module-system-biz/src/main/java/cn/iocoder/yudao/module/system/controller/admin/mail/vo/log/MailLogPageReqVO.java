@@ -18,7 +18,7 @@ import static cn.iocoder.yudao.framework.common.util.date.DateUtils.FORMAT_YEAR_
 public class MailLogPageReqVO extends PageParam {
 
     @Schema(description = "用户编号", example = "30883")
-    private Long userId;
+    private String userId;
 
     @Schema(description = "用户类型 - 参见 UserTypeEnum 枚举", example = "2")
     private Integer userType;

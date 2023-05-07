@@ -32,17 +32,17 @@ public class NotifySendServiceImpl implements NotifySendService {
     private NotifyMessageService notifyMessageService;
 
     @Override
-    public Long sendSingleNotifyToAdmin(Long userId, String templateCode, Map<String, Object> templateParams) {
+    public Long sendSingleNotifyToAdmin(String userId, String templateCode, Map<String, Object> templateParams) {
         return sendSingleNotify(userId, UserTypeEnum.ADMIN.getValue(), templateCode, templateParams);
     }
 
     @Override
-    public Long sendSingleNotifyToMember(Long userId, String templateCode, Map<String, Object> templateParams) {
+    public Long sendSingleNotifyToMember(String userId, String templateCode, Map<String, Object> templateParams) {
         return sendSingleNotify(userId, UserTypeEnum.MEMBER.getValue(), templateCode, templateParams);
     }
 
     @Override
-    public Long sendSingleNotify(Long userId, Integer userType, String templateCode, Map<String, Object> templateParams) {
+    public Long sendSingleNotify(String userId, Integer userType, String templateCode, Map<String, Object> templateParams) {
         // 校验模版
         NotifyTemplateDO template = validateNotifyTemplate(templateCode);
         if (Objects.equals(template.getStatus(), CommonStatusEnum.DISABLE.getStatus())) {

@@ -52,7 +52,7 @@ public class OperateLogDO extends BaseDO {
      *
      * 关联 MemberUserDO 的 id 属性，或者 AdminUserDO 的 id 属性
      */
-    private Long userId;
+    private String userId;
     /**
      * 用户类型
      *

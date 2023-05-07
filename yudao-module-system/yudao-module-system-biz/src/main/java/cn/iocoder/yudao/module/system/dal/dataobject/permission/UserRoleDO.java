@@ -26,7 +26,7 @@ public class UserRoleDO extends BaseDO {
     /**
      * 用户 ID
      */
-    private Long userId;
+    private String userId;
     /**
      * 角色 ID
      */

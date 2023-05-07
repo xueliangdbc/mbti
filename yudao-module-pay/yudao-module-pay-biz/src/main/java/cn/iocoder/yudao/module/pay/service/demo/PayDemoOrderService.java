@@ -21,7 +21,7 @@ public interface PayDemoOrderService {
      * @param createReqVO 创建信息
      * @return 编号
      */
-    Long createDemoOrder(Long userId, @Valid PayDemoOrderCreateReqVO createReqVO);
+    Long createDemoOrder(String userId, @Valid PayDemoOrderCreateReqVO createReqVO);
 
     /**
      * 获得示例订单

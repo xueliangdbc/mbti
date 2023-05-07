@@ -49,7 +49,7 @@ public class ApiErrorLogServiceImpl implements ApiErrorLogService {
     }
 
     @Override
-    public void updateApiErrorLogProcess(Long id, Integer processStatus, Long processUserId) {
+    public void updateApiErrorLogProcess(Long id, Integer processStatus, String processUserId) {
         ApiErrorLogDO errorLog = apiErrorLogMapper.selectById(id);
         if (errorLog == null) {
             throw exception(API_ERROR_LOG_NOT_FOUND);

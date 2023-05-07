@@ -82,8 +82,8 @@ public class MemberAuthServiceTest extends BaseDbAndRedisUnitTest {
         when(passwordEncoder.encode(newPassword)).thenReturn(newPassword);
 
         // 更新用户密码
-        authService.updatePassword(userDO.getId(), reqVO);
-        assertEquals(memberUserMapper.selectById(userDO.getId()).getPassword(),newPassword);
+        authService.updatePassword(userDO.getUserId(), reqVO);
+        assertEquals(memberUserMapper.selectById(userDO.getUserId()).getPassword(),newPassword);
     }
 
     @Test
@@ -107,7 +107,7 @@ public class MemberAuthServiceTest extends BaseDbAndRedisUnitTest {
         reqVO.setCode(code);
 
         authService.resetPassword(reqVO);
-        assertEquals(memberUserMapper.selectById(userDO.getId()).getPassword(),password);
+        assertEquals(memberUserMapper.selectById(userDO.getUserId()).getPassword(),password);
     }
 
 

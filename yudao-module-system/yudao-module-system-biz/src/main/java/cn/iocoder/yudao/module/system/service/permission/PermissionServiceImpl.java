@@ -80,7 +80,7 @@ public class PermissionServiceImpl implements PermissionService {
      */
     @Getter
     @Setter // 单元测试需要
-    private volatile Map<Long, Set<Long>> userRoleCache;
+    private volatile Map<String, Set<Long>> userRoleCache;
 
     @Resource
     private RoleMenuMapper roleMenuMapper;
@@ -141,7 +141,7 @@ public class PermissionServiceImpl implements PermissionService {
             log.info("[initLocalCacheForUserRole][缓存用户与角色，数量为:{}]", userRoles.size());
 
             // 第二步：构建缓存。
-            ImmutableMultimap.Builder<Long, Long> userRoleCacheBuilder = ImmutableMultimap.builder();
+            ImmutableMultimap.Builder<String, Long> userRoleCacheBuilder = ImmutableMultimap.builder();
             userRoles.forEach(userRoleDO -> userRoleCacheBuilder.put(userRoleDO.getUserId(), userRoleDO.getRoleId()));
             userRoleCache = CollectionUtils.convertMultiMap2(userRoles, UserRoleDO::getUserId, UserRoleDO::getRoleId);
 //        });
@@ -167,7 +167,7 @@ public class PermissionServiceImpl implements PermissionService {
     }
 
     @Override
-    public Set<Long> getUserRoleIdsFromCache(Long userId, Collection<Integer> roleStatuses) {
+    public Set<Long> getUserRoleIdsFromCache(String userId, Collection<Integer> roleStatuses) {
         Set<Long> cacheRoleIds = userRoleCache.get(userId);
         // 创建用户的时候没有分配角色，会存在空指针异常
         if (CollUtil.isEmpty(cacheRoleIds)) {
@@ -227,20 +227,20 @@ public class PermissionServiceImpl implements PermissionService {
     }
 
     @Override
-    public Set<Long> getUserRoleIdListByUserId(Long userId) {
+    public Set<Long> getUserRoleIdListByUserId(String userId) {
         return convertSet(userRoleMapper.selectListByUserId(userId),
                 UserRoleDO::getRoleId);
     }
 
     @Override
-    public Set<Long> getUserRoleIdListByRoleIds(Collection<Long> roleIds) {
+    public Set<String> getUserRoleIdListByRoleIds(Collection<Long> roleIds) {
         return convertSet(userRoleMapper.selectListByRoleIds(roleIds),
                 UserRoleDO::getUserId);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void assignUserRole(Long userId, Set<Long> roleIds) {
+    public void assignUserRole(String userId, Set<Long> roleIds) {
         // 获得角色拥有角色编号
         Set<Long> dbRoleIds = convertSet(userRoleMapper.selectListByUserId(userId),
                 UserRoleDO::getRoleId);
@@ -311,7 +311,7 @@ public class PermissionServiceImpl implements PermissionService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void processUserDeleted(Long userId) {
+    public void processUserDeleted(String userId) {
         userRoleMapper.deleteListByUserId(userId);
         TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization() {
 
@@ -324,7 +324,7 @@ public class PermissionServiceImpl implements PermissionService {
     }
 
     @Override
-    public boolean hasAnyPermissions(Long userId, String... permissions) {
+    public boolean hasAnyPermissions(String userId, String... permissions) {
         // 如果为空，说明已经有权限
         if (ArrayUtil.isEmpty(permissions)) {
             return true;
@@ -354,7 +354,7 @@ public class PermissionServiceImpl implements PermissionService {
     }
 
     @Override
-    public boolean hasAnyRoles(Long userId, String... roles) {
+    public boolean hasAnyRoles(String userId, String... roles) {
         // 如果为空，说明已经有权限
         if (ArrayUtil.isEmpty(roles)) {
             return true;
@@ -376,7 +376,7 @@ public class PermissionServiceImpl implements PermissionService {
 
     @Override
     @DataPermission(enable = false) // 关闭数据权限，不然就会出现递归获取数据权限的问题
-    public DeptDataPermissionRespDTO getDeptDataPermission(Long userId) {
+    public DeptDataPermissionRespDTO getDeptDataPermission(String userId) {
         // 获得用户的角色
         Set<Long> roleIds = getUserRoleIdsFromCache(userId, singleton(CommonStatusEnum.ENABLE.getStatus()));
         // 如果角色为空，则只能查看自己

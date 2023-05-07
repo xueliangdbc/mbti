@@ -254,8 +254,8 @@ public class BpmTaskAssignRuleServiceImpl implements BpmTaskAssignRuleService {
     }
 
     @VisibleForTesting
-    Set<Long> calculateTaskCandidateUsers(DelegateExecution execution, BpmTaskAssignRuleDO rule) {
-        Set<Long> assigneeUserIds = null;
+    Set<String> calculateTaskCandidateUsers(DelegateExecution execution, BpmTaskAssignRuleDO rule) {
+        Set<String> assigneeUserIds = null;
         if (Objects.equals(BpmTaskAssignRuleTypeEnum.ROLE.getType(), rule.getType())) {
             assigneeUserIds = calculateTaskCandidateUsersByRole(rule);
         } else if (Objects.equals(BpmTaskAssignRuleTypeEnum.DEPT_MEMBER.getType(), rule.getType())) {
@@ -267,9 +267,9 @@ public class BpmTaskAssignRuleServiceImpl implements BpmTaskAssignRuleService {
         } else if (Objects.equals(BpmTaskAssignRuleTypeEnum.USER.getType(), rule.getType())) {
             assigneeUserIds = calculateTaskCandidateUsersByUser(rule);
         } else if (Objects.equals(BpmTaskAssignRuleTypeEnum.USER_GROUP.getType(), rule.getType())) {
-            assigneeUserIds = calculateTaskCandidateUsersByUserGroup(rule);
+//            assigneeUserIds = calculateTaskCandidateUsersByUserGroup(rule);
         } else if (Objects.equals(BpmTaskAssignRuleTypeEnum.SCRIPT.getType(), rule.getType())) {
-            assigneeUserIds = calculateTaskCandidateUsersByScript(execution, rule);
+//            assigneeUserIds = calculateTaskCandidateUsersByScript(execution, rule);
         }
 
         // 移除被禁用的用户
@@ -283,26 +283,26 @@ public class BpmTaskAssignRuleServiceImpl implements BpmTaskAssignRuleService {
         return assigneeUserIds;
     }
 
-    private Set<Long> calculateTaskCandidateUsersByRole(BpmTaskAssignRuleDO rule) {
+    private Set<String> calculateTaskCandidateUsersByRole(BpmTaskAssignRuleDO rule) {
         return permissionApi.getUserRoleIdListByRoleIds(rule.getOptions());
     }
 
-    private Set<Long> calculateTaskCandidateUsersByDeptMember(BpmTaskAssignRuleDO rule) {
+    private Set<String> calculateTaskCandidateUsersByDeptMember(BpmTaskAssignRuleDO rule) {
         List<AdminUserRespDTO> users = adminUserApi.getUserListByDeptIds(rule.getOptions());
         return convertSet(users, AdminUserRespDTO::getId);
     }
 
-    private Set<Long> calculateTaskCandidateUsersByDeptLeader(BpmTaskAssignRuleDO rule) {
+    private Set<String> calculateTaskCandidateUsersByDeptLeader(BpmTaskAssignRuleDO rule) {
         List<DeptRespDTO> depts = deptApi.getDeptList(rule.getOptions());
         return convertSet(depts, DeptRespDTO::getLeaderUserId);
     }
 
-    private Set<Long> calculateTaskCandidateUsersByPost(BpmTaskAssignRuleDO rule) {
+    private Set<String> calculateTaskCandidateUsersByPost(BpmTaskAssignRuleDO rule) {
         List<AdminUserRespDTO> users = adminUserApi.getUsersByPostIds(rule.getOptions());
         return convertSet(users, AdminUserRespDTO::getId);
     }
 
-    private Set<Long> calculateTaskCandidateUsersByUser(BpmTaskAssignRuleDO rule) {
+    private Set<String> calculateTaskCandidateUsersByUser(BpmTaskAssignRuleDO rule) {
         return rule.getOptions();
     }
 
@@ -330,11 +330,11 @@ public class BpmTaskAssignRuleServiceImpl implements BpmTaskAssignRuleService {
     }
 
     @VisibleForTesting
-    void removeDisableUsers(Set<Long> assigneeUserIds) {
+    void removeDisableUsers(Set<String> assigneeUserIds) {
         if (CollUtil.isEmpty(assigneeUserIds)) {
             return;
         }
-        Map<Long, AdminUserRespDTO> userMap = adminUserApi.getUserMap(assigneeUserIds);
+        Map<String, AdminUserRespDTO> userMap = adminUserApi.getUserMap(assigneeUserIds);
         assigneeUserIds.removeIf(id -> {
             AdminUserRespDTO user = userMap.get(id);
             return user == null || !CommonStatusEnum.ENABLE.getStatus().equals(user.getStatus());

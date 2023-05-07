@@ -41,7 +41,7 @@ public class SmsLogRespVO {
     private String mobile;
 
     @Schema(description = "用户编号", example = "10")
-    private Long userId;
+    private String userId;
 
     @Schema(description = "用户类型", example = "1")
     private Integer userType;

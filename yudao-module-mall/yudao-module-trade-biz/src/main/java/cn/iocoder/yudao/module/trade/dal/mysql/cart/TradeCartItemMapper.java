@@ -16,12 +16,12 @@ import java.util.Map;
 @Mapper
 public interface TradeCartItemMapper extends BaseMapperX<TradeCartItemDO> {
 
-    default TradeCartItemDO selectByUserIdAndSkuId(Long userId, Long skuId) {
+    default TradeCartItemDO selectByUserIdAndSkuId(String userId, Long skuId) {
         return selectOne(TradeCartItemDO::getUserId, userId,
                 TradeCartItemDO::getSkuId, skuId);
     }
 
-    default List<TradeCartItemDO> selectListByUserIdAndSkuIds(Long userId, Collection<Long> skuIds) {
+    default List<TradeCartItemDO> selectListByUserIdAndSkuIds(String userId, Collection<Long> skuIds) {
         return selectList(new LambdaQueryWrapper<TradeCartItemDO>().eq(TradeCartItemDO::getUserId, userId)
                 .in(TradeCartItemDO::getSkuId, skuIds));
     }
@@ -30,7 +30,7 @@ public interface TradeCartItemMapper extends BaseMapperX<TradeCartItemDO> {
        update(updateObject, new LambdaQueryWrapper<TradeCartItemDO>().in(TradeCartItemDO::getId, ids));
    }
 
-    default Integer selectSumByUserId(Long userId) {
+    default Integer selectSumByUserId(String userId) {
         // SQL sum 查询
         List<Map<String, Object>> result = selectMaps(new QueryWrapper<TradeCartItemDO>()
                 .select("SUM(count) AS sumCount")
@@ -39,7 +39,7 @@ public interface TradeCartItemMapper extends BaseMapperX<TradeCartItemDO> {
         return CollUtil.isNotEmpty(result) ? MapUtil.getInt(result.get(0), "sumCount") : 0;
     }
 
-    default List<TradeCartItemDO> selectListByUserId(Long userId, Boolean selected) {
+    default List<TradeCartItemDO> selectListByUserId(String userId, Boolean selected) {
         return selectList(new LambdaQueryWrapperX<TradeCartItemDO>().eq(TradeCartItemDO::getUserId, userId)
                 .eqIfPresent(TradeCartItemDO::getSelected, selected));
     }

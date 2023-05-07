@@ -23,7 +23,7 @@ public interface SmsSendService {
      * @param templateParams 短信模板参数
      * @return 发送日志编号
      */
-    Long sendSingleSmsToAdmin(String mobile, Long userId,
+    Long sendSingleSmsToAdmin(String mobile, String userId,
                               String templateCode, Map<String, Object> templateParams);
 
     /**
@@ -37,7 +37,7 @@ public interface SmsSendService {
      * @param templateParams 短信模板参数
      * @return 发送日志编号
      */
-    Long sendSingleSmsToMember(String mobile, Long userId,
+    Long sendSingleSmsToMember(String mobile, String userId,
                                String templateCode, Map<String, Object> templateParams);
 
     /**
@@ -50,7 +50,7 @@ public interface SmsSendService {
      * @param templateParams 短信模板参数
      * @return 发送日志编号
      */
-    Long sendSingleSms(String mobile, Long userId, Integer userType,
+    Long sendSingleSms(String mobile, String userId, Integer userType,
                        String templateCode, Map<String, Object> templateParams);
 
     default void sendBatchSms(List<String> mobiles, List<Long> userIds, Integer userType,

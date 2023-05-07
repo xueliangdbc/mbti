@@ -67,9 +67,9 @@ public class MemberUserServiceImplTest extends BaseDbAndRedisUnitTest {
         String newNickName = randomString();
 
         // 调用接口修改昵称
-        memberUserService.updateUserNickname(userDO.getId(),newNickName);
+        memberUserService.updateUserNickname(userDO.getUserId(),newNickName);
         // 查询新修改后的昵称
-        String nickname = memberUserService.getUser(userDO.getId()).getNickname();
+        String nickname = memberUserService.getUser(userDO.getUserId()).getNickname();
         // 断言
         assertEquals(newNickName,nickname);
     }
@@ -81,7 +81,7 @@ public class MemberUserServiceImplTest extends BaseDbAndRedisUnitTest {
         userMapper.insert(dbUser);
 
         // 准备参数
-        Long userId = dbUser.getId();
+        String userId = dbUser.getUserId();
         byte[] avatarFileBytes = randomBytes(10);
         ByteArrayInputStream avatarFile = new ByteArrayInputStream(avatarFileBytes);
         // mock 方法
@@ -119,9 +119,9 @@ public class MemberUserServiceImplTest extends BaseDbAndRedisUnitTest {
         reqVO.setCode(newCode);
         reqVO.setOldMobile(oldMobile);
         reqVO.setOldCode(oldCode);
-        memberUserService.updateUserMobile(userDO.getId(),reqVO);
+        memberUserService.updateUserMobile(userDO.getUserId(),reqVO);
 
-        assertEquals(memberUserService.getUser(userDO.getId()).getMobile(),newMobile);
+        assertEquals(memberUserService.getUser(userDO.getUserId()).getMobile(),newMobile);
     }
 
     // ========== 随机对象 ==========

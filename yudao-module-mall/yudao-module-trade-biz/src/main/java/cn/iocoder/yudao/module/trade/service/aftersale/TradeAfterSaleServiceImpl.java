@@ -68,7 +68,7 @@ public class TradeAfterSaleServiceImpl implements TradeAfterSaleService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public Long createAfterSale(Long userId, AppTradeAfterSaleCreateReqVO createReqVO) {
+    public Long createAfterSale(String userId, AppTradeAfterSaleCreateReqVO createReqVO) {
         // 第一步，前置校验
         TradeOrderItemDO tradeOrderItem = validateOrderItemApplicable(userId, createReqVO);
 
@@ -84,7 +84,7 @@ public class TradeAfterSaleServiceImpl implements TradeAfterSaleService {
      * @param createReqVO 售后创建信息
      * @return 交易订单项
      */
-    private TradeOrderItemDO validateOrderItemApplicable(Long userId, AppTradeAfterSaleCreateReqVO createReqVO) {
+    private TradeOrderItemDO validateOrderItemApplicable(String userId, AppTradeAfterSaleCreateReqVO createReqVO) {
         // 校验订单项存在
         TradeOrderItemDO orderItem = tradeOrderService.getOrderItem(userId, createReqVO.getOrderItemId());
         if (orderItem == null) {
@@ -152,7 +152,7 @@ public class TradeAfterSaleServiceImpl implements TradeAfterSaleService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void agreeAfterSale(Long userId, Long id) {
+    public void agreeAfterSale(String userId, Long id) {
         // 校验售后单存在，并状态未审批
         TradeAfterSaleDO afterSale = validateAfterSaleAuditable(id);
 
@@ -173,7 +173,7 @@ public class TradeAfterSaleServiceImpl implements TradeAfterSaleService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void disagreeAfterSale(Long userId, TradeAfterSaleDisagreeReqVO auditReqVO) {
+    public void disagreeAfterSale(String userId, TradeAfterSaleDisagreeReqVO auditReqVO) {
         // 校验售后单存在，并状态未审批
         TradeAfterSaleDO afterSale = validateAfterSaleAuditable(auditReqVO.getId());
 
@@ -221,7 +221,7 @@ public class TradeAfterSaleServiceImpl implements TradeAfterSaleService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void deliveryAfterSale(Long userId, AppTradeAfterSaleDeliveryReqVO deliveryReqVO) {
+    public void deliveryAfterSale(String userId, AppTradeAfterSaleDeliveryReqVO deliveryReqVO) {
         // 校验售后单存在，并状态未退货
         TradeAfterSaleDO afterSale = tradeAfterSaleMapper.selectById(deliveryReqVO.getId());
         if (afterSale == null) {
@@ -246,7 +246,7 @@ public class TradeAfterSaleServiceImpl implements TradeAfterSaleService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void receiveAfterSale(Long userId, Long id) {
+    public void receiveAfterSale(String userId, Long id) {
         // 校验售后单存在，并状态为已退货
         TradeAfterSaleDO afterSale = validateAfterSaleReceivable(id);
 
@@ -263,7 +263,7 @@ public class TradeAfterSaleServiceImpl implements TradeAfterSaleService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void refuseAfterSale(Long userId, TradeAfterSaleRefuseReqVO refuseReqVO) {
+    public void refuseAfterSale(String userId, TradeAfterSaleRefuseReqVO refuseReqVO) {
         // 校验售后单存在，并状态为已退货
         TradeAfterSaleDO afterSale = tradeAfterSaleMapper.selectById(refuseReqVO.getId());
         if (afterSale == null) {
@@ -309,7 +309,7 @@ public class TradeAfterSaleServiceImpl implements TradeAfterSaleService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void refundAfterSale(Long userId, String userIp, Long id) {
+    public void refundAfterSale(String userId, String userIp, Long id) {
         // 校验售后单的状态，并状态待退款
         TradeAfterSaleDO afterSale = tradeAfterSaleMapper.selectByPayRefundId(id);
         if (afterSale == null) {
@@ -353,7 +353,7 @@ public class TradeAfterSaleServiceImpl implements TradeAfterSaleService {
     }
 
     @Override
-    public void cancelAfterSale(Long userId, Long id) {
+    public void cancelAfterSale(String userId, Long id) {
         // 校验售后单的状态，并状态待退款
         TradeAfterSaleDO afterSale = tradeAfterSaleMapper.selectByPayRefundId(id);
         if (afterSale == null) {
@@ -380,7 +380,7 @@ public class TradeAfterSaleServiceImpl implements TradeAfterSaleService {
                 TradeOrderItemAfterSaleStatusEnum.NONE.getStatus(), null);
     }
 
-    private void createAfterSaleLog(Long userId, Integer userType, TradeAfterSaleDO afterSale,
+    private void createAfterSaleLog(String userId, Integer userType, TradeAfterSaleDO afterSale,
                                     Integer beforeStatus, Integer afterStatus) {
         TradeAfterSaleLogDO afterSaleLog = new TradeAfterSaleLogDO().setUserId(userId).setUserType(userType)
                 .setAfterSaleId(afterSale.getId()).setOrderId(afterSale.getOrderId())

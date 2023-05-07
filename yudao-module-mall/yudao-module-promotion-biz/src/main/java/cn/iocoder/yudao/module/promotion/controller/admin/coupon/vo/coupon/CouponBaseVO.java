@@ -40,7 +40,7 @@ public class CouponBaseVO {
     // ========== 领取情况 BEGIN ==========
     @Schema(description = "用户编号", required = true, example = "1")
     @NotNull(message = "用户编号不能为空")
-    private Long userId;
+    private String userId;
 
     @Schema(description = "领取方式", required = true, example = "1")
     @NotNull(message = "领取方式不能为空")

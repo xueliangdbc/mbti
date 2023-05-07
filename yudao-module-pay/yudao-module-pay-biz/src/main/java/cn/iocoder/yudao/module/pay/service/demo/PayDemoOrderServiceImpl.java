@@ -76,7 +76,7 @@ public class PayDemoOrderServiceImpl implements PayDemoOrderService {
     }
 
     @Override
-    public Long createDemoOrder(Long userId, PayDemoOrderCreateReqVO createReqVO) {
+    public Long createDemoOrder(String userId, PayDemoOrderCreateReqVO createReqVO) {
         // 1.1 获得商品
         Object[] spu = spuNames.get(createReqVO.getSpuId());
         Assert.notNull(spu, "商品({}) 不存在", createReqVO.getSpuId());
@@ -87,7 +87,7 @@ public class PayDemoOrderServiceImpl implements PayDemoOrderService {
                 .setSpuId(createReqVO.getSpuId()).setSpuName(spuName)
                 .setPrice(price).setPayed(false).setRefundPrice(0);
         if(null==demoOrder.getUserId()){
-            demoOrder.setUserId(1L);
+            demoOrder.setUserId("1L");
         }
         payDemoOrderMapper.insert(demoOrder);
 

@@ -58,7 +58,7 @@ public class OAuth2TokenServiceImplTest extends BaseDbAndRedisUnitTest {
     public void testCreateAccessToken() {
         TenantContextHolder.setTenantId(0L);
         // 准备参数
-        Long userId = randomLongId();
+        String userId = randomLongId();
         Integer userType = RandomUtil.randomEle(UserTypeEnum.values()).getValue();
         String clientId = randomString();
         List<String> scopes = Lists.newArrayList("read", "write");

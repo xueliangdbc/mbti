@@ -46,7 +46,7 @@ public class DeptDO extends BaseDO {
      *
      * 关联 {@link AdminUserDO#getId()}
      */
-    private Long leaderUserId;
+    private String leaderUserId;
     /**
      * 联系电话
      */

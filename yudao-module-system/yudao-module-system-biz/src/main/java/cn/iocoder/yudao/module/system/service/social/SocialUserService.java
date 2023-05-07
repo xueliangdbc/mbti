@@ -44,7 +44,7 @@ public interface SocialUserService {
      * @param userType 用户类型
      * @return 社交用户列表
      */
-    List<SocialUserDO> getSocialUserList(Long userId, Integer userType);
+    List<SocialUserDO> getSocialUserList(String userId, Integer userType);
 
     /**
      * 绑定社交用户
@@ -61,7 +61,7 @@ public interface SocialUserService {
      * @param type 社交平台的类型 {@link SocialTypeEnum}
      * @param openid 社交平台的 openid
      */
-    void unbindSocialUser(Long userId, Integer userType, Integer type, String openid);
+    void unbindSocialUser(String userId, Integer userType, Integer type, String openid);
 
     /**
      * 获得社交用户的绑定用户编号
@@ -74,5 +74,5 @@ public interface SocialUserService {
      * @param state state
      * @return 绑定用户编号
      */
-    Long getBindUserId(Integer userType, Integer type, String code, String state);
+    String getBindUserId(Integer userType, Integer type, String code, String state);
 }

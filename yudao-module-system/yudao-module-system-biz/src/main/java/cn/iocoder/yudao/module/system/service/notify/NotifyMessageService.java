@@ -27,7 +27,7 @@ public interface NotifyMessageService {
      * @param templateParams 模版参数
      * @return 站内信编号
      */
-    Long createNotifyMessage(Long userId, Integer userType,
+    Long createNotifyMessage(String userId, Integer userType,
                              NotifyTemplateDO template, String templateContent, Map<String, Object> templateParams);
 
     /**
@@ -46,7 +46,7 @@ public interface NotifyMessageService {
      * @param userType 用户类型
      * @return 站内信分页
      */
-    PageResult<NotifyMessageDO> getMyMyNotifyMessagePage(NotifyMessageMyPageReqVO pageReqVO, Long userId, Integer userType);
+    PageResult<NotifyMessageDO> getMyMyNotifyMessagePage(NotifyMessageMyPageReqVO pageReqVO, String userId, Integer userType);
 
     /**
      * 获得站内信
@@ -64,7 +64,7 @@ public interface NotifyMessageService {
      * @param size     数量
      * @return 站内信列表
      */
-    List<NotifyMessageDO> getUnreadNotifyMessageList(Long userId, Integer userType, Integer size);
+    List<NotifyMessageDO> getUnreadNotifyMessageList(String userId, Integer userType, Integer size);
 
     /**
      * 统计用户未读站内信条数
@@ -73,7 +73,7 @@ public interface NotifyMessageService {
      * @param userType 用户类型
      * @return 返回未读站内信条数
      */
-    Long getUnreadNotifyMessageCount(Long userId, Integer userType);
+    Long getUnreadNotifyMessageCount(String userId, Integer userType);
 
     /**
      * 标记站内信为已读
@@ -83,7 +83,7 @@ public interface NotifyMessageService {
      * @param userType 用户类型
      * @return 更新到的条数
      */
-    int updateNotifyMessageRead(Collection<Long> ids, Long userId, Integer userType);
+    int updateNotifyMessageRead(Collection<Long> ids, String userId, Integer userType);
 
     /**
      * 标记所有站内信为已读
@@ -92,6 +92,6 @@ public interface NotifyMessageService {
      * @param userType 用户类型
      * @return 更新到的条数
      */
-    int updateAllNotifyMessageRead(Long userId, Integer userType);
+    int updateAllNotifyMessageRead(String userId, Integer userType);
 
 }

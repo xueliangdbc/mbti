@@ -91,7 +91,7 @@ public class TradeOrderServiceImpl implements TradeOrderService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public Long createOrder(Long userId, String userIp, AppTradeOrderCreateReqVO createReqVO) {
+    public Long createOrder(String userId, String userIp, AppTradeOrderCreateReqVO createReqVO) {
         // 商品 SKU 检查：可售状态、库存
         List<ProductSkuRespDTO> skus = validateSkuSaleable(createReqVO.getItems());
         // 商品 SPU 检查：可售状态
@@ -169,7 +169,7 @@ public class TradeOrderServiceImpl implements TradeOrderService {
      * @param addressId 收件地址编号
      * @return 收件地址
      */
-    private AddressRespDTO validateAddress(Long userId, Long addressId) {
+    private AddressRespDTO validateAddress(String userId, Long addressId) {
         AddressRespDTO address = addressApi.getAddress(addressId, userId);
         if (Objects.isNull(address)) {
             throw exception(ErrorCodeConstants.ORDER_CREATE_ADDRESS_NOT_FOUND);
@@ -177,7 +177,7 @@ public class TradeOrderServiceImpl implements TradeOrderService {
         return address;
     }
 
-    private TradeOrderDO createTradeOrder(Long userId, String clientIp, AppTradeOrderCreateReqVO createReqVO,
+    private TradeOrderDO createTradeOrder(String userId, String clientIp, AppTradeOrderCreateReqVO createReqVO,
                                           PriceCalculateRespDTO.Order order, AddressRespDTO address) {
         TradeOrderDO tradeOrderDO = TradeOrderConvert.INSTANCE.convert(userId, clientIp, createReqVO, order, address);
         tradeOrderDO.setNo(IdUtil.getSnowflakeNextId() + ""); // TODO @LeeYan9: 思考下, 怎么生成好点哈; 这个是会展示给用户的;
@@ -209,7 +209,7 @@ public class TradeOrderServiceImpl implements TradeOrderService {
      * @param createReqVO 创建订单请求
      * @param tradeOrderDO 交易订单
      */
-    private void afterCreateTradeOrder(Long userId, AppTradeOrderCreateReqVO createReqVO,
+    private void afterCreateTradeOrder(String userId, AppTradeOrderCreateReqVO createReqVO,
                                        TradeOrderDO tradeOrderDO, List<TradeOrderItemDO> tradeOrderItemDOs,
                                        List<ProductSpuRespDTO> spus) {
         // 下单时扣减商品库存
@@ -322,7 +322,7 @@ public class TradeOrderServiceImpl implements TradeOrderService {
 
     // TODO 芋艿：如果无需发货，需要怎么存储？
     @Override
-    public void deliveryOrder(Long userId, TradeOrderDeliveryReqVO deliveryReqVO) {
+    public void deliveryOrder(String userId, TradeOrderDeliveryReqVO deliveryReqVO) {
         // 校验并获得交易订单（可发货）
         TradeOrderDO order = validateOrderDeliverable(deliveryReqVO.getId());
 
@@ -372,7 +372,7 @@ public class TradeOrderServiceImpl implements TradeOrderService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void receiveOrder(Long userId, Long id) {
+    public void receiveOrder(String userId, Long id) {
         // 校验并获得交易订单（可收货）
         TradeOrderDO order = validateOrderReceivable(userId, id);
 
@@ -405,7 +405,7 @@ public class TradeOrderServiceImpl implements TradeOrderService {
      * @param id 交易订单编号
      * @return 交易订单
      */
-    private TradeOrderDO validateOrderReceivable(Long userId, Long id) {
+    private TradeOrderDO validateOrderReceivable(String userId, Long id) {
         // 校验订单是否存在
         TradeOrderDO order = tradeOrderMapper.selectByIdAndUserId(id, userId);
         if (order == null) {
@@ -420,7 +420,7 @@ public class TradeOrderServiceImpl implements TradeOrderService {
     }
 
     @Override
-    public TradeOrderDO getOrder(Long userId, Long id) {
+    public TradeOrderDO getOrder(String userId, Long id) {
         TradeOrderDO order = tradeOrderMapper.selectById(id);
         if (order != null
                 && ObjectUtil.notEqual(order.getUserId(), userId)) {
@@ -452,14 +452,14 @@ public class TradeOrderServiceImpl implements TradeOrderService {
     }
 
     @Override
-    public PageResult<TradeOrderDO> getOrderPage(Long userId, AppTradeOrderPageReqVO reqVO) {
+    public PageResult<TradeOrderDO> getOrderPage(String userId, AppTradeOrderPageReqVO reqVO) {
         return tradeOrderMapper.selectPage(reqVO, userId);
     }
 
     // =================== Order Item ===================
 
     @Override
-    public TradeOrderItemDO getOrderItem(Long userId, Long itemId) {
+    public TradeOrderItemDO getOrderItem(String userId, Long itemId) {
         TradeOrderItemDO orderItem = tradeOrderItemMapper.selectById(itemId);
         if (orderItem != null
                 && ObjectUtil.notEqual(orderItem.getUserId(), userId)) {

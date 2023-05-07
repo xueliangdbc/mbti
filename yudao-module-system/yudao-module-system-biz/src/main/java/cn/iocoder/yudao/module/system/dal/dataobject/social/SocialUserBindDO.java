@@ -32,7 +32,7 @@ public class SocialUserBindDO extends BaseDO {
      *
      * 关联 UserDO 的编号
      */
-    private Long userId;
+    private String userId;
     /**
      * 用户类型
      *

@@ -44,7 +44,7 @@ public class BpmOALeaveServiceImpl implements BpmOALeaveService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public Long createLeave(Long userId, BpmOALeaveCreateReqVO createReqVO) {
+    public Long createLeave(String userId, BpmOALeaveCreateReqVO createReqVO) {
         // 插入 OA 请假单
         long day = LocalDateTimeUtil.between(createReqVO.getStartTime(), createReqVO.getEndTime()).toDays();
         BpmOALeaveDO leave = BpmOALeaveConvert.INSTANCE.convert(createReqVO).setUserId(userId).setDay(day)
@@ -81,7 +81,7 @@ public class BpmOALeaveServiceImpl implements BpmOALeaveService {
     }
 
     @Override
-    public PageResult<BpmOALeaveDO> getLeavePage(Long userId, BpmOALeavePageReqVO pageReqVO) {
+    public PageResult<BpmOALeaveDO> getLeavePage(String userId, BpmOALeavePageReqVO pageReqVO) {
         return leaveMapper.selectPage(userId, pageReqVO);
     }
 

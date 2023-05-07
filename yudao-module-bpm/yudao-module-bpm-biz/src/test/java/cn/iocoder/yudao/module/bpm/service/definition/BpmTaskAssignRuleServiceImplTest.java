@@ -69,11 +69,11 @@ public class BpmTaskAssignRuleServiceImplTest extends BaseDbUnitTest {
                 .setType(BpmTaskAssignRuleTypeEnum.ROLE.getType());
         // mock 方法
         when(permissionApi.getUserRoleIdListByRoleIds(eq(rule.getOptions())))
-                .thenReturn(asSet(11L, 22L));
-        mockGetUserMap(asSet(11L, 22L));
+                .thenReturn(asSet("11L", "22L"));
+        mockGetUserMap(asSet("11L", "22L"));
 
         // 调用
-        Set<Long> results = bpmTaskRuleService.calculateTaskCandidateUsers(null, rule);
+        Set<String> results = bpmTaskRuleService.calculateTaskCandidateUsers(null, rule);
         // 断言
         assertEquals(asSet(11L, 22L), results);
     }
@@ -84,13 +84,13 @@ public class BpmTaskAssignRuleServiceImplTest extends BaseDbUnitTest {
         BpmTaskAssignRuleDO rule = new BpmTaskAssignRuleDO().setOptions(asSet(1L, 2L))
                 .setType(BpmTaskAssignRuleTypeEnum.DEPT_MEMBER.getType());
         // mock 方法
-        List<AdminUserRespDTO> users = CollectionUtils.convertList(asSet(11L, 22L),
+        List<AdminUserRespDTO> users = CollectionUtils.convertList(asSet("11L", "22L"),
                 id -> new AdminUserRespDTO().setId(id));
         when(adminUserApi.getUserListByDeptIds(eq(rule.getOptions()))).thenReturn(users);
-        mockGetUserMap(asSet(11L, 22L));
+        mockGetUserMap(asSet("11L", "22L"));
 
         // 调用
-        Set<Long> results = bpmTaskRuleService.calculateTaskCandidateUsers(null, rule);
+        Set<String> results = bpmTaskRuleService.calculateTaskCandidateUsers(null, rule);
         // 断言
         assertEquals(asSet(11L, 22L), results);
     }
@@ -101,15 +101,15 @@ public class BpmTaskAssignRuleServiceImplTest extends BaseDbUnitTest {
         BpmTaskAssignRuleDO rule = new BpmTaskAssignRuleDO().setOptions(asSet(1L, 2L))
                 .setType(BpmTaskAssignRuleTypeEnum.DEPT_LEADER.getType());
         // mock 方法
-        DeptRespDTO dept1 = randomPojo(DeptRespDTO.class, o -> o.setLeaderUserId(11L));
-        DeptRespDTO dept2 = randomPojo(DeptRespDTO.class, o -> o.setLeaderUserId(22L));
+        DeptRespDTO dept1 = randomPojo(DeptRespDTO.class, o -> o.setLeaderUserId("11L"));
+        DeptRespDTO dept2 = randomPojo(DeptRespDTO.class, o -> o.setLeaderUserId("22L"));
         when(deptApi.getDeptList(eq(rule.getOptions()))).thenReturn(Arrays.asList(dept1, dept2));
-        mockGetUserMap(asSet(11L, 22L));
+        mockGetUserMap(asSet("11L", "22L"));
 
         // 调用
-        Set<Long> results = bpmTaskRuleService.calculateTaskCandidateUsers(null, rule);
+        Set<String> results = bpmTaskRuleService.calculateTaskCandidateUsers(null, rule);
         // 断言
-        assertEquals(asSet(11L, 22L), results);
+        assertEquals(asSet("11L", "22L"), results);
     }
 
     @Test
@@ -118,13 +118,13 @@ public class BpmTaskAssignRuleServiceImplTest extends BaseDbUnitTest {
         BpmTaskAssignRuleDO rule = new BpmTaskAssignRuleDO().setOptions(asSet(1L, 2L))
                 .setType(BpmTaskAssignRuleTypeEnum.POST.getType());
         // mock 方法
-        List<AdminUserRespDTO> users = CollectionUtils.convertList(asSet(11L, 22L),
+        List<AdminUserRespDTO> users = CollectionUtils.convertList(asSet("11L", "22L"),
                 id -> new AdminUserRespDTO().setId(id));
         when(adminUserApi.getUsersByPostIds(eq(rule.getOptions()))).thenReturn(users);
-        mockGetUserMap(asSet(11L, 22L));
+        mockGetUserMap(asSet("11L", "22L"));
 
         // 调用
-        Set<Long> results = bpmTaskRuleService.calculateTaskCandidateUsers(null, rule);
+        Set<String> results = bpmTaskRuleService.calculateTaskCandidateUsers(null, rule);
         // 断言
         assertEquals(asSet(11L, 22L), results);
     }
@@ -135,10 +135,10 @@ public class BpmTaskAssignRuleServiceImplTest extends BaseDbUnitTest {
         BpmTaskAssignRuleDO rule = new BpmTaskAssignRuleDO().setOptions(asSet(1L, 2L))
                 .setType(BpmTaskAssignRuleTypeEnum.USER.getType());
         // mock 方法
-        mockGetUserMap(asSet(1L, 2L));
+        mockGetUserMap(asSet("1L", "2L"));
 
         // 调用
-        Set<Long> results = bpmTaskRuleService.calculateTaskCandidateUsers(null, rule);
+        Set<String> results = bpmTaskRuleService.calculateTaskCandidateUsers(null, rule);
         // 断言
         assertEquals(asSet(1L, 2L), results);
     }
@@ -151,11 +151,11 @@ public class BpmTaskAssignRuleServiceImplTest extends BaseDbUnitTest {
         // mock 方法
         BpmUserGroupDO userGroup1 = randomPojo(BpmUserGroupDO.class, o -> o.setMemberUserIds(asSet(11L, 12L)));
         BpmUserGroupDO userGroup2 = randomPojo(BpmUserGroupDO.class, o -> o.setMemberUserIds(asSet(21L, 22L)));
-        when(userGroupService.getUserGroupList(eq(rule.getOptions()))).thenReturn(Arrays.asList(userGroup1, userGroup2));
-        mockGetUserMap(asSet(11L, 12L, 21L, 22L));
+//        when(userGroupService.getUserGroupList(eq(rule.getOptions()))).thenReturn(Arrays.asList(userGroup1, userGroup2));
+        mockGetUserMap(asSet("11L", "12L", "21L", "22L"));
 
         // 调用
-        Set<Long> results = bpmTaskRuleService.calculateTaskCandidateUsers(null, rule);
+        Set<String> results = bpmTaskRuleService.calculateTaskCandidateUsers(null, rule);
         // 断言
         assertEquals(asSet(11L, 12L, 21L, 22L), results);
     }
@@ -191,10 +191,10 @@ public class BpmTaskAssignRuleServiceImplTest extends BaseDbUnitTest {
             }
         };
         bpmTaskRuleService.setScripts(Arrays.asList(script1, script2));
-        mockGetUserMap(asSet(11L, 22L));
+        mockGetUserMap(asSet("11L", "22L"));
 
         // 调用
-        Set<Long> results = bpmTaskRuleService.calculateTaskCandidateUsers(null, rule);
+        Set<String> results = bpmTaskRuleService.calculateTaskCandidateUsers(null, rule);
         // 断言
         assertEquals(asSet(11L, 22L), results);
     }
@@ -202,13 +202,13 @@ public class BpmTaskAssignRuleServiceImplTest extends BaseDbUnitTest {
     @Test
     public void testRemoveDisableUsers() {
         // 准备参数. 1L 可以找到；2L 是禁用的；3L 找不到
-        Set<Long> assigneeUserIds = asSet(1L, 2L, 3L);
+        Set<String> assigneeUserIds = asSet("1L", "2L", "3L");
         // mock 方法
-        AdminUserRespDTO user1 = randomPojo(AdminUserRespDTO.class, o -> o.setId(1L)
+        AdminUserRespDTO user1 = randomPojo(AdminUserRespDTO.class, o -> o.setId("1L")
                 .setStatus(CommonStatusEnum.ENABLE.getStatus()));
-        AdminUserRespDTO user2 = randomPojo(AdminUserRespDTO.class, o -> o.setId(2L)
+        AdminUserRespDTO user2 = randomPojo(AdminUserRespDTO.class, o -> o.setId("2L")
                 .setStatus(CommonStatusEnum.DISABLE.getStatus()));
-        Map<Long, AdminUserRespDTO> userMap = MapUtil.builder(user1.getId(), user1)
+        Map<String, AdminUserRespDTO> userMap = MapUtil.builder(user1.getId(), user1)
                 .put(user2.getId(), user2).build();
         when(adminUserApi.getUserMap(eq(assigneeUserIds))).thenReturn(userMap);
 
@@ -218,8 +218,8 @@ public class BpmTaskAssignRuleServiceImplTest extends BaseDbUnitTest {
         assertEquals(asSet(1L), assigneeUserIds);
     }
 
-    private void mockGetUserMap(Set<Long> assigneeUserIds) {
-        Map<Long, AdminUserRespDTO> userMap = CollectionUtils.convertMap(assigneeUserIds, id -> id,
+    private void mockGetUserMap(Set<String> assigneeUserIds) {
+        Map<String, AdminUserRespDTO> userMap = CollectionUtils.convertMap(assigneeUserIds, id -> id,
                 id -> new AdminUserRespDTO().setId(id).setStatus(CommonStatusEnum.ENABLE.getStatus()));
         when(adminUserApi.getUserMap(eq(assigneeUserIds))).thenReturn(userMap);
     }

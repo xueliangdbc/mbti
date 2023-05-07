@@ -16,6 +16,6 @@ public interface BpmMessageConvert {
     @Mapping(source = "userId", target = "userId")
     @Mapping(source = "templateCode", target = "templateCode")
     @Mapping(source = "templateParams", target = "templateParams")
-    SmsSendSingleToUserReqDTO convert(Long userId, String templateCode, Map<String, Object> templateParams);
+    SmsSendSingleToUserReqDTO convert(String userId, String templateCode, Map<String, Object> templateParams);
 
 }

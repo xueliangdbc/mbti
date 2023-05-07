@@ -41,7 +41,7 @@ public class MailLogServiceImpl implements MailLogService {
     }
 
     @Override
-    public Long createMailLog(Long userId, Integer userType, String toMail,
+    public Long createMailLog(String userId, Integer userType, String toMail,
                               MailAccountDO account, MailTemplateDO template,
                               String templateContent, Map<String, Object> templateParams, Boolean isSend) {
         MailLogDO.MailLogDOBuilder logDOBuilder = MailLogDO.builder();

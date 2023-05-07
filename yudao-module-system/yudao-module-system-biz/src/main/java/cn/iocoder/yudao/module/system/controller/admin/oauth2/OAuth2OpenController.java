@@ -267,7 +267,7 @@ public class OAuth2OpenController {
         throw exception0(BAD_REQUEST.getCode(), "response_type 参数值只允许 code 和 token");
     }
 
-    private String getImplicitGrantRedirect(Long userId, OAuth2ClientDO client,
+    private String getImplicitGrantRedirect(String userId, OAuth2ClientDO client,
                                             List<String> scopes, String redirectUri, String state) {
         // 1. 创建 access token 访问令牌
         OAuth2AccessTokenDO accessTokenDO = oauth2GrantService.grantImplicit(userId, getUserType(), client.getClientId(), scopes);
@@ -278,7 +278,7 @@ public class OAuth2OpenController {
                 scopes, JsonUtils.parseObject(client.getAdditionalInformation(), Map.class));
     }
 
-    private String getAuthorizationCodeRedirect(Long userId, OAuth2ClientDO client,
+    private String getAuthorizationCodeRedirect(String userId, OAuth2ClientDO client,
                                                 List<String> scopes, String redirectUri, String state) {
         // 1. 创建 code 授权码
         String authorizationCode = oauth2GrantService.grantAuthorizationCodeForCode(userId, getUserType(), client.getClientId(), scopes,

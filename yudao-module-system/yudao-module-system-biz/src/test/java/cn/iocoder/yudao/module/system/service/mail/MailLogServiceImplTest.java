@@ -41,7 +41,7 @@ public class MailLogServiceImplTest extends BaseDbUnitTest {
     @Test
     public void testCreateMailLog() {
         // 准备参数
-        Long userId = randomLongId();
+        String userId = randomLongId();
         Integer userType = randomEle(UserTypeEnum.values()).getValue();
         String toMail = randomEmail();
         MailAccountDO account = randomPojo(MailAccountDO.class);

@@ -16,8 +16,8 @@ public interface AuthConvert {
 
     AuthConvert INSTANCE = Mappers.getMapper(AuthConvert.class);
 
-    SocialUserBindReqDTO convert(Long userId, Integer userType, AppAuthSocialLoginReqVO reqVO);
-    SocialUserUnbindReqDTO convert(Long userId, Integer userType, AppSocialUserUnbindReqVO reqVO);
+    SocialUserBindReqDTO convert(String userId, Integer userType, AppAuthSocialLoginReqVO reqVO);
+    SocialUserUnbindReqDTO convert(String userId, Integer userType, AppSocialUserUnbindReqVO reqVO);
 
     SmsCodeSendReqDTO convert(AppAuthSmsSendReqVO reqVO);
     SmsCodeUseReqDTO convert(AppAuthResetPasswordReqVO reqVO, SmsSceneEnum scene, String usedIp);

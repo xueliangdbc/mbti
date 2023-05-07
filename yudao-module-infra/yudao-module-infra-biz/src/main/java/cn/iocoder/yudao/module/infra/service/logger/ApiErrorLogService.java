@@ -45,6 +45,6 @@ public interface ApiErrorLogService {
      * @param processStatus 处理结果
      * @param processUserId 处理人
      */
-    void updateApiErrorLogProcess(Long id, Integer processStatus, Long processUserId);
+    void updateApiErrorLogProcess(Long id, Integer processStatus, String processUserId);
 
 }

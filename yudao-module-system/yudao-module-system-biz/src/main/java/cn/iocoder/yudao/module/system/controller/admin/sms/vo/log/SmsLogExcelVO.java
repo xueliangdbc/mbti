@@ -50,7 +50,7 @@ public class SmsLogExcelVO {
     private String mobile;
 
     @ExcelProperty("用户编号")
-    private Long userId;
+    private String userId;
 
     @ExcelProperty(value = "用户类型", converter = DictConvert.class)
     @DictFormat(DictTypeConstants.USER_TYPE)

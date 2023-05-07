@@ -33,7 +33,7 @@ public class OAuth2CodeServiceImpl implements OAuth2CodeService {
     private OAuth2CodeMapper oauth2CodeMapper;
 
     @Override
-    public OAuth2CodeDO createAuthorizationCode(Long userId, Integer userType, String clientId,
+    public OAuth2CodeDO createAuthorizationCode(String userId, Integer userType, String clientId,
                                                 List<String> scopes, String redirectUri, String state) {
         OAuth2CodeDO codeDO = new OAuth2CodeDO().setCode(generateCode())
                 .setUserId(userId).setUserType(userType)

@@ -13,7 +13,7 @@ public class PermissionAssignUserRoleReqVO {
 
     @Schema(description = "用户编号", required = true, example = "1")
     @NotNull(message = "用户编号不能为空")
-    private Long userId;
+    private String userId;
 
     @Schema(description = "角色编号列表", example = "1,3,5")
     private Set<Long> roleIds = Collections.emptySet(); // 兜底

@@ -38,7 +38,7 @@ class OAuth2CodeServiceImplTest extends BaseDbUnitTest {
     @Test
     public void testCreateAuthorizationCode() {
         // 准备参数
-        Long userId = randomLongId();
+        String userId = randomLongId();
         Integer userType = RandomUtil.randomEle(UserTypeEnum.values()).getValue();
         String clientId = randomString();
         List<String> scopes = Lists.newArrayList("read", "write");

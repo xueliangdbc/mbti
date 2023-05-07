@@ -66,7 +66,7 @@ public interface MemberAuthService {
      * @param userId 用户id
      * @param userReqVO 用户请求实体类
      */
-    void updatePassword(Long userId, AppAuthUpdatePasswordReqVO userReqVO);
+    void updatePassword(String userId, AppAuthUpdatePasswordReqVO userReqVO);
 
     /**
      * 忘记密码
@@ -80,7 +80,7 @@ public interface MemberAuthService {
      * @param userId 用户编号
      * @param reqVO 发送信息
      */
-    void sendSmsCode(Long userId, AppAuthSmsSendReqVO reqVO);
+    void sendSmsCode(String userId, AppAuthSmsSendReqVO reqVO);
 
     /**
      * 刷新访问令牌

@@ -21,7 +21,7 @@ public interface TradeCartService {
      * @param userId 用户编号
      * @param addCountReqVO 添加信息
      */
-    void addCartItemCount(Long userId, @Valid AppTradeCartItemAddCountReqVO addCountReqVO);
+    void addCartItemCount(String userId, @Valid AppTradeCartItemAddCountReqVO addCountReqVO);
 
     /**
      * 更新购物车商品数量
@@ -29,7 +29,7 @@ public interface TradeCartService {
      * @param userId 用户编号
      * @param updateCountReqVO 更新信息
      */
-    void updateCartItemCount(Long userId, AppTradeCartItemUpdateCountReqVO updateCountReqVO);
+    void updateCartItemCount(String userId, AppTradeCartItemUpdateCountReqVO updateCountReqVO);
 
     /**
      * 更新购物车商品是否选中
@@ -37,7 +37,7 @@ public interface TradeCartService {
      * @param userId 用户编号
      * @param updateSelectedReqVO 更新信息
      */
-    void updateCartItemSelected(Long userId, AppTradeCartItemUpdateSelectedReqVO updateSelectedReqVO);
+    void updateCartItemSelected(String userId, AppTradeCartItemUpdateSelectedReqVO updateSelectedReqVO);
 
     /**
      * 删除购物车商品
@@ -45,7 +45,7 @@ public interface TradeCartService {
      * @param userId 用户编号
      * @param skuIds SKU 编号的数组
      */
-    void deleteCartItems(Long userId, Collection<Long> skuIds);
+    void deleteCartItems(String userId, Collection<Long> skuIds);
 
     /**
      * 查询用户在购物车中的商品数量
@@ -53,7 +53,7 @@ public interface TradeCartService {
      * @param userId 用户编号
      * @return 商品数量
      */
-    Integer getCartCount(Long userId);
+    Integer getCartCount(String userId);
 
     /**
      * 查询用户的购物车详情
@@ -61,6 +61,6 @@ public interface TradeCartService {
      * @param userId 用户编号
      * @return 购物车详情
      */
-    AppTradeCartDetailRespVO getCartDetail(Long userId);
+    AppTradeCartDetailRespVO getCartDetail(String userId);
 
 }

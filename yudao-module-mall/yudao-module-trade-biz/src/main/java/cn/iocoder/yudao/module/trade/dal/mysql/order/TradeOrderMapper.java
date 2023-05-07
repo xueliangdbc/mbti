@@ -19,7 +19,7 @@ public interface TradeOrderMapper extends BaseMapperX<TradeOrderDO> {
                 .eq(TradeOrderDO::getId, id).eq(TradeOrderDO::getStatus, status));
     }
 
-    default TradeOrderDO selectByIdAndUserId(Long id, Long userId) {
+    default TradeOrderDO selectByIdAndUserId(Long id, String userId) {
         return selectOne(TradeOrderDO::getId, id, TradeOrderDO::getUserId, userId);
     }
 
@@ -36,7 +36,7 @@ public interface TradeOrderMapper extends BaseMapperX<TradeOrderDO> {
                 .betweenIfPresent(TradeOrderDO::getCreateTime, reqVO.getCreateTime()));
     }
 
-    default PageResult<TradeOrderDO> selectPage(AppTradeOrderPageReqVO reqVO, Long userId) {
+    default PageResult<TradeOrderDO> selectPage(AppTradeOrderPageReqVO reqVO, String userId) {
         return selectPage(reqVO, new LambdaQueryWrapperX<TradeOrderDO>()
                 .eq(TradeOrderDO::getUserId, userId)
                 .eqIfPresent(TradeOrderDO::getStatus, reqVO.getStatus())

@@ -21,7 +21,7 @@ public class OAuth2CheckTokenRespDTO {
      * 用户编号
      */
     @JsonProperty("user_id")
-    private Long userId;
+    private String userId;
     /**
      * 用户类型
      */

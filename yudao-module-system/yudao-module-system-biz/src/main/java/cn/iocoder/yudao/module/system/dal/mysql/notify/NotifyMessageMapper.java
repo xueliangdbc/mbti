@@ -26,7 +26,7 @@ public interface NotifyMessageMapper extends BaseMapperX<NotifyMessageDO> {
                 .orderByDesc(NotifyMessageDO::getId));
     }
 
-    default PageResult<NotifyMessageDO> selectPage(NotifyMessageMyPageReqVO reqVO, Long userId, Integer userType) {
+    default PageResult<NotifyMessageDO> selectPage(NotifyMessageMyPageReqVO reqVO, String userId, Integer userType) {
         return selectPage(reqVO, new LambdaQueryWrapperX<NotifyMessageDO>()
                 .eqIfPresent(NotifyMessageDO::getReadStatus, reqVO.getReadStatus())
                 .betweenIfPresent(NotifyMessageDO::getCreateTime, reqVO.getCreateTime())
@@ -35,7 +35,7 @@ public interface NotifyMessageMapper extends BaseMapperX<NotifyMessageDO> {
                 .orderByDesc(NotifyMessageDO::getId));
     }
 
-    default int updateListRead(Collection<Long> ids, Long userId, Integer userType) {
+    default int updateListRead(Collection<Long> ids, String userId, Integer userType) {
         return update(new NotifyMessageDO().setReadStatus(true).setReadTime(LocalDateTime.now()),
                 new LambdaQueryWrapperX<NotifyMessageDO>()
                         .in(NotifyMessageDO::getId, ids)
@@ -44,7 +44,7 @@ public interface NotifyMessageMapper extends BaseMapperX<NotifyMessageDO> {
                         .eq(NotifyMessageDO::getReadStatus, false));
     }
 
-    default int updateListRead(Long userId, Integer userType) {
+    default int updateListRead(String userId, Integer userType) {
         return update(new NotifyMessageDO().setReadStatus(true).setReadTime(LocalDateTime.now()),
                 new LambdaQueryWrapperX<NotifyMessageDO>()
                         .eq(NotifyMessageDO::getUserId, userId)
@@ -52,7 +52,7 @@ public interface NotifyMessageMapper extends BaseMapperX<NotifyMessageDO> {
                         .eq(NotifyMessageDO::getReadStatus, false));
     }
 
-    default List<NotifyMessageDO> selectUnreadListByUserIdAndUserType(Long userId, Integer userType, Integer size) {
+    default List<NotifyMessageDO> selectUnreadListByUserIdAndUserType(String userId, Integer userType, Integer size) {
         return selectList(new QueryWrapperX<NotifyMessageDO>() // 由于要使用 limitN 语句，所以只能用 QueryWrapperX
                 .eq("user_id", userId)
                 .eq("user_type", userType)
@@ -60,7 +60,7 @@ public interface NotifyMessageMapper extends BaseMapperX<NotifyMessageDO> {
                 .orderByDesc("id").limitN(size));
     }
 
-    default Long selectUnreadCountByUserIdAndUserType(Long userId, Integer userType) {
+    default Long selectUnreadCountByUserIdAndUserType(String userId, Integer userType) {
         return selectCount(new LambdaQueryWrapperX<NotifyMessageDO>()
                 .eq(NotifyMessageDO::getReadStatus, false)
                 .eq(NotifyMessageDO::getUserId, userId)

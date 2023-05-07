@@ -22,13 +22,13 @@ public class AdminUserApiImpl implements AdminUserApi {
     private AdminUserService userService;
 
     @Override
-    public AdminUserRespDTO getUser(Long id) {
+    public AdminUserRespDTO getUser(String id) {
         AdminUserDO user = userService.getUser(id);
         return UserConvert.INSTANCE.convert4(user);
     }
 
     @Override
-    public List<AdminUserRespDTO> getUserList(Collection<Long> ids) {
+    public List<AdminUserRespDTO> getUserList(Collection<String> ids) {
         List<AdminUserDO> users = userService.getUserList(ids);
         return UserConvert.INSTANCE.convertList4(users);
     }

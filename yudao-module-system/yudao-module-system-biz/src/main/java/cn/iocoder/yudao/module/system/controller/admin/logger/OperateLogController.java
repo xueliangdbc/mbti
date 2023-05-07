@@ -53,8 +53,8 @@ public class OperateLogController {
         PageResult<OperateLogDO> pageResult = operateLogService.getOperateLogPage(reqVO);
 
         // 获得拼接需要的数据
-        Collection<Long> userIds = CollectionUtils.convertList(pageResult.getList(), OperateLogDO::getUserId);
-        Map<Long, AdminUserDO> userMap = userService.getUserMap(userIds);
+        Collection<String> userIds = CollectionUtils.convertList(pageResult.getList(), OperateLogDO::getUserId);
+        Map<String, AdminUserDO> userMap = userService.getUserMap(userIds);
         // 拼接数据
         List<OperateLogRespVO> list = new ArrayList<>(pageResult.getList().size());
         pageResult.getList().forEach(operateLog -> {
@@ -74,8 +74,8 @@ public class OperateLogController {
         List<OperateLogDO> list = operateLogService.getOperateLogList(reqVO);
 
         // 获得拼接需要的数据
-        Collection<Long> userIds = CollectionUtils.convertList(list, OperateLogDO::getUserId);
-        Map<Long, AdminUserDO> userMap = userService.getUserMap(userIds);
+        Collection<String> userIds = CollectionUtils.convertList(list, OperateLogDO::getUserId);
+        Map<String, AdminUserDO> userMap = userService.getUserMap(userIds);
         // 拼接数据
         List<OperateLogExcelVO> excelDataList = OperateLogConvert.INSTANCE.convertList(list, userMap);
         // 输出

@@ -31,7 +31,7 @@ public interface TradeOrderService {
      * @param createReqVO 创建交易订单请求模型
      * @return 交易订单的编号
      */
-    Long createOrder(Long userId, String userIp, AppTradeOrderCreateReqVO createReqVO);
+    Long createOrder(String userId, String userIp, AppTradeOrderCreateReqVO createReqVO);
 
     /**
      * 更新交易订单已支付
@@ -47,7 +47,7 @@ public interface TradeOrderService {
      * @param userId 管理员编号
      * @param deliveryReqVO 发货请求
      */
-    void deliveryOrder(Long userId, TradeOrderDeliveryReqVO deliveryReqVO);
+    void deliveryOrder(String userId, TradeOrderDeliveryReqVO deliveryReqVO);
 
     /**
      * 【会员】收货交易订单
@@ -55,7 +55,7 @@ public interface TradeOrderService {
      * @param userId 用户编号
      * @param id 订单编号
      */
-    void receiveOrder(Long userId, Long id);
+    void receiveOrder(String userId, Long id);
 
     /**
      * 获得指定编号的交易订单
@@ -72,7 +72,7 @@ public interface TradeOrderService {
      * @param id 交易订单编号
      * @return 交易订单
      */
-    TradeOrderDO getOrder(Long userId, Long id);
+    TradeOrderDO getOrder(String userId, Long id);
 
     /**
      * 【管理员】获得交易订单分页
@@ -89,7 +89,7 @@ public interface TradeOrderService {
      * @param reqVO 分页请求
      * @return 交易订单
      */
-    PageResult<TradeOrderDO> getOrderPage(Long userId, AppTradeOrderPageReqVO reqVO);
+    PageResult<TradeOrderDO> getOrderPage(String userId, AppTradeOrderPageReqVO reqVO);
 
     // =================== Order Item ===================
 
@@ -100,7 +100,7 @@ public interface TradeOrderService {
      * @param itemId 交易订单项编号
      * @return 交易订单项
      */
-    TradeOrderItemDO getOrderItem(Long userId, Long itemId);
+    TradeOrderItemDO getOrderItem(String userId, Long itemId);
 
     /**
      * 更新交易订单项的售后状态

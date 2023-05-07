@@ -29,7 +29,7 @@ public interface OAuth2GrantService {
      * @param scopes 授权范围
      * @return 访问令牌
      */
-    OAuth2AccessTokenDO grantImplicit(Long userId, Integer userType,
+    OAuth2AccessTokenDO grantImplicit(String userId, Integer userType,
                                       String clientId, List<String> scopes);
 
     /**
@@ -45,7 +45,7 @@ public interface OAuth2GrantService {
      * @param state 状态
      * @return 授权码
      */
-    String grantAuthorizationCodeForCode(Long userId, Integer userType,
+    String grantAuthorizationCodeForCode(String userId, Integer userType,
                                          String clientId, List<String> scopes,
                                          String redirectUri, String state);
 

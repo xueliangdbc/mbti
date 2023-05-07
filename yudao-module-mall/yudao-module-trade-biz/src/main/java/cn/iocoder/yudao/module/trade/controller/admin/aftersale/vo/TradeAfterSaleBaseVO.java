@@ -35,7 +35,7 @@ public class TradeAfterSaleBaseVO {
 
     @Schema(description = "用户编号", required = true, example = "30337")
     @NotNull(message = "用户编号不能为空")
-    private Long userId;
+    private String userId;
 
     @Schema(description = "申请原因", required = true, example = "不喜欢")
     @NotNull(message = "申请原因不能为空")

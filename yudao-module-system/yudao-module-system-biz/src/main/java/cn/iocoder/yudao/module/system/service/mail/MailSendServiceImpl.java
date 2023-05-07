@@ -51,7 +51,7 @@ public class MailSendServiceImpl implements MailSendService {
     private MailProducer mailProducer;
 
     @Override
-    public Long sendSingleMailToAdmin(String mail, Long userId,
+    public Long sendSingleMailToAdmin(String mail, String userId,
                                       String templateCode, Map<String, Object> templateParams) {
         // 如果 mail 为空，则加载用户编号对应的邮箱
         if (StrUtil.isEmpty(mail)) {
@@ -65,7 +65,7 @@ public class MailSendServiceImpl implements MailSendService {
     }
 
     @Override
-    public Long sendSingleMailToMember(String mail, Long userId,
+    public Long sendSingleMailToMember(String mail, String userId,
                                        String templateCode, Map<String, Object> templateParams) {
         // 如果 mail 为空，则加载用户编号对应的邮箱
         if (StrUtil.isEmpty(mail)) {
@@ -76,7 +76,7 @@ public class MailSendServiceImpl implements MailSendService {
     }
 
     @Override
-    public Long sendSingleMail(String mail, Long userId, Integer userType,
+    public Long sendSingleMail(String mail, String userId, Integer userType,
                                String templateCode, Map<String, Object> templateParams) {
         // 校验邮箱模版是否合法
         MailTemplateDO template = validateMailTemplate(templateCode);

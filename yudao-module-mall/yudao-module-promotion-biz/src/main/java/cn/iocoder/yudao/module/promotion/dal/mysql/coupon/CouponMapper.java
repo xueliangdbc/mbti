@@ -28,12 +28,12 @@ public interface CouponMapper extends BaseMapperX<CouponDO> {
                 .orderByDesc(CouponDO::getId));
     }
 
-    default List<CouponDO> selectListByUserIdAndStatus(Long userId, Integer status) {
+    default List<CouponDO> selectListByUserIdAndStatus(String userId, Integer status) {
         return selectList(new LambdaQueryWrapperX<CouponDO>()
                 .eq(CouponDO::getUserId, userId).eq(CouponDO::getStatus, status));
     }
 
-    default CouponDO selectByIdAndUserId(Long id, Long userId) {
+    default CouponDO selectByIdAndUserId(Long id, String userId) {
         return selectOne(new LambdaQueryWrapperX<CouponDO>()
                 .eq(CouponDO::getId, id).eq(CouponDO::getUserId, userId));
     }

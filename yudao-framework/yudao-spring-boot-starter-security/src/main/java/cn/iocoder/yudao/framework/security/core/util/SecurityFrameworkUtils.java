@@ -76,7 +76,7 @@ public class SecurityFrameworkUtils {
      * @return 用户编号
      */
     @Nullable
-    public static Long getLoginUserId() {
+    public static String getLoginUserId() {
         LoginUser loginUser = getLoginUser();
         return loginUser != null ? loginUser.getId() : null;
     }

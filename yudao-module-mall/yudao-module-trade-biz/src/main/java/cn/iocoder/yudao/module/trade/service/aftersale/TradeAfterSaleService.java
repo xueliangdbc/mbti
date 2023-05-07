@@ -32,7 +32,7 @@ public interface TradeAfterSaleService {
      * @param createReqVO 创建 Request 信息
      * @return 交易售后编号
      */
-    Long createAfterSale(Long userId, AppTradeAfterSaleCreateReqVO createReqVO);
+    Long createAfterSale(String userId, AppTradeAfterSaleCreateReqVO createReqVO);
 
     /**
      * 【管理员】同意交易售后
@@ -40,7 +40,7 @@ public interface TradeAfterSaleService {
      * @param userId 管理员用户编号
      * @param id 交易售后编号
      */
-    void agreeAfterSale(Long userId, Long id);
+    void agreeAfterSale(String userId, Long id);
 
     /**
      * 【管理员】拒绝交易售后
@@ -48,7 +48,7 @@ public interface TradeAfterSaleService {
      * @param userId 管理员用户编号
      * @param auditReqVO 审批 Request 信息
      */
-    void disagreeAfterSale(Long userId, TradeAfterSaleDisagreeReqVO auditReqVO);
+    void disagreeAfterSale(String userId, TradeAfterSaleDisagreeReqVO auditReqVO);
 
     /**
      * 【会员】退回货物
@@ -56,7 +56,7 @@ public interface TradeAfterSaleService {
      * @param userId 会员用户编号
      * @param deliveryReqVO 退货 Request 信息
      */
-    void deliveryAfterSale(Long userId, AppTradeAfterSaleDeliveryReqVO deliveryReqVO);
+    void deliveryAfterSale(String userId, AppTradeAfterSaleDeliveryReqVO deliveryReqVO);
 
     /**
      * 【管理员】确认收货
@@ -64,7 +64,7 @@ public interface TradeAfterSaleService {
      * @param userId 管理员编号
      * @param id 交易售后编号
      */
-    void receiveAfterSale(Long userId, Long id);
+    void receiveAfterSale(String userId, Long id);
 
     /**
      * 【管理员】拒绝收货
@@ -72,7 +72,7 @@ public interface TradeAfterSaleService {
      * @param userId 管理员用户编号
      * @param refuseReqVO 拒绝收货 Request 信息
      */
-    void refuseAfterSale(Long userId, TradeAfterSaleRefuseReqVO refuseReqVO);
+    void refuseAfterSale(String userId, TradeAfterSaleRefuseReqVO refuseReqVO);
 
     /**
      * 【管理员】确认退款
@@ -81,7 +81,7 @@ public interface TradeAfterSaleService {
      * @param userIp 管理员用户 IP
      * @param id 售后编号
      */
-    void refundAfterSale(Long userId, String userIp, Long id);
+    void refundAfterSale(String userId, String userIp, Long id);
 
     /**
      * 【会员】取消售后
@@ -89,6 +89,6 @@ public interface TradeAfterSaleService {
      * @param userId 会员用户编号
      * @param id 交易售后编号
      */
-    void cancelAfterSale(Long userId, Long id);
+    void cancelAfterSale(String userId, Long id);
 
 }

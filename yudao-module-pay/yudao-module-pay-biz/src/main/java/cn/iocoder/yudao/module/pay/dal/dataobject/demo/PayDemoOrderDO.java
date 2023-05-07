@@ -34,7 +34,7 @@ public class PayDemoOrderDO extends BaseDO {
     /**
      * 用户编号
      */
-    private Long userId;
+    private String userId;
     /**
      * 商品编号
      */

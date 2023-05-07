@@ -1,5 +1,6 @@
 package cn.iocoder.yudao.module.infra.service.logger;
 
+import cn.hutool.core.util.IdUtil;
 import cn.iocoder.yudao.framework.common.enums.UserTypeEnum;
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.framework.test.core.ut.BaseDbUnitTest;
@@ -140,7 +141,7 @@ public class ApiErrorLogServiceImplTest extends BaseDbUnitTest {
         // 准备参数
         Long id = apiErrorLogDO.getId();
         Integer processStatus = randomEle(ApiErrorLogProcessStatusEnum.values()).getStatus();
-        Long processUserId = randomLongId();
+        String processUserId = IdUtil.simpleUUID();
 
         // 调用
         apiErrorLogService.updateApiErrorLogProcess(id, processStatus, processUserId);
@@ -160,7 +161,7 @@ public class ApiErrorLogServiceImplTest extends BaseDbUnitTest {
         // 准备参数
         Long id = apiErrorLogDO.getId();
         Integer processStatus = randomEle(ApiErrorLogProcessStatusEnum.values()).getStatus();
-        Long processUserId = randomLongId();
+        String processUserId =  IdUtil.simpleUUID();
 
         // 调用，并断言异常
         assertServiceException(() ->
@@ -173,7 +174,7 @@ public class ApiErrorLogServiceImplTest extends BaseDbUnitTest {
         // 准备参数
         Long id = randomLongId();
         Integer processStatus = randomEle(ApiErrorLogProcessStatusEnum.values()).getStatus();
-        Long processUserId = randomLongId();
+        String processUserId = IdUtil.simpleUUID();
 
         // 调用，并断言异常
         assertServiceException(() ->

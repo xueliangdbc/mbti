@@ -34,7 +34,7 @@ public class SmsServiceIntegrationTest extends BaseDbAndRedisIntegrationTest {
     public void testSendSingleSms_aliyunSuccess() {
         // 参数准备
         String mobile = "15601691399";
-        Long userId = 1L;
+        String userId = 1L;
         Integer userType = UserTypeEnum.ADMIN.getValue();
         String templateCode = "test_02";
         Map<String, Object> templateParams = MapUtil.<String, Object>builder()

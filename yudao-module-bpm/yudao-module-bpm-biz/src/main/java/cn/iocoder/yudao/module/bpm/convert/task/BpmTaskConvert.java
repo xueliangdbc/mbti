@@ -64,7 +64,7 @@ public interface BpmTaskConvert {
     }
 
     default List<BpmTaskTodoPageItemRespVO> convertList1(List<Task> tasks,
-        Map<String, ProcessInstance> processInstanceMap, Map<Long, AdminUserRespDTO> userMap) {
+        Map<String, ProcessInstance> processInstanceMap, Map<String, AdminUserRespDTO> userMap) {
         return CollectionUtils.convertList(tasks, task -> {
             BpmTaskTodoPageItemRespVO respVO = convert1(task);
             ProcessInstance processInstance = processInstanceMap.get(task.getProcessInstanceId());
@@ -88,7 +88,7 @@ public interface BpmTaskConvert {
 
     default List<BpmTaskDonePageItemRespVO> convertList2(List<HistoricTaskInstance> tasks,
         Map<String, BpmTaskExtDO> bpmTaskExtDOMap, Map<String, HistoricProcessInstance> historicProcessInstanceMap,
-        Map<Long, AdminUserRespDTO> userMap) {
+        Map<String, AdminUserRespDTO> userMap) {
         return CollectionUtils.convertList(tasks, task -> {
             BpmTaskDonePageItemRespVO respVO = convert2(task);
             BpmTaskExtDO taskExtDO = bpmTaskExtDOMap.get(task.getId());
@@ -113,7 +113,7 @@ public interface BpmTaskConvert {
 
     default List<BpmTaskRespVO> convertList3(List<HistoricTaskInstance> tasks,
         Map<String, BpmTaskExtDO> bpmTaskExtDOMap, HistoricProcessInstance processInstance,
-        Map<Long, AdminUserRespDTO> userMap, Map<Long, DeptRespDTO> deptMap) {
+        Map<String, AdminUserRespDTO> userMap, Map<Long, DeptRespDTO> deptMap) {
         return CollectionUtils.convertList(tasks, task -> {
             BpmTaskRespVO respVO = convert3(task);
             BpmTaskExtDO taskExtDO = bpmTaskExtDOMap.get(task.getId());

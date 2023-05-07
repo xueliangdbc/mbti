@@ -37,7 +37,7 @@ public class TradeCartItemDO extends BaseDO {
      *
      * 关联 MemberUserDO 的 id 编号
      */
-    private Long userId;
+    private String userId;
 
     // ========= 买家信息 END =========
 

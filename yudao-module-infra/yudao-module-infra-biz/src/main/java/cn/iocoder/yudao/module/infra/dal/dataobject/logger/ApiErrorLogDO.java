@@ -33,7 +33,7 @@ public class ApiErrorLogDO extends BaseDO {
     /**
      * 用户编号
      */
-    private Long userId;
+    private String userId;
     /**
      * 链路追踪编号
      *
@@ -151,6 +151,6 @@ public class ApiErrorLogDO extends BaseDO {
      *
      * 关联 cn.iocoder.yudao.adminserver.modules.system.dal.dataobject.user.SysUserDO.SysUserDO#getId()
      */
-    private Long processUserId;
+    private String processUserId;
 
 }

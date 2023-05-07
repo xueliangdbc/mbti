@@ -163,7 +163,7 @@ public class PriceServiceImpl implements PriceService {
      * @param userId 用户编号
      * @param priceCalculate 价格计算的结果
      */
-    private void calculatePriceForSkuLevel(Long userId, PriceCalculateRespDTO priceCalculate) {
+    private void calculatePriceForSkuLevel(String userId, PriceCalculateRespDTO priceCalculate) {
         // 获取 SKU 级别的所有优惠信息
         Supplier<Double> memberDiscountPercentSupplier = getMemberDiscountPercentSupplier(userId);
         Map<Long, DiscountProductDetailBO> discountProducts = discountService.getMatchDiscountProducts(
@@ -226,7 +226,7 @@ public class PriceServiceImpl implements PriceService {
     }
 
     // TODO 芋艿：提前实现
-    private Supplier<Double> getMemberDiscountPercentSupplier(Long userId) {
+    private Supplier<Double> getMemberDiscountPercentSupplier(String userId) {
         return Suppliers.memoize(() -> {
             if (userId == 1) {
                 return 90d;
@@ -248,7 +248,7 @@ public class PriceServiceImpl implements PriceService {
      * @param priceCalculate 价格计算的结果
      */
     @SuppressWarnings("unused")
-    private void calculatePriceForOrderLevel(Long userId, PriceCalculateRespDTO priceCalculate) {
+    private void calculatePriceForOrderLevel(String userId, PriceCalculateRespDTO priceCalculate) {
         // 获取 SKU 级别的所有优惠信息
         Set<Long> spuIds = convertSet(priceCalculate.getOrder().getItems(), PriceCalculateRespDTO.OrderItem::getSpuId);
         Map<RewardActivityDO, Set<Long>> rewardActivities = rewardActivityService.getMatchRewardActivities(spuIds);
@@ -326,7 +326,7 @@ public class PriceServiceImpl implements PriceService {
 
     // ========== 计算优惠劵级别的价格 ==========
 
-    private void calculatePriceForCouponLevel(Long userId, Long couponId, PriceCalculateRespDTO priceCalculate) {
+    private void calculatePriceForCouponLevel(String userId, Long couponId, PriceCalculateRespDTO priceCalculate) {
         // 校验优惠劵
         if (couponId == null) {
             return;

@@ -94,12 +94,12 @@ public class MemberUserServiceImpl implements MemberUserService {
     }
 
     @Override
-    public List<MemberUserDO> getUserList(Collection<Long> ids) {
+    public List<MemberUserDO> getUserList(Collection<String> ids) {
         return memberUserMapper.selectBatchIds(ids);
     }
 
     @Override
-    public void updateUserNickname(Long userId, String nickname) {
+    public void updateUserNickname(String userId, String nickname) {
         MemberUserDO user = this.checkUserExists(userId);
         // 仅当新昵称不等于旧昵称时进行修改
         if (nickname.equals(user.getNickname())){

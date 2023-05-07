@@ -20,7 +20,7 @@ public class ApiErrorLogCreateReqDTO {
     /**
      * 账号编号
      */
-    private Long userId;
+    private String userId;
     /**
      * 用户类型
      */

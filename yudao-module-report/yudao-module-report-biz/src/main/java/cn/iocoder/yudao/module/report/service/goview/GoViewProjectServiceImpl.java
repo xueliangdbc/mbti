@@ -67,7 +67,7 @@ public class GoViewProjectServiceImpl implements GoViewProjectService {
     }
 
     @Override
-    public PageResult<GoViewProjectDO> getMyProjectPage(PageParam pageReqVO, Long userId) {
+    public PageResult<GoViewProjectDO> getMyProjectPage(PageParam pageReqVO, String userId) {
         return goViewProjectMapper.selectPage(pageReqVO, userId);
     }
 

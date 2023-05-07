@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 public class AppAuthLoginRespVO {
 
     @Schema(description = "用户编号", required = true, example = "1024")
-    private Long userId;
+    private String userId;
 
     @Schema(description = "访问令牌", required = true, example = "happy")
     private String accessToken;

@@ -29,7 +29,7 @@ public class NotifyMessageServiceImpl implements NotifyMessageService {
     private NotifyMessageMapper notifyMessageMapper;
 
     @Override
-    public Long createNotifyMessage(Long userId, Integer userType,
+    public Long createNotifyMessage(String userId, Integer userType,
                                     NotifyTemplateDO template, String templateContent, Map<String, Object> templateParams) {
         NotifyMessageDO message = new NotifyMessageDO().setUserId(userId).setUserType(userType)
                 .setTemplateId(template.getId()).setTemplateCode(template.getCode())
@@ -45,7 +45,7 @@ public class NotifyMessageServiceImpl implements NotifyMessageService {
     }
 
     @Override
-    public PageResult<NotifyMessageDO> getMyMyNotifyMessagePage(NotifyMessageMyPageReqVO pageReqVO, Long userId, Integer userType) {
+    public PageResult<NotifyMessageDO> getMyMyNotifyMessagePage(NotifyMessageMyPageReqVO pageReqVO, String userId, Integer userType) {
         return notifyMessageMapper.selectPage(pageReqVO, userId, userType);
     }
 
@@ -55,22 +55,22 @@ public class NotifyMessageServiceImpl implements NotifyMessageService {
     }
 
     @Override
-    public List<NotifyMessageDO> getUnreadNotifyMessageList(Long userId, Integer userType, Integer size) {
+    public List<NotifyMessageDO> getUnreadNotifyMessageList(String userId, Integer userType, Integer size) {
         return notifyMessageMapper.selectUnreadListByUserIdAndUserType(userId, userType, size);
     }
 
     @Override
-    public Long getUnreadNotifyMessageCount(Long userId, Integer userType) {
+    public Long getUnreadNotifyMessageCount(String userId, Integer userType) {
         return notifyMessageMapper.selectUnreadCountByUserIdAndUserType(userId, userType);
     }
 
     @Override
-    public int updateNotifyMessageRead(Collection<Long> ids, Long userId, Integer userType) {
+    public int updateNotifyMessageRead(Collection<Long> ids, String userId, Integer userType) {
         return notifyMessageMapper.updateListRead(ids, userId, userType);
     }
 
     @Override
-    public int updateAllNotifyMessageRead(Long userId, Integer userType) {
+    public int updateAllNotifyMessageRead(String userId, Integer userType) {
         return notifyMessageMapper.updateListRead(userId, userType);
     }
 

@@ -57,7 +57,7 @@ public class SmsSendServiceImpl implements SmsSendService {
 
     @Override
     @DataPermission(enable = false) // 发送短信时，无需考虑数据权限
-    public Long sendSingleSmsToAdmin(String mobile, Long userId, String templateCode, Map<String, Object> templateParams) {
+    public Long sendSingleSmsToAdmin(String mobile, String userId, String templateCode, Map<String, Object> templateParams) {
         // 如果 mobile 为空，则加载用户编号对应的手机号
         if (StrUtil.isEmpty(mobile)) {
             AdminUserDO user = adminUserService.getUser(userId);
@@ -70,7 +70,7 @@ public class SmsSendServiceImpl implements SmsSendService {
     }
 
     @Override
-    public Long sendSingleSmsToMember(String mobile, Long userId, String templateCode, Map<String, Object> templateParams) {
+    public Long sendSingleSmsToMember(String mobile, String userId, String templateCode, Map<String, Object> templateParams) {
         // 如果 mobile 为空，则加载用户编号对应的手机号
         if (StrUtil.isEmpty(mobile)) {
             mobile = memberService.getMemberUserMobile(userId);
@@ -80,7 +80,7 @@ public class SmsSendServiceImpl implements SmsSendService {
     }
 
     @Override
-    public Long sendSingleSms(String mobile, Long userId, Integer userType,
+    public Long sendSingleSms(String mobile, String userId, Integer userType,
                               String templateCode, Map<String, Object> templateParams) {
         // 校验短信模板是否合法
         SmsTemplateDO template = validateSmsTemplate(templateCode);

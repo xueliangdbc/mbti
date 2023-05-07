@@ -53,7 +53,7 @@ public interface TradeOrderConvert {
             @Mapping(source = "address.postCode", target = "receiverPostCode"),
             @Mapping(source = "address.detailAddress", target = "receiverDetailAddress"),
     })
-    TradeOrderDO convert(Long userId, String userIp, AppTradeOrderCreateReqVO createReqVO,
+    TradeOrderDO convert(String userId, String userIp, AppTradeOrderCreateReqVO createReqVO,
                          PriceCalculateRespDTO.Order order, AddressRespDTO address);
 
     @Mappings({
@@ -76,7 +76,7 @@ public interface TradeOrderConvert {
     }
 
     @Mapping(source = "userId" , target = "userId")
-    PriceCalculateReqDTO convert(AppTradeOrderCreateReqVO createReqVO, Long userId);
+    PriceCalculateReqDTO convert(AppTradeOrderCreateReqVO createReqVO, String userId);
 
     @Mappings({
             @Mapping(source = "skuId", target = "id"),

@@ -44,7 +44,7 @@ public class CouponServiceImpl implements CouponService {
     private MemberUserApi memberUserApi;
 
     @Override
-    public CouponDO validCoupon(Long id, Long userId) {
+    public CouponDO validCoupon(Long id, String userId) {
         CouponDO coupon = couponMapper.selectByIdAndUserId(id, userId);
         if (coupon == null) {
             throw exception(COUPON_NOT_EXISTS);
@@ -81,7 +81,7 @@ public class CouponServiceImpl implements CouponService {
     }
 
     @Override
-    public void useCoupon(Long id, Long userId, Long orderId) {
+    public void useCoupon(Long id, String userId, Long orderId) {
         // 校验优惠劵
         validCoupon(id, userId);
         // 更新状态
@@ -110,7 +110,7 @@ public class CouponServiceImpl implements CouponService {
     }
 
     @Override
-    public List<CouponDO> getCouponList(Long userId, Integer status) {
+    public List<CouponDO> getCouponList(String userId, Integer status) {
         return couponMapper.selectListByUserIdAndStatus(userId, status);
     }
 

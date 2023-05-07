@@ -25,7 +25,7 @@ public interface TradeCartConvert {
                         .setOrderPromotionPrice(0).setDeliveryPrice(0).setPayPrice(0));
     }
 
-    default PriceCalculateReqDTO convert(Long userId, List<TradeCartItemDO> cartItems) {
+    default PriceCalculateReqDTO convert(String userId, List<TradeCartItemDO> cartItems) {
         return new PriceCalculateReqDTO().setUserId(userId)
                 .setItems(convertList(cartItems, cartItem -> new PriceCalculateReqDTO.Item().setSkuId(cartItem.getSkuId())
                         .setCount(cartItem.getSelected() ? cartItem.getCount() : 0)));

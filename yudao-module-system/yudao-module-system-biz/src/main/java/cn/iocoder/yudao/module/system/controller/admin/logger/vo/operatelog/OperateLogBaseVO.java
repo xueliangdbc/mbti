@@ -21,7 +21,7 @@ public class OperateLogBaseVO {
 
     @Schema(description = "用户编号", required = true, example = "1024")
     @NotNull(message = "用户编号不能为空")
-    private Long userId;
+    private String userId;
 
     @Schema(description = "操作模块", required = true, example = "订单")
     @NotEmpty(message = "操作模块不能为空")

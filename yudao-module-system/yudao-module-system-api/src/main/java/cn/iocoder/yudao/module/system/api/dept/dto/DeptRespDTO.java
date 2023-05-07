@@ -26,7 +26,7 @@ public class DeptRespDTO {
     /**
      * 负责人的用户编号
      */
-    private Long leaderUserId;
+    private String leaderUserId;
     /**
      * 部门状态
      *

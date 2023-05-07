@@ -135,7 +135,7 @@ public class SmsLogServiceImplTest extends BaseDbUnitTest {
     public void testCreateSmsLog() {
         // 准备参数
         String mobile = randomString();
-        Long userId = randomLongId();
+        String userId = randomLongId();
         Integer userType = randomEle(UserTypeEnum.values()).getValue();
         Boolean isSend = randomBoolean();
         SmsTemplateDO templateDO = randomPojo(SmsTemplateDO.class,

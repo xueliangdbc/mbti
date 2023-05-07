@@ -162,7 +162,7 @@ public class DeptDataPermissionRule implements DataPermissionRule {
                 new ExpressionList(CollectionUtils.convertList(deptIds, LongValue::new)));
     }
 
-    private Expression buildUserExpression(String tableName, Alias tableAlias, Boolean self, Long userId) {
+    private Expression buildUserExpression(String tableName, Alias tableAlias, Boolean self, String userId) {
         // 如果不查看自己，则无需作为条件
         if (Boolean.FALSE.equals(self)) {
             return null;

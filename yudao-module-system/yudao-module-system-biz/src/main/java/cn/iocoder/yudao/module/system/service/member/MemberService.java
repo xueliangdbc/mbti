@@ -13,7 +13,7 @@ public interface MemberService {
      * @param id 会员用户编号
      * @return 手机号码
      */
-    String getMemberUserMobile(Long id);
+    String getMemberUserMobile(String id);
 
     /**
      * 获得会员用户的邮箱
@@ -21,6 +21,6 @@ public interface MemberService {
      * @param id 会员用户编号
      * @return 邮箱
      */
-    String getMemberUserEmail(Long id);
+    String getMemberUserEmail(String id);
 
 }

@@ -36,7 +36,7 @@ public class MailLogDO extends BaseDO implements Serializable {
     /**
      * 用户编码
      */
-    private Long userId;
+    private String userId;
     /**
      * 用户类型
      *

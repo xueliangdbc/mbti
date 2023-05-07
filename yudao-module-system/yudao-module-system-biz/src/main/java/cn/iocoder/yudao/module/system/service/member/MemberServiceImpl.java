@@ -20,7 +20,7 @@ public class MemberServiceImpl implements MemberService {
     private volatile Object memberUserApi;
 
     @Override
-    public String getMemberUserMobile(Long id) {
+    public String getMemberUserMobile(String id) {
         Object user = getMemberUser(id);
         if (user == null) {
             return null;
@@ -29,7 +29,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public String getMemberUserEmail(Long id) {
+    public String getMemberUserEmail(String id) {
         Object user = getMemberUser(id);
         if (user == null) {
             return null;
@@ -37,7 +37,7 @@ public class MemberServiceImpl implements MemberService {
         return ReflectUtil.invoke(user, "getEmail");
     }
 
-    private Object getMemberUser(Long id) {
+    private Object getMemberUser(String id) {
         if (id == null) {
             return null;
         }

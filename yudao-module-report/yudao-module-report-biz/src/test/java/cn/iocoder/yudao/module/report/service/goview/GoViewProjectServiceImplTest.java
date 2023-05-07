@@ -122,7 +122,7 @@ public class GoViewProjectServiceImplTest extends BaseDbUnitTest {
         goViewProjectMapper.insert(cloneIgnoreId(dbGoViewProject, o -> o.setCreator("2")));
         // 准备参数
         PageParam reqVO = new PageParam();
-        Long userId = 1L;
+        String userId = 1L;
 
         // 调用
         PageResult<GoViewProjectDO> pageResult = goViewProjectService.getMyProjectPage(reqVO, userId);

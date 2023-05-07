@@ -27,7 +27,7 @@ public interface OperateLogConvert {
 
     OperateLogRespVO convert(OperateLogDO bean);
 
-    default List<OperateLogExcelVO> convertList(List<OperateLogDO> list, Map<Long, AdminUserDO> userMap) {
+    default List<OperateLogExcelVO> convertList(List<OperateLogDO> list, Map<String, AdminUserDO> userMap) {
         return list.stream().map(operateLog -> {
             OperateLogExcelVO excelVO = convert02(operateLog);
             MapUtils.findAndThen(userMap, operateLog.getUserId(), user -> excelVO.setUserNickname(user.getNickname()));

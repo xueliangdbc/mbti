@@ -63,14 +63,14 @@ public interface MemberUserService {
      * @param ids 用户 ID
      * @return 用户对象信息数组
      */
-    List<MemberUserDO> getUserList(Collection<Long> ids);
+    List<MemberUserDO> getUserList(Collection<String> ids);
 
     /**
      * 修改用户昵称
      * @param userId 用户id
      * @param nickname 用户新昵称
      */
-    void updateUserNickname(Long userId, String nickname);
+    void updateUserNickname(String userId, String nickname);
 
     /**
      * 修改用户头像
@@ -85,7 +85,7 @@ public interface MemberUserService {
      * @param userId 用户id
      * @param reqVO 请求实体
      */
-    void updateUserMobile(Long userId, AppUserUpdateMobileReqVO reqVO);
+    void updateUserMobile(String userId, AppUserUpdateMobileReqVO reqVO);
 
     /**
      * 判断密码是否匹配

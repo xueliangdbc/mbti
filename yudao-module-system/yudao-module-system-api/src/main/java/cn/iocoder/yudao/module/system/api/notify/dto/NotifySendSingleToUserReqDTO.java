@@ -18,7 +18,7 @@ public class NotifySendSingleToUserReqDTO {
      * 用户编号
      */
     @NotNull(message = "用户编号不能为空")
-    private Long userId;
+    private String userId;
 
     /**
      * 站内信模板编号

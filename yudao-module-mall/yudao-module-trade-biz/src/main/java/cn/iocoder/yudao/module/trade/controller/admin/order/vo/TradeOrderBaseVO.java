@@ -31,7 +31,7 @@ public class TradeOrderBaseVO {
     private Integer terminal;
 
     @Schema(description = "用户编号", required = true, example = "2048")
-    private Long userId;
+    private String userId;
 
     @Schema(description = "用户 IP", required = true, example = "127.0.0.1")
     private String userIp;

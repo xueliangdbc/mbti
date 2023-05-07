@@ -91,7 +91,7 @@ public class TradeOrderServiceTest extends BaseDbUnitTest {
     @Test
     public void testCreateTradeOrder_success() {
         // 准备参数
-        Long userId = 100L;
+        String userId = 100L;
         String userIp = "127.0.0.1";
         AppTradeOrderCreateReqVO reqVO = new AppTradeOrderCreateReqVO()
                 .setAddressId(10L).setCouponId(101L).setRemark("我是备注").setFromCart(true)
@@ -308,7 +308,7 @@ public class TradeOrderServiceTest extends BaseDbUnitTest {
         tradeOrderMapper.insert(order);
         // 准备参数
         Long id = 1L;
-        Long userId = 10L;
+        String userId = 10L;
         // mock 方法（支付单）
 
         // 调用

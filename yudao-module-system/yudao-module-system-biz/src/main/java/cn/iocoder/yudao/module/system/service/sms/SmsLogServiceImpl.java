@@ -31,7 +31,7 @@ public class SmsLogServiceImpl implements SmsLogService {
     private SmsLogMapper smsLogMapper;
 
     @Override
-    public Long createSmsLog(String mobile, Long userId, Integer userType, Boolean isSend,
+    public Long createSmsLog(String mobile, String userId, Integer userType, Boolean isSend,
                              SmsTemplateDO template, String templateContent, Map<String, Object> templateParams) {
         SmsLogDO.SmsLogDOBuilder logBuilder = SmsLogDO.builder();
         // 根据是否要发送，设置状态

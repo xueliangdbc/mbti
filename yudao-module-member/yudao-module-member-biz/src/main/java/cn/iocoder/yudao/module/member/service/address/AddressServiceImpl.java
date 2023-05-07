@@ -30,7 +30,7 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public Long createAddress(Long userId, AppAddressCreateReqVO createReqVO) {
+    public Long createAddress(String userId, AppAddressCreateReqVO createReqVO) {
         // 如果添加的是默认收件地址，则将原默认地址修改为非默认
         if (Boolean.TRUE.equals(createReqVO.getDefaulted())) {
             List<AddressDO> addresses = addressMapper.selectListByUserIdAndDefaulted(userId, true);
@@ -47,7 +47,7 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void updateAddress(Long userId, AppAddressUpdateReqVO updateReqVO) {
+    public void updateAddress(String userId, AppAddressUpdateReqVO updateReqVO) {
         // 校验存在,校验是否能够操作
         validAddressExists(userId, updateReqVO.getId());
 
@@ -64,14 +64,14 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
-    public void deleteAddress(Long userId, Long id) {
+    public void deleteAddress(String userId, Long id) {
         // 校验存在,校验是否能够操作
         validAddressExists(userId, id);
         // 删除
         addressMapper.deleteById(id);
     }
 
-    private void validAddressExists(Long userId, Long id) {
+    private void validAddressExists(String userId, Long id) {
         AddressDO addressDO = getAddress(userId, id);
         if (addressDO == null) {
             throw exception(ADDRESS_NOT_EXISTS);
@@ -79,17 +79,17 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
-    public AddressDO getAddress(Long userId, Long id) {
+    public AddressDO getAddress(String userId, Long id) {
         return addressMapper.selectByIdAndUserId(id, userId);
     }
 
     @Override
-    public List<AddressDO> getAddressList(Long userId) {
+    public List<AddressDO> getAddressList(String userId) {
         return addressMapper.selectListByUserIdAndDefaulted(userId, null);
     }
 
     @Override
-    public AddressDO getDefaultUserAddress(Long userId) {
+    public AddressDO getDefaultUserAddress(String userId) {
         List<AddressDO> addresses = addressMapper.selectListByUserIdAndDefaulted(userId, true);
         return CollUtil.getFirst(addresses);
     }

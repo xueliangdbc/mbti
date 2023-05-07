@@ -20,7 +20,7 @@ public interface AdminUserApi {
      * @param id 用户ID
      * @return 用户对象信息
      */
-    AdminUserRespDTO getUser(Long id);
+    AdminUserRespDTO getUser(String id);
 
     /**
      * 通过用户 ID 查询用户们
@@ -28,7 +28,7 @@ public interface AdminUserApi {
      * @param ids 用户 ID 们
      * @return 用户对象信息
      */
-    List<AdminUserRespDTO> getUserList(Collection<Long> ids);
+    List<AdminUserRespDTO> getUserList(Collection<String> ids);
 
     /**
      * 获得指定部门的用户数组
@@ -52,7 +52,7 @@ public interface AdminUserApi {
      * @param ids 用户编号数组
      * @return 用户 Map
      */
-    default Map<Long, AdminUserRespDTO> getUserMap(Collection<Long> ids) {
+    default Map<String, AdminUserRespDTO> getUserMap(Collection<String> ids) {
         List<AdminUserRespDTO> users = getUserList(ids);
         return CollectionUtils.convertMap(users, AdminUserRespDTO::getId);
     }

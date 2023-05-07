@@ -47,7 +47,7 @@ public class OAuth2ApproveServiceImplTest extends BaseDbUnitTest {
     @Test
     public void checkForPreApproval_clientAutoApprove() {
         // 准备参数
-        Long userId = randomLongId();
+        String userId = randomLongId();
         Integer userType = randomEle(UserTypeEnum.values()).getValue();
         String clientId = randomString();
         List<String> requestedScopes = Lists.newArrayList("read");
@@ -73,7 +73,7 @@ public class OAuth2ApproveServiceImplTest extends BaseDbUnitTest {
     @Test
     public void checkForPreApproval_approve() {
         // 准备参数
-        Long userId = randomLongId();
+        String userId = randomLongId();
         Integer userType = randomEle(UserTypeEnum.values()).getValue();
         String clientId = randomString();
         List<String> requestedScopes = Lists.newArrayList("read");
@@ -96,7 +96,7 @@ public class OAuth2ApproveServiceImplTest extends BaseDbUnitTest {
     @Test
     public void checkForPreApproval_reject() {
         // 准备参数
-        Long userId = randomLongId();
+        String userId = randomLongId();
         Integer userType = randomEle(UserTypeEnum.values()).getValue();
         String clientId = randomString();
         List<String> requestedScopes = Lists.newArrayList("read");
@@ -119,7 +119,7 @@ public class OAuth2ApproveServiceImplTest extends BaseDbUnitTest {
     @Test
     public void testUpdateAfterApproval_none() {
         // 准备参数
-        Long userId = randomLongId();
+        String userId = randomLongId();
         Integer userType = randomEle(UserTypeEnum.values()).getValue();
         String clientId = randomString();
 
@@ -135,7 +135,7 @@ public class OAuth2ApproveServiceImplTest extends BaseDbUnitTest {
     @Test
     public void testUpdateAfterApproval_approved() {
         // 准备参数
-        Long userId = randomLongId();
+        String userId = randomLongId();
         Integer userType = randomEle(UserTypeEnum.values()).getValue();
         String clientId = randomString();
         Map<String, Boolean> requestedScopes = new LinkedHashMap<>(); // 有序，方便判断
@@ -169,7 +169,7 @@ public class OAuth2ApproveServiceImplTest extends BaseDbUnitTest {
     @Test
     public void testUpdateAfterApproval_reject() {
         // 准备参数
-        Long userId = randomLongId();
+        String userId = randomLongId();
         Integer userType = randomEle(UserTypeEnum.values()).getValue();
         String clientId = randomString();
         Map<String, Boolean> requestedScopes = new LinkedHashMap<>();
@@ -195,7 +195,7 @@ public class OAuth2ApproveServiceImplTest extends BaseDbUnitTest {
     @Test
     public void testGetApproveList() {
         // 准备参数
-        Long userId = 10L;
+        String userId = 10L;
         Integer userType = UserTypeEnum.ADMIN.getValue();
         String clientId = randomString();
         // mock 数据
@@ -215,7 +215,7 @@ public class OAuth2ApproveServiceImplTest extends BaseDbUnitTest {
     @Test
     public void testSaveApprove_insert() {
         // 准备参数
-        Long userId = randomLongId();
+        String userId = randomLongId();
         Integer userType = randomEle(UserTypeEnum.values()).getValue();
         String clientId = randomString();
         String scope = randomString();
@@ -243,7 +243,7 @@ public class OAuth2ApproveServiceImplTest extends BaseDbUnitTest {
         OAuth2ApproveDO approve = randomPojo(OAuth2ApproveDO.class);
         oauth2ApproveMapper.insert(approve);
         // 准备参数
-        Long userId = approve.getUserId();
+        String userId = approve.getUserId();
         Integer userType = approve.getUserType();
         String clientId = approve.getClientId();
         String scope = approve.getScope();

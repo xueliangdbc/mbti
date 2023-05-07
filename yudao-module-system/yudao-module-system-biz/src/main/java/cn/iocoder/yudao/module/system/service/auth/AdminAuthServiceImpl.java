@@ -133,7 +133,7 @@ public class AdminAuthServiceImpl implements AdminAuthService {
         return createTokenAfterLoginSuccess(user.getId(), reqVO.getMobile(), LoginLogTypeEnum.LOGIN_MOBILE);
     }
 
-    private void createLoginLog(Long userId, String username,
+    private void createLoginLog(String userId, String username,
                                 LoginLogTypeEnum logTypeEnum, LoginResultEnum loginResult) {
         // 插入登录日志
         LoginLogCreateReqDTO reqDTO = new LoginLogCreateReqDTO();
@@ -190,7 +190,7 @@ public class AdminAuthServiceImpl implements AdminAuthService {
         }
     }
 
-    private AuthLoginRespVO createTokenAfterLoginSuccess(Long userId, String username, LoginLogTypeEnum logType) {
+    private AuthLoginRespVO createTokenAfterLoginSuccess(String userId, String username, LoginLogTypeEnum logType) {
         // 插入登陆日志
         createLoginLog(userId, username, logType, LoginResultEnum.SUCCESS);
         // 创建访问令牌
@@ -217,7 +217,7 @@ public class AdminAuthServiceImpl implements AdminAuthService {
         createLogoutLog(accessTokenDO.getUserId(), accessTokenDO.getUserType(), logType);
     }
 
-    private void createLogoutLog(Long userId, Integer userType, Integer logType) {
+    private void createLogoutLog(String userId, Integer userType, Integer logType) {
         LoginLogCreateReqDTO reqDTO = new LoginLogCreateReqDTO();
         reqDTO.setLogType(logType);
         reqDTO.setTraceId(TracerUtils.getTraceId());
@@ -234,7 +234,7 @@ public class AdminAuthServiceImpl implements AdminAuthService {
         loginLogService.createLoginLog(reqDTO);
     }
 
-    private String getUsername(Long userId) {
+    private String getUsername(String userId) {
         if (userId == null) {
             return null;
         }

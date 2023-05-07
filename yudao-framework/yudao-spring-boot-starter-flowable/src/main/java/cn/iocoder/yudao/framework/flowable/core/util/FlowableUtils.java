@@ -18,7 +18,7 @@ public class FlowableUtils {
 
     // ========== User 相关的工具方法 ==========
 
-    public static void setAuthenticatedUserId(Long userId) {
+    public static void setAuthenticatedUserId(String userId) {
         Authentication.setAuthenticatedUserId(String.valueOf(userId));
     }
 

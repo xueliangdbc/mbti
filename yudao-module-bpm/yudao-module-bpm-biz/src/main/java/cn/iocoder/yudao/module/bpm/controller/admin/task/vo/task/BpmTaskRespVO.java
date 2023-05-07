@@ -24,7 +24,7 @@ public class BpmTaskRespVO extends BpmTaskDonePageItemRespVO {
     public static class User {
 
         @Schema(description = "用户编号", required = true, example = "1")
-        private Long id;
+        private String id;
         @Schema(description = "用户昵称", required = true, example = "芋艿")
         private String nickname;
 

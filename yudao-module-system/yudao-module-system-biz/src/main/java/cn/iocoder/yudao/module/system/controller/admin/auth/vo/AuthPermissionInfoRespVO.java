@@ -32,7 +32,7 @@ public class AuthPermissionInfoRespVO {
     public static class UserVO {
 
         @Schema(description = "用户编号", required = true, example = "1024")
-        private Long id;
+        private String id;
 
         @Schema(description = "用户昵称", required = true, example = "芋道源码")
         private String nickname;

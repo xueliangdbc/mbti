@@ -86,7 +86,7 @@ public class SocialUserServiceImpl implements SocialUserService {
     }
 
     @Override
-    public List<SocialUserDO> getSocialUserList(Long userId, Integer userType) {
+    public List<SocialUserDO> getSocialUserList(String userId, Integer userType) {
         // 获得绑定
         List<SocialUserBindDO> socialUserBinds = socialUserBindMapper.selectListByUserIdAndUserType(userId, userType);
         if (CollUtil.isEmpty(socialUserBinds)) {
@@ -118,7 +118,7 @@ public class SocialUserServiceImpl implements SocialUserService {
     }
 
     @Override
-    public void unbindSocialUser(Long userId, Integer userType, Integer type, String openid) {
+    public void unbindSocialUser(String userId, Integer userType, Integer type, String openid) {
         // 获得 openid 对应的 SocialUserDO 社交用户
         SocialUserDO socialUser = socialUserMapper.selectByTypeAndOpenid(type, openid);
         if (socialUser == null) {
@@ -130,7 +130,7 @@ public class SocialUserServiceImpl implements SocialUserService {
     }
 
     @Override
-    public Long getBindUserId(Integer userType, Integer type, String code, String state) {
+    public String getBindUserId(Integer userType, Integer type, String code, String state) {
         // 获得社交用户
         SocialUserDO socialUser = authSocialUser(type, code, state);
         Assert.notNull(socialUser, "社交用户不能为空");

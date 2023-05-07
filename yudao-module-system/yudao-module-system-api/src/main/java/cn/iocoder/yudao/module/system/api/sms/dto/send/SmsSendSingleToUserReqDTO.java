@@ -17,7 +17,7 @@ public class SmsSendSingleToUserReqDTO {
     /**
      * 用户编号
      */
-    private Long userId;
+    private String userId;
     /**
      * 手机号
      */

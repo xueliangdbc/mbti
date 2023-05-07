@@ -32,13 +32,13 @@ public class OAuth2GrantServiceImpl implements OAuth2GrantService {
     private AdminAuthService adminAuthService;
 
     @Override
-    public OAuth2AccessTokenDO grantImplicit(Long userId, Integer userType,
+    public OAuth2AccessTokenDO grantImplicit(String userId, Integer userType,
                                              String clientId, List<String> scopes) {
         return oauth2TokenService.createAccessToken(userId, userType, clientId, scopes);
     }
 
     @Override
-    public String grantAuthorizationCodeForCode(Long userId, Integer userType,
+    public String grantAuthorizationCodeForCode(String userId, Integer userType,
                                                 String clientId, List<String> scopes,
                                                 String redirectUri, String state) {
         return oauth2CodeService.createAuthorizationCode(userId, userType, clientId, scopes,

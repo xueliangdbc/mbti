@@ -64,21 +64,21 @@ public class CodegenServiceImpl implements CodegenService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public List<Long> createCodegenList(Long userId, CodegenCreateListReqVO reqVO) {
+    public List<Long> createCodegenList(String userId, CodegenCreateListReqVO reqVO) {
         List<Long> ids = new ArrayList<>(reqVO.getTableNames().size());
         // 遍历添加。虽然效率会低一点，但是没必要做成完全批量，因为不会这么大量
         reqVO.getTableNames().forEach(tableName -> ids.add(createCodegen(userId, reqVO.getDataSourceConfigId(), tableName)));
         return ids;
     }
 
-    public Long createCodegen(Long userId, Long dataSourceConfigId, String tableName) {
+    public Long createCodegen(String userId, Long dataSourceConfigId, String tableName) {
         // 从数据库中，获得数据库表结构
         TableInfo tableInfo = databaseTableService.getTable(dataSourceConfigId, tableName);
         // 导入
         return createCodegen0(userId, dataSourceConfigId, tableInfo);
     }
 
-    private Long createCodegen0(Long userId, Long dataSourceConfigId, TableInfo tableInfo) {
+    private Long createCodegen0(String userId, Long dataSourceConfigId, TableInfo tableInfo) {
         // 校验导入的表和字段非空
         validateTableInfo(tableInfo);
         // 校验是否已经存在

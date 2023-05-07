@@ -58,7 +58,7 @@ public class CouponDO extends BaseDO {
      *
      * 关联 MemberUserDO 的 id 字段
      */
-    private Long userId;
+    private String userId;
     /**
      * 领取类型
      *

@@ -25,7 +25,7 @@ public interface CodegenService {
      * @param reqVO 表信息
      * @return 创建的表定义的编号数组
      */
-    List<Long> createCodegenList(Long userId, CodegenCreateListReqVO reqVO);
+    List<Long> createCodegenList(String userId, CodegenCreateListReqVO reqVO);
 
     /**
      * 更新数据库的表和字段定义

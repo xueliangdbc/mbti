@@ -10,11 +10,11 @@ import java.util.List;
 @Mapper
 public interface AddressMapper extends BaseMapperX<AddressDO> {
 
-    default AddressDO selectByIdAndUserId(Long id, Long userId) {
+    default AddressDO selectByIdAndUserId(Long id, String userId) {
         return selectOne(AddressDO::getId, id, AddressDO::getUserId, userId);
     }
 
-    default List<AddressDO> selectListByUserIdAndDefaulted(Long userId, Boolean defaulted) {
+    default List<AddressDO> selectListByUserIdAndDefaulted(String userId, Boolean defaulted) {
         return selectList(new LambdaQueryWrapperX<AddressDO>().eq(AddressDO::getUserId, userId)
                 .eqIfPresent(AddressDO::getDefaulted, defaulted));
     }

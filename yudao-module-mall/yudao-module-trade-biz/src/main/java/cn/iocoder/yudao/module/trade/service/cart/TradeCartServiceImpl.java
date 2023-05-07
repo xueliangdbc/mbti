@@ -49,7 +49,7 @@ public class TradeCartServiceImpl implements TradeCartService {
     private PriceApi priceApi;
 
     @Override
-    public void addCartItemCount(Long userId, AppTradeCartItemAddCountReqVO addCountReqVO) {
+    public void addCartItemCount(String userId, AppTradeCartItemAddCountReqVO addCountReqVO) {
         Long skuId = addCountReqVO.getSkuId();
         Integer count = addCountReqVO.getCount();
         // 查询 CartItemDO
@@ -70,7 +70,7 @@ public class TradeCartServiceImpl implements TradeCartService {
     }
 
     @Override
-    public void updateCartItemCount(Long userId, AppTradeCartItemUpdateCountReqVO updateCountReqVO) {
+    public void updateCartItemCount(String userId, AppTradeCartItemUpdateCountReqVO updateCountReqVO) {
         // 校验 TradeCartItemDO 存在
         TradeCartItemDO tradeItem = cartItemMapper.selectByUserIdAndSkuId(userId, updateCountReqVO.getSkuId());
         if (tradeItem == null) {
@@ -84,7 +84,7 @@ public class TradeCartServiceImpl implements TradeCartService {
     }
 
     @Override
-    public void updateCartItemSelected(Long userId, AppTradeCartItemUpdateSelectedReqVO updateSelectedReqVO) {
+    public void updateCartItemSelected(String userId, AppTradeCartItemUpdateSelectedReqVO updateSelectedReqVO) {
         // 查询 CartItemDO 列表
         List<TradeCartItemDO> cartItems = cartItemMapper.selectListByUserIdAndSkuIds(userId, updateSelectedReqVO.getSkuIds());
         if (CollUtil.isEmpty(cartItems)) {
@@ -103,7 +103,7 @@ public class TradeCartServiceImpl implements TradeCartService {
      * @param skuIds 商品 SKU 编号的数组
      */
     @Override
-    public void deleteCartItems(Long userId, Collection<Long> skuIds) {
+    public void deleteCartItems(String userId, Collection<Long> skuIds) {
         // 查询 CartItemDO 列表
         List<TradeCartItemDO> cartItems = cartItemMapper.selectListByUserIdAndSkuIds(userId, skuIds);
         if (CollUtil.isEmpty(cartItems)) {
@@ -115,12 +115,12 @@ public class TradeCartServiceImpl implements TradeCartService {
     }
 
     @Override
-    public Integer getCartCount(Long userId) {
+    public Integer getCartCount(String userId) {
         return cartItemMapper.selectSumByUserId(userId);
     }
 
     @Override
-    public AppTradeCartDetailRespVO getCartDetail(Long userId) {
+    public AppTradeCartDetailRespVO getCartDetail(String userId) {
         // 获得购物车的商品
         List<TradeCartItemDO> cartItems = cartItemMapper.selectListByUserId(userId, null);
         // 如果未空，则返回空结果

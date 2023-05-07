@@ -56,7 +56,7 @@ public class MpMessageDO extends BaseDO {
      *
      * 关联 {@link MpUserDO#getId()}
      */
-    private Long userId;
+    private String userId;
     /**
      * 公众号粉丝标志
      *

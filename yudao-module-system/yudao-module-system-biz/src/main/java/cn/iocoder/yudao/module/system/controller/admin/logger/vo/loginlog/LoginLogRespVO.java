@@ -18,7 +18,7 @@ public class LoginLogRespVO extends LoginLogBaseVO {
     private Long id;
 
     @Schema(description = "用户编号", example = "666")
-    private Long userId;
+    private String userId;
 
     @Schema(description = "用户类型,参见 UserTypeEnum 枚举", required = true, example = "2")
     @NotNull(message = "用户类型不能为空")

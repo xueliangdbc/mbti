@@ -62,7 +62,7 @@ public class TradeAfterSaleServiceTest extends BaseDbUnitTest {
     @Test
     public void testCreateAfterSale() {
         // 准备参数
-        Long userId = 1024L;
+        String userId = 1024L;
         AppTradeAfterSaleCreateReqVO createReqVO = new AppTradeAfterSaleCreateReqVO()
                 .setOrderItemId(1L).setRefundPrice(100).setWay(TradeAfterSaleWayEnum.RETURN_AND_REFUND.getWay())
                 .setApplyReason("退钱").setApplyDescription("快退")

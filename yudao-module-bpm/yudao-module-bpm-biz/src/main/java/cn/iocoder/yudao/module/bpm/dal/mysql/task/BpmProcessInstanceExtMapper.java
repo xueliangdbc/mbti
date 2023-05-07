@@ -10,7 +10,7 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface BpmProcessInstanceExtMapper extends BaseMapperX<BpmProcessInstanceExtDO> {
 
-    default PageResult<BpmProcessInstanceExtDO> selectPage(Long userId, BpmProcessInstanceMyPageReqVO reqVO) {
+    default PageResult<BpmProcessInstanceExtDO> selectPage(String userId, BpmProcessInstanceMyPageReqVO reqVO) {
         return selectPage(reqVO, new LambdaQueryWrapperX<BpmProcessInstanceExtDO>()
                 .eqIfPresent(BpmProcessInstanceExtDO::getStartUserId, userId)
                 .likeIfPresent(BpmProcessInstanceExtDO::getName, reqVO.getName())

@@ -4,7 +4,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
-import net.bytebuddy.implementation.bind.annotation.Empty;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -19,6 +18,6 @@ public class BpmTaskUpdateAssigneeReqVO {
 
     @Schema(description = "新审批人的用户编号", required = true, example = "2048")
     @NotNull(message = "新审批人的用户编号不能为空")
-    private Long assigneeUserId;
+    private String assigneeUserId;
 
 }

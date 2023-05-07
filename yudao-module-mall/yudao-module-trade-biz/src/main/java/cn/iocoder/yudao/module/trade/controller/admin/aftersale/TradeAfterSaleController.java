@@ -61,7 +61,7 @@ public class TradeAfterSaleController {
         List<ProductPropertyValueDetailRespDTO> propertyValueDetails = productPropertyValueApi
                 .getPropertyValueDetailList(TradeAfterSaleConvert.INSTANCE.convertPropertyValueIds(pageResult.getList()));
         // 查询会员
-        Map<Long, MemberUserRespDTO> memberUsers = memberUserApi.getUserMap(
+        Map<String, MemberUserRespDTO> memberUsers = memberUserApi.getUserMap(
                 convertSet(pageResult.getList(), TradeAfterSaleDO::getUserId));
         return success(TradeAfterSaleConvert.INSTANCE.convertPage(pageResult, memberUsers, propertyValueDetails));
     }

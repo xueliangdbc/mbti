@@ -11,17 +11,17 @@ import java.util.List;
 @Mapper
 public interface UserRoleMapper extends BaseMapperX<UserRoleDO> {
 
-    default List<UserRoleDO> selectListByUserId(Long userId) {
+    default List<UserRoleDO> selectListByUserId(String userId) {
         return selectList(UserRoleDO::getUserId, userId);
     }
 
-    default void deleteListByUserIdAndRoleIdIds(Long userId, Collection<Long> roleIds) {
+    default void deleteListByUserIdAndRoleIdIds(String userId, Collection<Long> roleIds) {
         delete(new LambdaQueryWrapper<UserRoleDO>()
                 .eq(UserRoleDO::getUserId, userId)
                 .in(UserRoleDO::getRoleId, roleIds));
     }
 
-    default void deleteListByUserId(Long userId) {
+    default void deleteListByUserId(String userId) {
         delete(new LambdaQueryWrapper<UserRoleDO>().eq(UserRoleDO::getUserId, userId));
     }
 

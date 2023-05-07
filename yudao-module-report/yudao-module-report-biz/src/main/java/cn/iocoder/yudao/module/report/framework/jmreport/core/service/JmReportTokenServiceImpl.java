@@ -64,7 +64,7 @@ public class JmReportTokenServiceImpl implements JmReportTokenServiceI {
      */
     @Override
     public Boolean verifyToken(String token) {
-        Long userId = SecurityFrameworkUtils.getLoginUserId();
+        String userId = SecurityFrameworkUtils.getLoginUserId();
         if (!Objects.isNull(userId)) {
             return true;
         }
@@ -81,7 +81,7 @@ public class JmReportTokenServiceImpl implements JmReportTokenServiceI {
      */
     @Override
     public String getUsername(String token) {
-        Long userId = SecurityFrameworkUtils.getLoginUserId();
+        String userId = SecurityFrameworkUtils.getLoginUserId();
         if (ObjectUtil.isNotNull(userId)) {
             return String.valueOf(userId);
         }

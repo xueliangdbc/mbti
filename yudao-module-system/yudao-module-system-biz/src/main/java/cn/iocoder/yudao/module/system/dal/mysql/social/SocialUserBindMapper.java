@@ -10,7 +10,7 @@ import java.util.List;
 @Mapper
 public interface SocialUserBindMapper extends BaseMapperX<SocialUserBindDO> {
 
-    default void deleteByUserTypeAndUserIdAndSocialType(Integer userType, Long userId, Integer socialType) {
+    default void deleteByUserTypeAndUserIdAndSocialType(Integer userType, String userId, Integer socialType) {
         delete(new LambdaQueryWrapperX<SocialUserBindDO>()
                 .eq(SocialUserBindDO::getUserType, userType)
                 .eq(SocialUserBindDO::getUserId, userId)
@@ -28,7 +28,7 @@ public interface SocialUserBindMapper extends BaseMapperX<SocialUserBindDO> {
                 SocialUserBindDO::getSocialUserId, socialUserId);
     }
 
-    default List<SocialUserBindDO> selectListByUserIdAndUserType(Long userId, Integer userType) {
+    default List<SocialUserBindDO> selectListByUserIdAndUserType(String userId, Integer userType) {
         return selectList(new LambdaQueryWrapperX<SocialUserBindDO>()
                 .eq(SocialUserBindDO::getUserId, userId)
                 .eq(SocialUserBindDO::getUserType, userType));

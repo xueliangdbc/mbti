@@ -16,6 +16,6 @@ public interface AddressApi {
      * @param userId 用户编号
      * @return 用户收件地址
      */
-    AddressRespDTO getAddress(Long id, Long userId);
+    AddressRespDTO getAddress(Long id, String userId);
 
 }

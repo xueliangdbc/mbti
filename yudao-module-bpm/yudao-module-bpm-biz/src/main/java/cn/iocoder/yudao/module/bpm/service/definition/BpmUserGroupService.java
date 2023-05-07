@@ -52,7 +52,7 @@ public interface BpmUserGroupService {
      * @param ids 编号
      * @return 用户组列表
      */
-    List<BpmUserGroupDO> getUserGroupList(Collection<Long> ids);
+    List<BpmUserGroupDO> getUserGroupList(Collection<String> ids);
 
     /**
      * 获得指定状态的用户组列表

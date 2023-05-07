@@ -45,7 +45,7 @@ public class NotifyMessageServiceImplTest extends BaseDbUnitTest {
     @Test
     public void testCreateNotifyMessage_success() {
         // 准备参数
-        Long userId = randomLongId();
+        String userId = randomLongId();
         Integer userType = randomEle(UserTypeEnum.values()).getValue();
         NotifyTemplateDO template = randomPojo(NotifyTemplateDO.class);
         String templateContent = randomString();
@@ -142,7 +142,7 @@ public class NotifyMessageServiceImplTest extends BaseDbUnitTest {
         // 测试 createTime 不匹配
         notifyMessageMapper.insert(cloneIgnoreId(dbNotifyMessage, o -> o.setCreateTime(buildTime(2022, 2, 1))));
         // 准备参数
-        Long userId = 1L;
+        String userId = 1L;
         Integer userType = UserTypeEnum.ADMIN.getValue();
         NotifyMessageMyPageReqVO reqVO = new NotifyMessageMyPageReqVO();
         reqVO.setReadStatus(true);
@@ -174,7 +174,7 @@ public class NotifyMessageServiceImplTest extends BaseDbUnitTest {
         // 测试 readStatus 不匹配
         notifyMessageMapper.insert(cloneIgnoreId(dbNotifyMessage, o -> o.setReadStatus(true)));
         // 准备参数
-        Long userId = 1L;
+        String userId = 1L;
         Integer userType = UserTypeEnum.ADMIN.getValue();
         Integer size = 10;
 
@@ -203,7 +203,7 @@ public class NotifyMessageServiceImplTest extends BaseDbUnitTest {
         // 测试 readStatus 不匹配
         notifyMessageMapper.insert(cloneIgnoreId(dbNotifyMessage, o -> o.setReadStatus(true)));
         // 准备参数
-        Long userId = 1L;
+        String userId = 1L;
         Integer userType = UserTypeEnum.ADMIN.getValue();
 
         // 调用，并断言
@@ -230,7 +230,7 @@ public class NotifyMessageServiceImplTest extends BaseDbUnitTest {
         // 准备参数
         Collection<Long> ids = Arrays.asList(dbNotifyMessage.getId(), dbNotifyMessage.getId() + 1,
                 dbNotifyMessage.getId() + 2, dbNotifyMessage.getId() + 3);
-        Long userId = 1L;
+        String userId = 1L;
         Integer userType = UserTypeEnum.ADMIN.getValue();
 
         // 调用
@@ -260,7 +260,7 @@ public class NotifyMessageServiceImplTest extends BaseDbUnitTest {
         // 测试 readStatus 不匹配
         notifyMessageMapper.insert(cloneIgnoreId(dbNotifyMessage, o -> o.setReadStatus(true)));
         // 准备参数
-        Long userId = 1L;
+        String userId = 1L;
         Integer userType = UserTypeEnum.ADMIN.getValue();
 
         // 调用

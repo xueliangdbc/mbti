@@ -10,7 +10,7 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface GoViewProjectMapper extends BaseMapperX<GoViewProjectDO> {
 
-    default PageResult<GoViewProjectDO> selectPage(PageParam reqVO, Long userId) {
+    default PageResult<GoViewProjectDO> selectPage(PageParam reqVO, String userId) {
         return selectPage(reqVO, new LambdaQueryWrapperX<GoViewProjectDO>()
                 .eq(GoViewProjectDO::getCreator, userId)
                 .orderByDesc(GoViewProjectDO::getId));

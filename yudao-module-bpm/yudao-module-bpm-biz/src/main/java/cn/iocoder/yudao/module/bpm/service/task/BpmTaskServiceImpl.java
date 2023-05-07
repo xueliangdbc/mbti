@@ -70,7 +70,7 @@ public class BpmTaskServiceImpl implements BpmTaskService {
     private BpmMessageService messageService;
 
     @Override
-    public PageResult<BpmTaskTodoPageItemRespVO> getTodoTaskPage(Long userId, BpmTaskTodoPageReqVO pageVO) {
+    public PageResult<BpmTaskTodoPageItemRespVO> getTodoTaskPage(String userId, BpmTaskTodoPageReqVO pageVO) {
         // 查询待办任务
         TaskQuery taskQuery = taskService.createTaskQuery().taskAssignee(String.valueOf(userId)) // 分配给自己
             .orderByTaskCreateTime().desc(); // 创建时间倒序
@@ -93,15 +93,15 @@ public class BpmTaskServiceImpl implements BpmTaskService {
         Map<String, ProcessInstance> processInstanceMap =
             processInstanceService.getProcessInstanceMap(convertSet(tasks, Task::getProcessInstanceId));
         // 获得 User Map
-        Map<Long, AdminUserRespDTO> userMap = adminUserApi.getUserMap(
-            convertSet(processInstanceMap.values(), instance -> Long.valueOf(instance.getStartUserId())));
+        Map<String, AdminUserRespDTO> userMap = adminUserApi.getUserMap(
+            convertSet(processInstanceMap.values(), instance -> instance.getStartUserId()));
         // 拼接结果
         return new PageResult<>(BpmTaskConvert.INSTANCE.convertList1(tasks, processInstanceMap, userMap),
             taskQuery.count());
     }
 
     @Override
-    public PageResult<BpmTaskDonePageItemRespVO> getDoneTaskPage(Long userId, BpmTaskDonePageReqVO pageVO) {
+    public PageResult<BpmTaskDonePageItemRespVO> getDoneTaskPage(String userId, BpmTaskDonePageReqVO pageVO) {
         // 查询已办任务
         HistoricTaskInstanceQuery taskQuery = historyService.createHistoricTaskInstanceQuery().finished() // 已完成
             .taskAssignee(String.valueOf(userId)) // 分配给自己
@@ -130,8 +130,8 @@ public class BpmTaskServiceImpl implements BpmTaskService {
             processInstanceService.getHistoricProcessInstanceMap(
                 convertSet(tasks, HistoricTaskInstance::getProcessInstanceId));
         // 获得 User Map
-        Map<Long, AdminUserRespDTO> userMap = adminUserApi.getUserMap(
-            convertSet(historicProcessInstanceMap.values(), instance -> Long.valueOf(instance.getStartUserId())));
+        Map<String, AdminUserRespDTO> userMap = adminUserApi.getUserMap(
+            convertSet(historicProcessInstanceMap.values(), instance -> instance.getStartUserId()));
         // 拼接结果
         return new PageResult<>(
             BpmTaskConvert.INSTANCE.convertList2(tasks, bpmTaskExtDOMap, historicProcessInstanceMap, userMap),
@@ -163,9 +163,9 @@ public class BpmTaskServiceImpl implements BpmTaskService {
         // 获得 ProcessInstance Map
         HistoricProcessInstance processInstance = processInstanceService.getHistoricProcessInstance(processInstanceId);
         // 获得 User Map
-        Set<Long> userIds = convertSet(tasks, task -> NumberUtils.parseLong(task.getAssignee()));
-        userIds.add(NumberUtils.parseLong(processInstance.getStartUserId()));
-        Map<Long, AdminUserRespDTO> userMap = adminUserApi.getUserMap(userIds);
+        Set<String> userIds = convertSet(tasks, task -> task.getAssignee());
+        userIds.add(processInstance.getStartUserId());
+        Map<String, AdminUserRespDTO> userMap = adminUserApi.getUserMap(userIds);
         // 获得 Dept Map
         Map<Long, DeptRespDTO> deptMap = deptApi.getDeptMap(convertSet(userMap.values(), AdminUserRespDTO::getDeptId));
 
@@ -175,7 +175,7 @@ public class BpmTaskServiceImpl implements BpmTaskService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void approveTask(Long userId, @Valid BpmTaskApproveReqVO reqVO) {
+    public void approveTask(String userId, @Valid BpmTaskApproveReqVO reqVO) {
         // 校验任务存在
         Task task = checkTask(userId, reqVO.getId());
         // 校验流程实例存在
@@ -195,7 +195,7 @@ public class BpmTaskServiceImpl implements BpmTaskService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void rejectTask(Long userId, @Valid BpmTaskRejectReqVO reqVO) {
+    public void rejectTask(String userId, @Valid BpmTaskRejectReqVO reqVO) {
         Task task = checkTask(userId, reqVO.getId());
         // 校验流程实例存在
         ProcessInstance instance = processInstanceService.getProcessInstance(task.getProcessInstanceId());
@@ -213,7 +213,7 @@ public class BpmTaskServiceImpl implements BpmTaskService {
     }
 
     @Override
-    public void updateTaskAssignee(Long userId, BpmTaskUpdateAssigneeReqVO reqVO) {
+    public void updateTaskAssignee(String userId, BpmTaskUpdateAssigneeReqVO reqVO) {
         // 校验任务存在
         Task task = checkTask(userId, reqVO.getId());
         // 更新负责人
@@ -221,7 +221,7 @@ public class BpmTaskServiceImpl implements BpmTaskService {
     }
 
     @Override
-    public void updateTaskAssignee(String id, Long userId) {
+    public void updateTaskAssignee(String id, String userId) {
         taskService.setAssignee(id, String.valueOf(userId));
     }
 
@@ -231,7 +231,7 @@ public class BpmTaskServiceImpl implements BpmTaskService {
      * @param userId 用户 id
      * @param taskId task id
      */
-    private Task checkTask(Long userId, String taskId) {
+    private Task checkTask(String userId, String taskId) {
         Task task = getTask(taskId);
         if (task == null) {
             throw exception(TASK_COMPLETE_FAIL_NOT_EXISTS);
@@ -301,7 +301,7 @@ public class BpmTaskServiceImpl implements BpmTaskService {
             public void afterCommit() {
                 ProcessInstance processInstance =
                     processInstanceService.getProcessInstance(task.getProcessInstanceId());
-                AdminUserRespDTO startUser = adminUserApi.getUser(Long.valueOf(processInstance.getStartUserId()));
+                AdminUserRespDTO startUser = adminUserApi.getUser(processInstance.getStartUserId());
                 messageService.sendMessageWhenTaskAssigned(
                     BpmTaskConvert.INSTANCE.convert(processInstance, startUser, task));
             }

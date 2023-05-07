@@ -48,7 +48,7 @@ public interface TradeAfterSaleConvert {
     PageResult<TradeAfterSaleRespPageItemVO> convertPage(PageResult<TradeAfterSaleDO> page);
 
     default PageResult<TradeAfterSaleRespPageItemVO> convertPage(PageResult<TradeAfterSaleDO> pageResult,
-                                                                 Map<Long, MemberUserRespDTO> memberUsers, List<ProductPropertyValueDetailRespDTO> propertyValueDetails) {
+                                                                 Map<String, MemberUserRespDTO> memberUsers, List<ProductPropertyValueDetailRespDTO> propertyValueDetails) {
         PageResult<TradeAfterSaleRespPageItemVO> pageVOResult = convertPage(pageResult);
         // 处理会员 + 商品属性等关联信息
         Map<Long, ProductPropertyValueDetailRespDTO> propertyValueDetailMap = convertMap(propertyValueDetails, ProductPropertyValueDetailRespDTO::getValueId);

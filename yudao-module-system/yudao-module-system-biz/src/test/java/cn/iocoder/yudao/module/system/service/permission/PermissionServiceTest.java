@@ -2,6 +2,7 @@ package cn.iocoder.yudao.module.system.service.permission;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.map.MapUtil;
+import cn.hutool.core.util.IdUtil;
 import cn.iocoder.yudao.framework.common.enums.CommonStatusEnum;
 import cn.iocoder.yudao.framework.test.core.ut.BaseDbUnitTest;
 import cn.iocoder.yudao.module.system.api.permission.dto.DeptDataPermissionRespDTO;
@@ -86,9 +87,9 @@ public class PermissionServiceTest extends BaseDbUnitTest {
     @Test
     public void testInitLocalCacheForUserRole() {
         // mock 数据
-        UserRoleDO userRoleDO01 = randomPojo(UserRoleDO.class, o -> o.setUserId(1L).setRoleId(10L));
+        UserRoleDO userRoleDO01 = randomPojo(UserRoleDO.class, o -> o.setUserId("1L").setRoleId(10L));
         userRoleMapper.insert(userRoleDO01);
-        UserRoleDO roleMenuDO02 = randomPojo(UserRoleDO.class, o -> o.setUserId(1L).setRoleId(20L));
+        UserRoleDO roleMenuDO02 = randomPojo(UserRoleDO.class, o -> o.setUserId("1L").setRoleId(20L));
         userRoleMapper.insert(roleMenuDO02);
 
         // 调用
@@ -139,7 +140,7 @@ public class PermissionServiceTest extends BaseDbUnitTest {
     @Test
     public void testGetUserRoleIdsFromCache() {
         // 准备参数
-        Long userId = 1L;
+        String userId = "1L";
         Collection<Integer> roleStatuses = singleton(CommonStatusEnum.ENABLE.getStatus());
         // mock 方法
         Map<Long, Set<Long>> userRoleCache = MapUtil.<Long, Set<Long>>builder()
@@ -213,12 +214,12 @@ public class PermissionServiceTest extends BaseDbUnitTest {
     @Test
     public void testAssignUserRole() {
         // 准备参数
-        Long userId = 1L;
+        String userId = "1L";
         Set<Long> roleIds = asSet(200L, 300L);
         // mock 数据
-        UserRoleDO userRole01 = randomPojo(UserRoleDO.class).setUserId(1L).setRoleId(100L);
+        UserRoleDO userRole01 = randomPojo(UserRoleDO.class).setUserId("1L").setRoleId(100L);
         userRoleMapper.insert(userRole01);
-        UserRoleDO userRole02 = randomPojo(UserRoleDO.class).setUserId(1L).setRoleId(200L);
+        UserRoleDO userRole02 = randomPojo(UserRoleDO.class).setUserId("1L").setRoleId(200L);
         userRoleMapper.insert(userRole02);
 
         // 调用
@@ -236,11 +237,11 @@ public class PermissionServiceTest extends BaseDbUnitTest {
     @Test
     public void testGetUserRoleIdListByUserId() {
         // 准备参数
-        Long userId = 1L;
+        String userId = "1L";
         // mock 数据
-        UserRoleDO userRoleDO01 = randomPojo(UserRoleDO.class, o -> o.setUserId(1L).setRoleId(10L));
+        UserRoleDO userRoleDO01 = randomPojo(UserRoleDO.class, o -> o.setUserId("1L").setRoleId(10L));
         userRoleMapper.insert(userRoleDO01);
-        UserRoleDO roleMenuDO02 = randomPojo(UserRoleDO.class, o -> o.setUserId(1L).setRoleId(20L));
+        UserRoleDO roleMenuDO02 = randomPojo(UserRoleDO.class, o -> o.setUserId("1L").setRoleId(20L));
         userRoleMapper.insert(roleMenuDO02);
 
         // 调用
@@ -254,13 +255,13 @@ public class PermissionServiceTest extends BaseDbUnitTest {
         // 准备参数
         Collection<Long> roleIds = asSet(10L, 20L);
         // mock 数据
-        UserRoleDO userRoleDO01 = randomPojo(UserRoleDO.class, o -> o.setUserId(1L).setRoleId(10L));
+        UserRoleDO userRoleDO01 = randomPojo(UserRoleDO.class, o -> o.setUserId("1L").setRoleId(10L));
         userRoleMapper.insert(userRoleDO01);
-        UserRoleDO roleMenuDO02 = randomPojo(UserRoleDO.class, o -> o.setUserId(2L).setRoleId(20L));
+        UserRoleDO roleMenuDO02 = randomPojo(UserRoleDO.class, o -> o.setUserId("2L").setRoleId(20L));
         userRoleMapper.insert(roleMenuDO02);
 
         // 调用
-        Set<Long> result = permissionService.getUserRoleIdListByRoleIds(roleIds);
+        Set<String> result = permissionService.getUserRoleIdListByRoleIds(roleIds);
         // 断言
         assertEquals(asSet(1L, 2L), result);
     }
@@ -331,7 +332,7 @@ public class PermissionServiceTest extends BaseDbUnitTest {
     @Test
     public void testProcessUserDeleted() {
         // 准备参数
-        Long userId = randomLongId();
+        String userId = IdUtil.simpleUUID();
         // mock 数据
         UserRoleDO userRoleDO01 = randomPojo(UserRoleDO.class, o -> o.setUserId(userId)); // 被删除
         userRoleMapper.insert(userRoleDO01);
@@ -351,7 +352,7 @@ public class PermissionServiceTest extends BaseDbUnitTest {
     @Test
     public void testHasAnyPermissions_superAdmin() {
         // 准备参数
-        Long userId = 1L;
+        String userId = IdUtil.simpleUUID();
         String[] roles = new String[]{"system:user:query", "system:user:create"};
         // mock 用户与角色的缓存
         permissionService.setUserRoleCache(MapUtil.<Long, Set<Long>>builder().put(1L, asSet(100L)).build());
@@ -370,7 +371,7 @@ public class PermissionServiceTest extends BaseDbUnitTest {
     @Test
     public void testHasAnyPermissions_normal() {
         // 准备参数
-        Long userId = 1L;
+        String userId = IdUtil.simpleUUID();
         String[] roles = new String[]{"system:user:query", "system:user:create"};
         // mock 用户与角色的缓存
         permissionService.setUserRoleCache(MapUtil.<Long, Set<Long>>builder().put(1L, asSet(100L)).build());
@@ -392,7 +393,7 @@ public class PermissionServiceTest extends BaseDbUnitTest {
     @Test
     public void testHasAnyRoles_superAdmin() {
         // 准备参数
-        Long userId = 1L;
+        String userId = "1L";
         String[] roles = new String[]{"yunai", "tudou"};
         // mock 用户与角色的缓存
         permissionService.setUserRoleCache(MapUtil.<Long, Set<Long>>builder().put(1L, asSet(100L)).build());
@@ -411,7 +412,7 @@ public class PermissionServiceTest extends BaseDbUnitTest {
     @Test
     public void testHasAnyRoles_normal() {
         // 准备参数
-        Long userId = 1L;
+        String userId = "1L";
         String[] roles = new String[]{"yunai", "tudou"};
         // mock 用户与角色的缓存
         permissionService.setUserRoleCache(MapUtil.<Long, Set<Long>>builder().put(1L, asSet(100L)).build());
@@ -430,7 +431,7 @@ public class PermissionServiceTest extends BaseDbUnitTest {
     @Test
     public void testGetDeptDataPermission_All() {
         // 准备参数
-        Long userId = 1L;
+        String userId = "1L";
         // mock 用户的角色编号
         permissionService.setUserRoleCache(MapUtil.<Long, Set<Long>>builder().put(1L, asSet(2L)).build());
         // mock 获得用户的角色
@@ -450,7 +451,7 @@ public class PermissionServiceTest extends BaseDbUnitTest {
     @Test
     public void testGetDeptDataPermission_DeptCustom() {
         // 准备参数
-        Long userId = 1L;
+        String userId = "1L";
         // mock 用户的角色编号
         permissionService.setUserRoleCache(MapUtil.<Long, Set<Long>>builder().put(1L, asSet(2L)).build());
         // mock 获得用户的角色
@@ -459,7 +460,7 @@ public class PermissionServiceTest extends BaseDbUnitTest {
         when(roleService.getRoleListFromCache(eq(singleton(2L)))).thenReturn(singletonList(roleDO));
         when(roleService.getRoleFromCache(eq(2L))).thenReturn(roleDO);
         // mock 部门的返回
-        when(userService.getUser(eq(1L))).thenReturn(new AdminUserDO().setDeptId(3L), null, null); // 最后返回 null 的目的，看看会不会重复调用
+        when(userService.getUser(eq("1L"))).thenReturn(new AdminUserDO().setDeptId(3L), null, null); // 最后返回 null 的目的，看看会不会重复调用
 
         // 调用
         DeptDataPermissionRespDTO result = permissionService.getDeptDataPermission(userId);
@@ -474,7 +475,7 @@ public class PermissionServiceTest extends BaseDbUnitTest {
     @Test
     public void testGetDeptDataPermission_DeptOnly() {
         // 准备参数
-        Long userId = 1L;
+        String userId = "1L";
         // mock 用户的角色编号
         permissionService.setUserRoleCache(MapUtil.<Long, Set<Long>>builder().put(1L, asSet(2L)).build());
         // mock 获得用户的角色
@@ -483,7 +484,7 @@ public class PermissionServiceTest extends BaseDbUnitTest {
         when(roleService.getRoleListFromCache(eq(singleton(2L)))).thenReturn(singletonList(roleDO));
         when(roleService.getRoleFromCache(eq(2L))).thenReturn(roleDO);
         // mock 部门的返回
-        when(userService.getUser(eq(1L))).thenReturn(new AdminUserDO().setDeptId(3L), null, null); // 最后返回 null 的目的，看看会不会重复调用
+        when(userService.getUser(eq("1L"))).thenReturn(new AdminUserDO().setDeptId(3L), null, null); // 最后返回 null 的目的，看看会不会重复调用
 
         // 调用
         DeptDataPermissionRespDTO result = permissionService.getDeptDataPermission(userId);
@@ -497,7 +498,7 @@ public class PermissionServiceTest extends BaseDbUnitTest {
     @Test
     public void testGetDeptDataPermission_DeptAndChild() {
         // 准备参数
-        Long userId = 1L;
+        String userId = "1L";
         // mock 用户的角色编号
         permissionService.setUserRoleCache(MapUtil.<Long, Set<Long>>builder().put(1L, asSet(2L)).build());
         // mock 获得用户的角色
@@ -506,7 +507,7 @@ public class PermissionServiceTest extends BaseDbUnitTest {
         when(roleService.getRoleListFromCache(eq(singleton(2L)))).thenReturn(singletonList(roleDO));
         when(roleService.getRoleFromCache(eq(2L))).thenReturn(roleDO);
         // mock 部门的返回
-        when(userService.getUser(eq(1L))).thenReturn(new AdminUserDO().setDeptId(3L), null, null); // 最后返回 null 的目的，看看会不会重复调用
+        when(userService.getUser(eq("1L"))).thenReturn(new AdminUserDO().setDeptId(3L), null, null); // 最后返回 null 的目的，看看会不会重复调用
         // mock 方法（部门）
         DeptDO deptDO = randomPojo(DeptDO.class);
         when(deptService.getDeptListByParentIdFromCache(eq(3L), eq(true)))
@@ -525,7 +526,7 @@ public class PermissionServiceTest extends BaseDbUnitTest {
     @Test
     public void testGetDeptDataPermission_Self() {
         // 准备参数
-        Long userId = 1L;
+        String userId = "1L";
         // mock 用户的角色编号
         permissionService.setUserRoleCache(MapUtil.<Long, Set<Long>>builder().put(1L, asSet(2L)).build());
         // mock 获得用户的角色

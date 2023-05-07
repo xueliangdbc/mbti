@@ -53,7 +53,7 @@ public interface BpmProcessInstanceService {
      * @param pageReqVO 分页请求
      * @return 流程实例的分页
      */
-    PageResult<BpmProcessInstancePageItemRespVO> getMyProcessInstancePage(Long userId,
+    PageResult<BpmProcessInstancePageItemRespVO> getMyProcessInstancePage(String userId,
                                                                           @Valid BpmProcessInstanceMyPageReqVO pageReqVO);
     /**
      * 创建流程实例（提供给前端）
@@ -62,7 +62,7 @@ public interface BpmProcessInstanceService {
      * @param createReqVO 创建信息
      * @return 实例的编号
      */
-    String createProcessInstance(Long userId, @Valid BpmProcessInstanceCreateReqVO createReqVO);
+    String createProcessInstance(String userId, @Valid BpmProcessInstanceCreateReqVO createReqVO);
 
     /**
      * 创建流程实例（提供给内部）
@@ -71,7 +71,7 @@ public interface BpmProcessInstanceService {
      * @param createReqDTO 创建信息
      * @return 实例的编号
      */
-    String createProcessInstance(Long userId, @Valid BpmProcessInstanceCreateReqDTO createReqDTO);
+    String createProcessInstance(String userId, @Valid BpmProcessInstanceCreateReqDTO createReqDTO);
 
     /**
      * 获得流程实例 VO 信息
@@ -87,7 +87,7 @@ public interface BpmProcessInstanceService {
      * @param userId 用户编号
      * @param cancelReqVO 取消信息
      */
-    void cancelProcessInstance(Long userId, @Valid BpmProcessInstanceCancelReqVO cancelReqVO);
+    void cancelProcessInstance(String userId, @Valid BpmProcessInstanceCancelReqVO cancelReqVO);
 
     /**
      * 获得历史的流程实例

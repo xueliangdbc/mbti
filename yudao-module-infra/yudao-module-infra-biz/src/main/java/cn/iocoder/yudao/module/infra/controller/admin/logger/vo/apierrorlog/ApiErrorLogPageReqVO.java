@@ -18,7 +18,7 @@ import static cn.iocoder.yudao.framework.common.util.date.DateUtils.FORMAT_YEAR_
 public class ApiErrorLogPageReqVO extends PageParam {
 
     @Schema(description = "用户编号", example = "666")
-    private Long userId;
+    private String userId;
 
     @Schema(description = "用户类型", example = "1")
     private Integer userType;

@@ -25,7 +25,7 @@ public interface AdminUserService {
      * @param reqVO 用户信息
      * @return 用户编号
      */
-    Long createUser(@Valid UserCreateReqVO reqVO);
+    String createUser(@Valid UserCreateReqVO reqVO);
 
     /**
      * 修改用户
@@ -40,7 +40,7 @@ public interface AdminUserService {
      * @param id 用户编号
      * @param loginIp 登陆 IP
      */
-    void updateUserLogin(Long id, String loginIp);
+    void updateUserLogin(String id, String loginIp);
 
     /**
      * 修改用户个人信息
@@ -48,7 +48,7 @@ public interface AdminUserService {
      * @param id 用户编号
      * @param reqVO 用户个人信息
      */
-    void updateUserProfile(Long id, @Valid UserProfileUpdateReqVO reqVO);
+    void updateUserProfile(String id, @Valid UserProfileUpdateReqVO reqVO);
 
     /**
      * 修改用户个人密码
@@ -56,7 +56,7 @@ public interface AdminUserService {
      * @param id 用户编号
      * @param reqVO 更新用户个人密码
      */
-    void updateUserPassword(Long id, @Valid UserProfileUpdatePasswordReqVO reqVO);
+    void updateUserPassword(String id, @Valid UserProfileUpdatePasswordReqVO reqVO);
 
     /**
      * 更新用户头像
@@ -64,7 +64,7 @@ public interface AdminUserService {
      * @param id         用户 id
      * @param avatarFile 头像文件
      */
-    String updateUserAvatar(Long id, InputStream avatarFile) throws Exception;
+    String updateUserAvatar(String id, InputStream avatarFile) throws Exception;
 
     /**
      * 修改密码
@@ -72,7 +72,7 @@ public interface AdminUserService {
      * @param id       用户编号
      * @param password 密码
      */
-    void updateUserPassword(Long id, String password);
+    void updateUserPassword(String id, String password);
 
     /**
      * 修改状态
@@ -80,14 +80,14 @@ public interface AdminUserService {
      * @param id     用户编号
      * @param status 状态
      */
-    void updateUserStatus(Long id, Integer status);
+    void updateUserStatus(String id, Integer status);
 
     /**
      * 删除用户
      *
      * @param id 用户编号
      */
-    void deleteUser(Long id);
+    void deleteUser(String id);
 
     /**
      * 通过用户名查询用户
@@ -143,7 +143,7 @@ public interface AdminUserService {
      * @param ids 用户编号数组
      * @return 用户列表
      */
-    List<AdminUserDO> getUserList(Collection<Long> ids);
+    List<AdminUserDO> getUserList(Collection<String> ids);
 
     /**
      * 校验用户们是否有效。如下情况，视为无效：
@@ -160,7 +160,7 @@ public interface AdminUserService {
      * @param ids 用户编号数组
      * @return 用户 Map
      */
-    default Map<Long, AdminUserDO> getUserMap(Collection<Long> ids) {
+    default Map<String, AdminUserDO> getUserMap(Collection<String> ids) {
         if (CollUtil.isEmpty(ids)) {
             return new HashMap<>();
         }

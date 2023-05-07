@@ -52,6 +52,6 @@ public interface GoViewProjectService {
      * @param userId 用户编号
      * @return GoView 项目分页
      */
-    PageResult<GoViewProjectDO> getMyProjectPage(PageParam pageReqVO, Long userId);
+    PageResult<GoViewProjectDO> getMyProjectPage(PageParam pageReqVO, String userId);
 
 }

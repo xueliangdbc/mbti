@@ -65,7 +65,7 @@ public class OperateLogServiceImplTest extends BaseDbUnitTest {
             o.setStatus(CommonStatusEnum.ENABLE.getStatus());
         });
         when(userService.getUserListByNickname("wang")).thenReturn(Collections.singletonList(user));
-        Long userId = user.getId();
+        String userId = user.getId();
 
         // 构造操作日志
         OperateLogDO operateLogDO = RandomUtils.randomPojo(OperateLogDO.class, o -> {
@@ -113,7 +113,7 @@ public class OperateLogServiceImplTest extends BaseDbUnitTest {
             o.setStatus(CommonStatusEnum.ENABLE.getStatus());
         });
         when(userService.getUserListByNickname("wang")).thenReturn(Collections.singletonList(user));
-        Long userId = user.getId();
+        String userId = user.getId();
 
         // 构造操作日志
         OperateLogDO operateLogDO = RandomUtils.randomPojo(OperateLogDO.class, o -> {

@@ -20,7 +20,7 @@ public class TradeOrderPageReqVO extends PageParam {
     private String no;
 
     @Schema(description = "用户编号", example = "1024")
-    private Long userId;
+    private String userId;
 
     @Schema(description = "用户昵称", example = "小王")
     private String userNickname;

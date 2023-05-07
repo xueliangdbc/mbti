@@ -74,7 +74,7 @@ public class AdminUserServiceImpl implements AdminUserService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public Long createUser(UserCreateReqVO reqVO) {
+    public String createUser(UserCreateReqVO reqVO) {
 
         // 校验正确性
         validateUserForCreateOrUpdate(null, reqVO.getUsername(), reqVO.getMobile(), reqVO.getEmail(),
@@ -106,7 +106,7 @@ public class AdminUserServiceImpl implements AdminUserService {
     }
 
     private void updateUserPost(UserUpdateReqVO reqVO, AdminUserDO updateObj) {
-        Long userId = reqVO.getId();
+        String userId = reqVO.getId();
         Set<Long> dbPostIds = convertSet(userPostMapper.selectListByUserId(userId), UserPostDO::getPostId);
         // 计算新增和删除的岗位编号
         Set<Long> postIds = updateObj.getPostIds();
@@ -123,12 +123,12 @@ public class AdminUserServiceImpl implements AdminUserService {
     }
 
     @Override
-    public void updateUserLogin(Long id, String loginIp) {
+    public void updateUserLogin(String id, String loginIp) {
         userMapper.updateById(new AdminUserDO().setId(id).setLoginIp(loginIp).setLoginDate(LocalDateTime.now()));
     }
 
     @Override
-    public void updateUserProfile(Long id, UserProfileUpdateReqVO reqVO) {
+    public void updateUserProfile(String id, UserProfileUpdateReqVO reqVO) {
         // 校验正确性
         validateUserExists(id);
         validateEmailUnique(id, reqVO.getEmail());
@@ -138,7 +138,7 @@ public class AdminUserServiceImpl implements AdminUserService {
     }
 
     @Override
-    public void updateUserPassword(Long id, UserProfileUpdatePasswordReqVO reqVO) {
+    public void updateUserPassword(String id, UserProfileUpdatePasswordReqVO reqVO) {
         // 校验旧密码密码
         validateOldPassword(id, reqVO.getOldPassword());
         // 执行更新
@@ -148,7 +148,7 @@ public class AdminUserServiceImpl implements AdminUserService {
     }
 
     @Override
-    public String updateUserAvatar(Long id, InputStream avatarFile) throws Exception {
+    public String updateUserAvatar(String id, InputStream avatarFile) throws Exception {
         validateUserExists(id);
         // 存储文件
         String avatar = fileApi.createFile(IoUtil.readBytes(avatarFile));
@@ -161,7 +161,7 @@ public class AdminUserServiceImpl implements AdminUserService {
     }
 
     @Override
-    public void updateUserPassword(Long id, String password) {
+    public void updateUserPassword(String id, String password) {
         // 校验用户存在
         validateUserExists(id);
         // 更新密码
@@ -172,7 +172,7 @@ public class AdminUserServiceImpl implements AdminUserService {
     }
 
     @Override
-    public void updateUserStatus(Long id, Integer status) {
+    public void updateUserStatus(String id, Integer status) {
         // 校验用户存在
         validateUserExists(id);
         // 更新状态
@@ -184,7 +184,7 @@ public class AdminUserServiceImpl implements AdminUserService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void deleteUser(Long id) {
+    public void deleteUser(String id) {
         // 校验用户存在
         validateUserExists(id);
         // 删除用户
@@ -211,7 +211,7 @@ public class AdminUserServiceImpl implements AdminUserService {
     }
 
     @Override
-    public AdminUserDO getUser(Long id) {
+    public AdminUserDO getUser(String id) {
         return userMapper.selectById(id);
     }
 
@@ -228,7 +228,7 @@ public class AdminUserServiceImpl implements AdminUserService {
         if (CollUtil.isEmpty(postIds)) {
             return Collections.emptyList();
         }
-        Set<Long> userIds = convertSet(userPostMapper.selectListByPostIds(postIds), UserPostDO::getUserId);
+        Set<String> userIds = convertSet(userPostMapper.selectListByPostIds(postIds), UserPostDO::getUserId);
         if (CollUtil.isEmpty(userIds)) {
             return Collections.emptyList();
         }
@@ -236,7 +236,7 @@ public class AdminUserServiceImpl implements AdminUserService {
     }
 
     @Override
-    public List<AdminUserDO> getUserList(Collection<Long> ids) {
+    public List<AdminUserDO> getUserList(Collection<String> ids) {
         if (CollUtil.isEmpty(ids)) {
             return Collections.emptyList();
         }
@@ -250,7 +250,7 @@ public class AdminUserServiceImpl implements AdminUserService {
         }
         // 获得岗位信息
         List<AdminUserDO> users = userMapper.selectBatchIds(ids);
-        Map<Long, AdminUserDO> userMap = CollectionUtils.convertMap(users, AdminUserDO::getId);
+        Map<String, AdminUserDO> userMap = CollectionUtils.convertMap(users, AdminUserDO::getId);
         // 校验
         ids.forEach(id -> {
             AdminUserDO user = userMap.get(id);
@@ -288,7 +288,7 @@ public class AdminUserServiceImpl implements AdminUserService {
         return deptIds;
     }
 
-    private void validateUserForCreateOrUpdate(Long id, String username, String mobile, String email,
+    private void validateUserForCreateOrUpdate(String id, String username, String mobile, String email,
                                               Long deptId, Set<Long> postIds) {
         // 关闭数据权限，避免因为没有数据权限，查询不到数据，进而导致唯一校验不正确
         DataPermissionUtils.executeIgnore(() -> {
@@ -308,7 +308,7 @@ public class AdminUserServiceImpl implements AdminUserService {
     }
 
     @VisibleForTesting
-    void validateUserExists(Long id) {
+    void validateUserExists(String id) {
         if (id == null) {
             return;
         }
@@ -319,7 +319,7 @@ public class AdminUserServiceImpl implements AdminUserService {
     }
 
     @VisibleForTesting
-    void validateUsernameUnique(Long id, String username) {
+    void validateUsernameUnique(String id, String username) {
         if (StrUtil.isBlank(username)) {
             return;
         }
@@ -337,7 +337,7 @@ public class AdminUserServiceImpl implements AdminUserService {
     }
 
     @VisibleForTesting
-    void validateEmailUnique(Long id, String email) {
+    void validateEmailUnique(String id, String email) {
         if (StrUtil.isBlank(email)) {
             return;
         }
@@ -355,7 +355,7 @@ public class AdminUserServiceImpl implements AdminUserService {
     }
 
     @VisibleForTesting
-    void validateMobileUnique(Long id, String mobile) {
+    void validateMobileUnique(String id, String mobile) {
         if (StrUtil.isBlank(mobile)) {
             return;
         }
@@ -378,7 +378,7 @@ public class AdminUserServiceImpl implements AdminUserService {
      * @param oldPassword 旧密码
      */
     @VisibleForTesting
-    void validateOldPassword(Long id, String oldPassword) {
+    void validateOldPassword(String id, String oldPassword) {
         AdminUserDO user = userMapper.selectById(id);
         if (user == null) {
             throw exception(USER_NOT_EXISTS);

@@ -65,8 +65,8 @@ public class CouponController {
             return success(pageResulVO);
         }
         // 读取用户信息，进行拼接
-        Set<Long> userIds = convertSet(pageResult.getList(), CouponDO::getUserId);
-        Map<Long, MemberUserRespDTO> userMap = memberUserApi.getUserMap(userIds);
+        Set<String> userIds = convertSet(pageResult.getList(), CouponDO::getUserId);
+        Map<String, MemberUserRespDTO> userMap = memberUserApi.getUserMap(userIds);
         pageResulVO.getList().forEach(itemRespVO -> MapUtils.findAndThen(userMap, itemRespVO.getUserId(),
                 userRespDTO -> itemRespVO.setNickname(userRespDTO.getNickname())));
         return success(pageResulVO);

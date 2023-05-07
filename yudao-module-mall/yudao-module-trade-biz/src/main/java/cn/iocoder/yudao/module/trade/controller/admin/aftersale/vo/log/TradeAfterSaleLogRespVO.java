@@ -15,7 +15,7 @@ public class TradeAfterSaleLogRespVO {
 
     @Schema(description = "用户编号", required = true, example = "22634")
     @NotNull(message = "用户编号不能为空")
-    private Long userId;
+    private String userId;
 
     @Schema(description = "用户类型", required = true, example = "2")
     @NotNull(message = "用户类型不能为空")

@@ -47,7 +47,7 @@ public class OperateLogServiceImpl implements OperateLogService {
     @Override
     public PageResult<OperateLogDO> getOperateLogPage(OperateLogPageReqVO reqVO) {
         // 处理基于用户昵称的查询
-        Collection<Long> userIds = null;
+        Collection<String> userIds = null;
         if (StrUtil.isNotEmpty(reqVO.getUserNickname())) {
             userIds = convertSet(userService.getUserListByNickname(reqVO.getUserNickname()), AdminUserDO::getId);
             if (CollUtil.isEmpty(userIds)) {
@@ -61,7 +61,7 @@ public class OperateLogServiceImpl implements OperateLogService {
     @Override
     public List<OperateLogDO> getOperateLogList(OperateLogExportReqVO reqVO) {
         // 处理基于用户昵称的查询
-        Collection<Long> userIds = null;
+        Collection<String> userIds = null;
         if (StrUtil.isNotEmpty(reqVO.getUserNickname())) {
             userIds = convertSet(userService.getUserListByNickname(reqVO.getUserNickname()), AdminUserDO::getId);
             if (CollUtil.isEmpty(userIds)) {

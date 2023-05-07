@@ -21,7 +21,7 @@ public class AddressApiImpl implements AddressApi {
     private AddressService addressService;
 
     @Override
-    public AddressRespDTO getAddress(Long id, Long userId) {
+    public AddressRespDTO getAddress(Long id, String userId) {
         return AddressConvert.INSTANCE.convert02(addressService.getAddress(userId, id));
     }
 

@@ -35,7 +35,7 @@ public class TradeOrderItemDO extends BaseDO {
      *
      * 关联 MemberUserDO 的 id 编号
      */
-    private Long userId;
+    private String userId;
     /**
      * 订单编号
      *

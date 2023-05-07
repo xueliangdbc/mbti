@@ -12,8 +12,8 @@ public interface SocialUserConvert {
 
     SocialUserConvert INSTANCE = Mappers.getMapper(SocialUserConvert.class);
 
-    SocialUserBindReqDTO convert(Long userId, Integer userType, AppSocialUserBindReqVO reqVO);
+    SocialUserBindReqDTO convert(String userId, Integer userType, AppSocialUserBindReqVO reqVO);
 
-    SocialUserUnbindReqDTO convert(Long userId, Integer userType, AppSocialUserUnbindReqVO reqVO);
+    SocialUserUnbindReqDTO convert(String userId, Integer userType, AppSocialUserUnbindReqVO reqVO);
 
 }

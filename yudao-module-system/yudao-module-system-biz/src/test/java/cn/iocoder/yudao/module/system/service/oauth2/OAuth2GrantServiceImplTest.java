@@ -41,7 +41,7 @@ public class OAuth2GrantServiceImplTest extends BaseMockitoUnitTest {
     @Test
     public void testGrantImplicit() {
         // 准备参数
-        Long userId = randomLongId();
+        String userId = randomLongId();
         Integer userType = randomEle(UserTypeEnum.values()).getValue();
         String clientId = randomString();
         List<String> scopes = Lists.newArrayList("read", "write");
@@ -58,7 +58,7 @@ public class OAuth2GrantServiceImplTest extends BaseMockitoUnitTest {
     @Test
     public void testGrantAuthorizationCodeForCode() {
         // 准备参数
-        Long userId = randomLongId();
+        String userId = randomLongId();
         Integer userType = randomEle(UserTypeEnum.values()).getValue();
         String clientId = randomString();
         List<String> scopes = Lists.newArrayList("read", "write");

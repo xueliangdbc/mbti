@@ -27,7 +27,7 @@ public class AddressDO extends BaseDO {
     /**
      * 用户编号
      */
-    private Long userId;
+    private String userId;
     /**
      * 收件人名称
      */

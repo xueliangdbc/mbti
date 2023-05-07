@@ -26,7 +26,7 @@ public interface BpmTaskService {
      *
      * @return 流程任务分页
      */
-    PageResult<BpmTaskTodoPageItemRespVO> getTodoTaskPage(Long userId, BpmTaskTodoPageReqVO pageReqVO);
+    PageResult<BpmTaskTodoPageItemRespVO> getTodoTaskPage(String userId, BpmTaskTodoPageReqVO pageReqVO);
 
     /**
      * 获得已办的流程任务分页
@@ -36,7 +36,7 @@ public interface BpmTaskService {
      *
      * @return 流程任务分页
      */
-    PageResult<BpmTaskDonePageItemRespVO> getDoneTaskPage(Long userId, BpmTaskDonePageReqVO pageReqVO);
+    PageResult<BpmTaskDonePageItemRespVO> getDoneTaskPage(String userId, BpmTaskDonePageReqVO pageReqVO);
 
     /**
      * 获得流程任务 Map
@@ -74,7 +74,7 @@ public interface BpmTaskService {
      * @param userId 用户编号
      * @param reqVO  通过请求
      */
-    void approveTask(Long userId, @Valid BpmTaskApproveReqVO reqVO);
+    void approveTask(String userId, @Valid BpmTaskApproveReqVO reqVO);
 
     /**
      * 不通过任务
@@ -82,7 +82,7 @@ public interface BpmTaskService {
      * @param userId 用户编号
      * @param reqVO  不通过请求
      */
-    void rejectTask(Long userId, @Valid BpmTaskRejectReqVO reqVO);
+    void rejectTask(String userId, @Valid BpmTaskRejectReqVO reqVO);
 
     /**
      * 将流程任务分配给指定用户
@@ -90,7 +90,7 @@ public interface BpmTaskService {
      * @param userId 用户编号
      * @param reqVO  分配请求
      */
-    void updateTaskAssignee(Long userId, BpmTaskUpdateAssigneeReqVO reqVO);
+    void updateTaskAssignee(String userId, BpmTaskUpdateAssigneeReqVO reqVO);
 
     /**
      * 将流程任务分配给指定用户
@@ -98,7 +98,7 @@ public interface BpmTaskService {
      * @param id     流程任务编号
      * @param userId 用户编号
      */
-    void updateTaskAssignee(String id, Long userId);
+    void updateTaskAssignee(String id, String userId);
 
     /**
      * 创建 Task 拓展记录

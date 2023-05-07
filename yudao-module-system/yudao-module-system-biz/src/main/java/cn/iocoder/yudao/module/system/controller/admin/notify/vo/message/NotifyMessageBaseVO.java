@@ -19,7 +19,7 @@ public class NotifyMessageBaseVO {
 
     @Schema(description = "用户编号", required = true, example = "25025")
     @NotNull(message = "用户编号不能为空")
-    private Long userId;
+    private String userId;
 
     @Schema(description = "用户类型 - 参见 UserTypeEnum 枚举", required = true, example = "1")
     @NotNull(message = "用户类型不能为空")

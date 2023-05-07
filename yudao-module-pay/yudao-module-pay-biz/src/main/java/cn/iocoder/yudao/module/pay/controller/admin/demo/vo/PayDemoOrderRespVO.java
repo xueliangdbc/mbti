@@ -16,7 +16,7 @@ public class PayDemoOrderRespVO {
     private Long id;
 
     @Schema(description = "用户编号", required = true, example = "23199")
-    private Long userId;
+    private String userId;
 
     @Schema(description = "商品编号", required = true, example = "17682")
     private Long spuId;

@@ -210,7 +210,7 @@ public class MemberAuthServiceImpl implements MemberAuthService {
     }
 
     @Override
-    public void updatePassword(Long userId, AppAuthUpdatePasswordReqVO reqVO) {
+    public void updatePassword(String userId, AppAuthUpdatePasswordReqVO reqVO) {
         // 检验旧密码
         MemberUserDO userDO = checkOldPassword(userId, reqVO.getOldPassword());
 
@@ -235,7 +235,7 @@ public class MemberAuthServiceImpl implements MemberAuthService {
     }
 
     @Override
-    public void sendSmsCode(Long userId, AppAuthSmsSendReqVO reqVO) {
+    public void sendSmsCode(String userId, AppAuthSmsSendReqVO reqVO) {
         // TODO 要根据不同的场景，校验是否有用户
         smsCodeApi.sendSmsCode(AuthConvert.INSTANCE.convert(reqVO).setCreateIp(getClientIP()));
     }
@@ -254,7 +254,7 @@ public class MemberAuthServiceImpl implements MemberAuthService {
      * @return MemberUserDO 用户实体
      */
     @VisibleForTesting
-    public MemberUserDO checkOldPassword(Long id, String oldPassword) {
+    public MemberUserDO checkOldPassword(String id, String oldPassword) {
         MemberUserDO user = userMapper.selectById(id);
         if (user == null) {
             throw exception(USER_NOT_EXISTS);

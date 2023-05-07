@@ -48,8 +48,8 @@ public class UserController {
     @PostMapping("/create")
     @Operation(summary = "新增用户")
     @PreAuthorize("@ss.hasPermission('system:user:create')")
-    public CommonResult<Long> createUser(@Valid @RequestBody UserCreateReqVO reqVO) {
-        Long id = userService.createUser(reqVO);
+    public CommonResult<String> createUser(@Valid @RequestBody UserCreateReqVO reqVO) {
+        String id = userService.createUser(reqVO);
         return success(id);
     }
 
@@ -65,7 +65,7 @@ public class UserController {
     @Operation(summary = "删除用户")
     @Parameter(name = "id", description = "编号", required = true, example = "1024")
     @PreAuthorize("@ss.hasPermission('system:user:delete')")
-    public CommonResult<Boolean> deleteUser(@RequestParam("id") Long id) {
+    public CommonResult<Boolean> deleteUser(@RequestParam("id") String id) {
         userService.deleteUser(id);
         return success(true);
     }
@@ -122,7 +122,7 @@ public class UserController {
     @Operation(summary = "获得用户详情")
     @Parameter(name = "id", description = "编号", required = true, example = "1024")
     @PreAuthorize("@ss.hasPermission('system:user:query')")
-    public CommonResult<UserRespVO> getUser(@RequestParam("id") Long id) {
+    public CommonResult<UserRespVO> getUser(@RequestParam("id") String id) {
         AdminUserDO user = userService.getUser(id);
         // 获得部门数据
         DeptDO dept = deptService.getDept(user.getDeptId());
@@ -141,7 +141,7 @@ public class UserController {
         // 获得拼接需要的数据
         Collection<Long> deptIds = convertList(users, AdminUserDO::getDeptId);
         Map<Long, DeptDO> deptMap = deptService.getDeptMap(deptIds);
-        Map<Long, AdminUserDO> deptLeaderUserMap = userService.getUserMap(
+        Map<String, AdminUserDO> deptLeaderUserMap = userService.getUserMap(
                 convertSet(deptMap.values(), DeptDO::getLeaderUserId));
         // 拼接数据
         List<UserExcelVO> excelUsers = new ArrayList<>(users.size());

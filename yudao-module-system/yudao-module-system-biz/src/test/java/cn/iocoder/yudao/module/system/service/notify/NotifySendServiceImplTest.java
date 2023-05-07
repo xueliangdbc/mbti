@@ -36,7 +36,7 @@ class NotifySendServiceImplTest extends BaseMockitoUnitTest {
     @Test
     public void testSendSingleNotifyToAdmin() {
         // 准备参数
-        Long userId = randomLongId();
+        String userId = randomLongId();
         String templateCode = randomString();
         Map<String, Object> templateParams = MapUtil.<String, Object>builder().put("code", "1234")
                 .put("op", "login").build();
@@ -64,7 +64,7 @@ class NotifySendServiceImplTest extends BaseMockitoUnitTest {
     @Test
     public void testSendSingleNotifyToMember() {
         // 准备参数
-        Long userId = randomLongId();
+        String userId = randomLongId();
         String templateCode = randomString();
         Map<String, Object> templateParams = MapUtil.<String, Object>builder().put("code", "1234")
                 .put("op", "login").build();
@@ -95,7 +95,7 @@ class NotifySendServiceImplTest extends BaseMockitoUnitTest {
     @Test
     public void testSendSingleNotify_successWhenMailTemplateEnable() {
         // 准备参数
-        Long userId = randomLongId();
+        String userId = randomLongId();
         Integer userType = randomEle(UserTypeEnum.values()).getValue();
         String templateCode = randomString();
         Map<String, Object> templateParams = MapUtil.<String, Object>builder().put("code", "1234")
@@ -127,7 +127,7 @@ class NotifySendServiceImplTest extends BaseMockitoUnitTest {
     @Test
     public void testSendSingleMail_successWhenSmsTemplateDisable() {
         // 准备参数
-        Long userId = randomLongId();
+        String userId = randomLongId();
         Integer userType = randomEle(UserTypeEnum.values()).getValue();
         String templateCode = randomString();
         Map<String, Object> templateParams = MapUtil.<String, Object>builder().put("code", "1234")

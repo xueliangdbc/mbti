@@ -73,7 +73,7 @@ public class BpmUserGroupServiceImpl implements BpmUserGroupService {
     }
 
     @Override
-    public List<BpmUserGroupDO> getUserGroupList(Collection<Long> ids) {
+    public List<BpmUserGroupDO> getUserGroupList(Collection<String> ids) {
         return userGroupMapper.selectBatchIds(ids);
     }
 

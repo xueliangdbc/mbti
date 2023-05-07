@@ -21,7 +21,7 @@ public interface MailSendService {
      * @param templateParams 邮件模版参数
      * @return 发送日志编号
      */
-    Long sendSingleMailToAdmin(String mail, Long userId,
+    Long sendSingleMailToAdmin(String mail, String userId,
                                String templateCode, Map<String, Object> templateParams);
 
     /**
@@ -33,7 +33,7 @@ public interface MailSendService {
      * @param templateParams 邮件模版参数
      * @return 发送日志编号
      */
-    Long sendSingleMailToMember(String mail, Long userId,
+    Long sendSingleMailToMember(String mail, String userId,
                                 String templateCode, Map<String, Object> templateParams);
 
     /**
@@ -46,7 +46,7 @@ public interface MailSendService {
      * @param templateParams 邮件模版参数
      * @return 发送日志编号
      */
-    Long sendSingleMail(String mail, Long userId, Integer userType,
+    Long sendSingleMail(String mail, String userId, Integer userType,
                         String templateCode, Map<String, Object> templateParams);
 
     /**

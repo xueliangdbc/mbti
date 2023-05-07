@@ -15,7 +15,7 @@ import java.util.List;
 @Mapper
 public interface OperateLogMapper extends BaseMapperX<OperateLogDO> {
 
-    default PageResult<OperateLogDO> selectPage(OperateLogPageReqVO reqVO, Collection<Long> userIds) {
+    default PageResult<OperateLogDO> selectPage(OperateLogPageReqVO reqVO, Collection<String> userIds) {
         LambdaQueryWrapperX<OperateLogDO> query = new LambdaQueryWrapperX<OperateLogDO>()
                 .likeIfPresent(OperateLogDO::getModule, reqVO.getModule())
                 .inIfPresent(OperateLogDO::getUserId, userIds)
@@ -30,7 +30,7 @@ public interface OperateLogMapper extends BaseMapperX<OperateLogDO> {
         return selectPage(reqVO, query);
     }
 
-    default List<OperateLogDO> selectList(OperateLogExportReqVO reqVO, Collection<Long> userIds) {
+    default List<OperateLogDO> selectList(OperateLogExportReqVO reqVO, Collection<String> userIds) {
         LambdaQueryWrapperX<OperateLogDO> query = new LambdaQueryWrapperX<OperateLogDO>()
                 .likeIfPresent(OperateLogDO::getModule, reqVO.getModule())
                 .inIfPresent(OperateLogDO::getUserId, userIds)

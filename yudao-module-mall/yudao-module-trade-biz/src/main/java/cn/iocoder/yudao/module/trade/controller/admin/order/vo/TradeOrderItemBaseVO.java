@@ -16,7 +16,7 @@ public class TradeOrderItemBaseVO {
     private Long id;
 
     @Schema(description = "用户编号", required = true, example = "1")
-    private Long userId;
+    private String userId;
 
     @Schema(description = "订单编号", required = true, example = "1")
     private Long orderId;

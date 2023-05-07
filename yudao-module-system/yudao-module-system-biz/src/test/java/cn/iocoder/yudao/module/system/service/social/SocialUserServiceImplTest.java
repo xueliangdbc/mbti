@@ -1,5 +1,6 @@
 package cn.iocoder.yudao.module.system.service.social;
 
+import cn.hutool.core.util.IdUtil;
 import cn.iocoder.yudao.framework.common.enums.UserTypeEnum;
 import cn.iocoder.yudao.framework.social.core.YudaoAuthRequestFactory;
 import cn.iocoder.yudao.framework.test.core.ut.BaseDbAndRedisUnitTest;
@@ -157,7 +158,7 @@ public class SocialUserServiceImplTest extends BaseDbAndRedisUnitTest {
 
     @Test
     public void testGetSocialUserList() {
-        Long userId = 1L;
+        String userId = "1L";
         Integer userType = UserTypeEnum.ADMIN.getValue();
         // mock 获得社交用户
         SocialUserDO socialUser = randomPojo(SocialUserDO.class).setType(SocialTypeEnum.GITEE.getType());
@@ -168,7 +169,7 @@ public class SocialUserServiceImplTest extends BaseDbAndRedisUnitTest {
                 .setUserId(userId).setUserType(userType).setSocialType(SocialTypeEnum.GITEE.getType())
                 .setSocialUserId(socialUser.getId()));
         socialUserBindMapper.insert(randomPojo(SocialUserBindDO.class) // 不可被查询到
-                .setUserId(2L).setUserType(userType).setSocialType(SocialTypeEnum.DINGTALK.getType()));
+                .setUserId("2L").setUserType(userType).setSocialType(SocialTypeEnum.DINGTALK.getType()));
 
         // 调用
         List<SocialUserDO> result = socialUserService.getSocialUserList(userId, userType);
@@ -181,14 +182,14 @@ public class SocialUserServiceImplTest extends BaseDbAndRedisUnitTest {
     public void testBindSocialUser() {
         // 准备参数
         SocialUserBindReqDTO reqDTO = new SocialUserBindReqDTO()
-                .setUserId(1L).setUserType(UserTypeEnum.ADMIN.getValue())
+                .setUserId("1").setUserType(UserTypeEnum.ADMIN.getValue())
                 .setType(SocialTypeEnum.GITEE.getType()).setCode("test_code").setState("test_state");
         // mock 数据：获得社交用户
         SocialUserDO socialUser = randomPojo(SocialUserDO.class).setType(reqDTO.getType())
                 .setCode(reqDTO.getCode()).setState(reqDTO.getState());
         socialUserMapper.insert(socialUser);
         // mock 数据：用户可能之前已经绑定过该社交类型
-        socialUserBindMapper.insert(randomPojo(SocialUserBindDO.class).setUserId(1L).setUserType(UserTypeEnum.ADMIN.getValue())
+        socialUserBindMapper.insert(randomPojo(SocialUserBindDO.class).setUserId("1L").setUserType(UserTypeEnum.ADMIN.getValue())
                 .setSocialType(SocialTypeEnum.GITEE.getType()).setSocialUserId(-1L));
         // mock 数据：社交用户可能之前绑定过别的用户
         socialUserBindMapper.insert(randomPojo(SocialUserBindDO.class).setUserType(UserTypeEnum.ADMIN.getValue())
@@ -204,7 +205,7 @@ public class SocialUserServiceImplTest extends BaseDbAndRedisUnitTest {
     @Test
     public void testUnbindSocialUser_success() {
         // 准备参数
-        Long userId = 1L;
+        String userId = "1";
         Integer userType = UserTypeEnum.ADMIN.getValue();
         Integer type = SocialTypeEnum.GITEE.getType();
         String openid = "test_openid";
@@ -224,9 +225,11 @@ public class SocialUserServiceImplTest extends BaseDbAndRedisUnitTest {
 
     @Test
     public void testUnbindSocialUser_notFound() {
+        // 准备参数
+        String userId = IdUtil.simpleUUID();
         // 调用，并断言
         assertServiceException(
-                () -> socialUserService.unbindSocialUser(randomLong(), UserTypeEnum.ADMIN.getValue(),
+                () -> socialUserService.unbindSocialUser(userId, UserTypeEnum.ADMIN.getValue(),
                         SocialTypeEnum.GITEE.getType(), "test_openid"),
                 SOCIAL_USER_NOT_FOUND);
     }
@@ -242,13 +245,14 @@ public class SocialUserServiceImplTest extends BaseDbAndRedisUnitTest {
         SocialUserDO socialUser = randomPojo(SocialUserDO.class).setType(type).setCode(code).setState(state);
         socialUserMapper.insert(socialUser);
         // mock 社交用户的绑定
-        Long userId = randomLong();
+//        String userId = randomLong();
+        String userId = IdUtil.simpleUUID();
         SocialUserBindDO socialUserBind = randomPojo(SocialUserBindDO.class).setUserType(userType).setUserId(userId)
                 .setSocialType(type).setSocialUserId(socialUser.getId());
         socialUserBindMapper.insert(socialUserBind);
 
         // 调用
-        Long result = socialUserService.getBindUserId(userType, type, code, state);
+        String result = socialUserService.getBindUserId(userType, type, code, state);
         // 断言
         assertEquals(userId, result);
     }

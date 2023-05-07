@@ -23,7 +23,7 @@ public interface CouponService {
      * @param userId 用户编号
      * @return 优惠劵信息
      */
-    CouponDO validCoupon(Long id, Long userId);
+    CouponDO validCoupon(Long id, String userId);
 
     /**
      * 校验优惠劵，包括状态、有限期
@@ -49,7 +49,7 @@ public interface CouponService {
      * @param userId  用户编号
      * @param orderId 订单编号
      */
-    void useCoupon(Long id, Long userId, Long orderId);
+    void useCoupon(Long id, String userId, Long orderId);
 
     /**
      * 回收优惠劵
@@ -65,6 +65,6 @@ public interface CouponService {
      * @param status 优惠劵状态
      * @return 优惠劵列表
      */
-    List<CouponDO> getCouponList(Long userId, Integer status);
+    List<CouponDO> getCouponList(String userId, Integer status);
 
 }
