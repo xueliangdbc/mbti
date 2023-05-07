@@ -47,7 +47,7 @@ public interface MemberUserService {
      * @param id 用户编号
      * @param loginIp 登陆 IP
      */
-    void updateUserLogin(Long id, String loginIp);
+    void updateUserLogin(String id, String loginIp);
 
     /**
      * 通过用户 ID 查询用户
@@ -55,7 +55,7 @@ public interface MemberUserService {
      * @param id 用户ID
      * @return 用户对象信息
      */
-    MemberUserDO getUser(Long id);
+    MemberUserDO getUser(String id);
 
     /**
      * 通过用户 ID 查询用户们
@@ -78,7 +78,7 @@ public interface MemberUserService {
      * @param inputStream 头像文件
      * @return 头像url
      */
-    String updateUserAvatar(Long userId, InputStream inputStream) throws Exception;
+    String updateUserAvatar(String userId, InputStream inputStream) throws Exception;
 
     /**
      * 修改手机

@@ -30,7 +30,7 @@ public class MemberUserDO extends BaseDO {
      * 用户ID
      */
     @TableId
-    private Long id;
+    private String userId;
     /**
      * 用户昵称
      */

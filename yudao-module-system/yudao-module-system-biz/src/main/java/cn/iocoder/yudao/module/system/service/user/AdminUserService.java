@@ -119,7 +119,7 @@ public interface AdminUserService {
      * @param id 用户ID
      * @return 用户对象信息
      */
-    AdminUserDO getUser(Long id);
+    AdminUserDO getUser(String id);
 
     /**
      * 获得指定部门的用户数组

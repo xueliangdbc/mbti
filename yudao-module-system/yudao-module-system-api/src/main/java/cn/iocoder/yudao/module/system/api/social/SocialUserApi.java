@@ -48,6 +48,6 @@ public interface SocialUserApi {
      * @param state state
      * @return 绑定用户编号
      */
-    Long getBindUserId(Integer userType, Integer type, String code, String state);
+    String getBindUserId(Integer userType, Integer type, String code, String state);
 
 }

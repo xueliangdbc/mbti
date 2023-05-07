@@ -28,6 +28,7 @@ import cn.iocoder.yudao.module.system.enums.sms.SmsSceneEnum;
 import cn.iocoder.yudao.module.system.enums.social.SocialTypeEnum;
 import com.google.common.annotations.VisibleForTesting;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -74,7 +75,7 @@ public class MemberAuthServiceImpl implements MemberAuthService {
 
         // 如果 socialType 非空，说明需要绑定社交用户
         if (reqVO.getSocialType() != null) {
-            socialUserApi.bindSocialUser(new SocialUserBindReqDTO(user.getId(), getUserType().getValue(),
+            socialUserApi.bindSocialUser(new SocialUserBindReqDTO(user.getUserId(), getUserType().getValue(),
                     reqVO.getSocialType(), reqVO.getSocialCode(), reqVO.getSocialState()));
         }
 
@@ -95,7 +96,7 @@ public class MemberAuthServiceImpl implements MemberAuthService {
 
         // 如果 socialType 非空，说明需要绑定社交用户
         if (reqVO.getSocialType() != null) {
-            socialUserApi.bindSocialUser(new SocialUserBindReqDTO(user.getId(), getUserType().getValue(),
+            socialUserApi.bindSocialUser(new SocialUserBindReqDTO(user.getUserId(), getUserType().getValue(),
                     reqVO.getSocialType(), reqVO.getSocialCode(), reqVO.getSocialState()));
         }
 
@@ -106,9 +107,9 @@ public class MemberAuthServiceImpl implements MemberAuthService {
     @Override
     public AppAuthLoginRespVO socialLogin(AppAuthSocialLoginReqVO reqVO) {
         // 使用 code 授权码，进行登录。然后，获得到绑定的用户编号
-        Long userId = socialUserApi.getBindUserId(UserTypeEnum.MEMBER.getValue(), reqVO.getType(),
+        String userId = socialUserApi.getBindUserId(UserTypeEnum.MEMBER.getValue(), reqVO.getType(),
                 reqVO.getCode(), reqVO.getState());
-        if (userId == null) {
+        if (StringUtils.isEmpty(userId)) {
             throw exception(AUTH_THIRD_LOGIN_NOT_BIND);
         }
 
@@ -136,7 +137,7 @@ public class MemberAuthServiceImpl implements MemberAuthService {
         Assert.notNull(user, "获取用户失败，结果为空");
 
         // 绑定社交用户
-        socialUserApi.bindSocialUser(new SocialUserBindReqDTO(user.getId(), getUserType().getValue(),
+        socialUserApi.bindSocialUser(new SocialUserBindReqDTO(user.getUserId(), getUserType().getValue(),
                 SocialTypeEnum.WECHAT_MINI_APP.getType(), reqVO.getLoginCode(), ""));
 
         // 创建 Token 令牌，记录登录日志
@@ -145,10 +146,10 @@ public class MemberAuthServiceImpl implements MemberAuthService {
 
     private AppAuthLoginRespVO createTokenAfterLoginSuccess(MemberUserDO user, String mobile, LoginLogTypeEnum logType) {
         // 插入登陆日志
-        createLoginLog(user.getId(), mobile, logType, LoginResultEnum.SUCCESS);
+        createLoginLog(user.getUserId(), mobile, logType, LoginResultEnum.SUCCESS);
         // 创建 Token 令牌
         OAuth2AccessTokenRespDTO accessTokenRespDTO = oauth2TokenApi.createAccessToken(new OAuth2AccessTokenCreateReqDTO()
-                .setUserId(user.getId()).setUserType(getUserType().getValue())
+                .setUserId(user.getUserId()).setUserType(getUserType().getValue())
                 .setClientId(OAuth2ClientConstants.CLIENT_ID_DEFAULT));
         // 构建返回结果
         return AuthConvert.INSTANCE.convert(accessTokenRespDTO);
@@ -168,18 +169,18 @@ public class MemberAuthServiceImpl implements MemberAuthService {
             throw exception(AUTH_LOGIN_BAD_CREDENTIALS);
         }
         if (!userService.isPasswordMatch(password, user.getPassword())) {
-            createLoginLog(user.getId(), mobile, logTypeEnum, LoginResultEnum.BAD_CREDENTIALS);
+            createLoginLog(user.getUserId(), mobile, logTypeEnum, LoginResultEnum.BAD_CREDENTIALS);
             throw exception(AUTH_LOGIN_BAD_CREDENTIALS);
         }
         // 校验是否禁用
         if (ObjectUtil.notEqual(user.getStatus(), CommonStatusEnum.ENABLE.getStatus())) {
-            createLoginLog(user.getId(), mobile, logTypeEnum, LoginResultEnum.USER_DISABLED);
+            createLoginLog(user.getUserId(), mobile, logTypeEnum, LoginResultEnum.USER_DISABLED);
             throw exception(AUTH_LOGIN_USER_DISABLED);
         }
         return user;
     }
 
-    private void createLoginLog(Long userId, String mobile, LoginLogTypeEnum logType, LoginResultEnum loginResult) {
+    private void createLoginLog(String userId, String mobile, LoginLogTypeEnum logType, LoginResultEnum loginResult) {
         // 插入登录日志
         LoginLogCreateReqDTO reqDTO = new LoginLogCreateReqDTO();
         reqDTO.setLogType(logType.getType());
@@ -215,7 +216,7 @@ public class MemberAuthServiceImpl implements MemberAuthService {
 
         // 更新用户密码
         // TODO 芋艿：需要重构到用户模块
-        userMapper.updateById(MemberUserDO.builder().id(userDO.getId())
+        userMapper.updateById(MemberUserDO.builder().userId(userDO.getUserId())
                 .password(passwordEncoder.encode(reqVO.getPassword())).build());
     }
 
@@ -229,7 +230,7 @@ public class MemberAuthServiceImpl implements MemberAuthService {
                 getClientIP()));
 
         // 更新密码
-        userMapper.updateById(MemberUserDO.builder().id(userDO.getId())
+        userMapper.updateById(MemberUserDO.builder().userId(userDO.getUserId())
                 .password(passwordEncoder.encode(reqVO.getPassword())).build());
     }
 
@@ -273,7 +274,7 @@ public class MemberAuthServiceImpl implements MemberAuthService {
         return user;
     }
 
-    private void createLogoutLog(Long userId) {
+    private void createLogoutLog(String userId) {
         LoginLogCreateReqDTO reqDTO = new LoginLogCreateReqDTO();
         reqDTO.setLogType(LoginLogTypeEnum.LOGOUT_SELF.getType());
         reqDTO.setTraceId(TracerUtils.getTraceId());
@@ -286,8 +287,8 @@ public class MemberAuthServiceImpl implements MemberAuthService {
         loginLogApi.createLoginLog(reqDTO);
     }
 
-    private String getMobile(Long userId) {
-        if (userId == null) {
+    private String getMobile(String userId) {
+        if (StringUtils.isEmpty(userId)) {
             return null;
         }
         MemberUserDO user = userService.getUser(userId);

@@ -37,7 +37,7 @@ public class SocialUserApiImpl implements SocialUserApi {
     }
 
     @Override
-    public Long getBindUserId(Integer userType, Integer type, String code, String state) {
+    public String getBindUserId(Integer userType, Integer type, String code, String state) {
        return socialUserService.getBindUserId(userType, type, code, state);
     }
 

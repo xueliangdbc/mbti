@@ -20,7 +20,6 @@ import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.io.InputStream;
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 import java.time.LocalDateTime;
 
@@ -84,13 +83,13 @@ public class MemberUserServiceImpl implements MemberUserService {
     }
 
     @Override
-    public void updateUserLogin(Long id, String loginIp) {
-        memberUserMapper.updateById(new MemberUserDO().setId(id)
+    public void updateUserLogin(String id, String loginIp) {
+        memberUserMapper.updateById(new MemberUserDO().setUserId(id)
                 .setLoginIp(loginIp).setLoginDate(LocalDateTime.now()));
     }
 
     @Override
-    public MemberUserDO getUser(Long id) {
+    public MemberUserDO getUser(String id) {
         return memberUserMapper.selectById(id);
     }
 
@@ -107,24 +106,24 @@ public class MemberUserServiceImpl implements MemberUserService {
             return;
         }
         MemberUserDO userDO = new MemberUserDO();
-        userDO.setId(user.getId());
+        userDO.setUserId(user.getUserId());
         userDO.setNickname(nickname);
         memberUserMapper.updateById(userDO);
     }
 
     @Override
-    public String updateUserAvatar(Long userId, InputStream avatarFile) throws Exception {
+    public String updateUserAvatar(String userId, InputStream avatarFile) throws Exception {
         this.checkUserExists(userId);
         // 创建文件
         String avatar = fileApi.createFile(IoUtil.readBytes(avatarFile));
         // 更新头像路径
-        memberUserMapper.updateById(MemberUserDO.builder().id(userId).avatar(avatar).build());
+        memberUserMapper.updateById(MemberUserDO.builder().userId(userId).avatar(avatar).build());
         return avatar;
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void updateUserMobile(Long userId, AppUserUpdateMobileReqVO reqVO) {
+    public void updateUserMobile(String userId, AppUserUpdateMobileReqVO reqVO) {
         // 检测用户是否存在
         checkUserExists(userId);
         // TODO 芋艿：oldMobile 应该不用传递
@@ -137,7 +136,7 @@ public class MemberUserServiceImpl implements MemberUserService {
                 .setScene(SmsSceneEnum.MEMBER_UPDATE_MOBILE.getScene()).setUsedIp(getClientIP()));
 
         // 更新用户手机
-        memberUserMapper.updateById(MemberUserDO.builder().id(userId).mobile(reqVO.getMobile()).build());
+        memberUserMapper.updateById(MemberUserDO.builder().userId(userId).mobile(reqVO.getMobile()).build());
     }
 
     @Override
@@ -156,7 +155,7 @@ public class MemberUserServiceImpl implements MemberUserService {
     }
 
     @VisibleForTesting
-    public MemberUserDO checkUserExists(Long id) {
+    public MemberUserDO checkUserExists(String id) {
         if (id == null) {
             return null;
         }
