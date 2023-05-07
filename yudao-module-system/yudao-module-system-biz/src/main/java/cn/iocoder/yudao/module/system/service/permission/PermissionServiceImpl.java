@@ -113,19 +113,19 @@ public class PermissionServiceImpl implements PermissionService {
     void initLocalCacheForRoleMenu() {
         // 注意：忽略自动多租户，因为要全局初始化缓存
 //        TenantUtils.executeIgnore(() -> {
-//            // 第一步：查询数据
-//            List<RoleMenuDO> roleMenus = roleMenuMapper.selectList();
-//            log.info("[initLocalCacheForRoleMenu][缓存角色与菜单，数量为:{}]", roleMenus.size());
-//
-//            // 第二步：构建缓存
-//            ImmutableMultimap.Builder<Long, Long> roleMenuCacheBuilder = ImmutableMultimap.builder();
-//            ImmutableMultimap.Builder<Long, Long> menuRoleCacheBuilder = ImmutableMultimap.builder();
-//            roleMenus.forEach(roleMenuDO -> {
-//                roleMenuCacheBuilder.put(roleMenuDO.getRoleId(), roleMenuDO.getMenuId());
-//                menuRoleCacheBuilder.put(roleMenuDO.getMenuId(), roleMenuDO.getRoleId());
-//            });
-//            roleMenuCache = roleMenuCacheBuilder.build();
-//            menuRoleCache = menuRoleCacheBuilder.build();
+            // 第一步：查询数据
+            List<RoleMenuDO> roleMenus = roleMenuMapper.selectList();
+            log.info("[initLocalCacheForRoleMenu][缓存角色与菜单，数量为:{}]", roleMenus.size());
+
+            // 第二步：构建缓存
+            ImmutableMultimap.Builder<Long, Long> roleMenuCacheBuilder = ImmutableMultimap.builder();
+            ImmutableMultimap.Builder<Long, Long> menuRoleCacheBuilder = ImmutableMultimap.builder();
+            roleMenus.forEach(roleMenuDO -> {
+                roleMenuCacheBuilder.put(roleMenuDO.getRoleId(), roleMenuDO.getMenuId());
+                menuRoleCacheBuilder.put(roleMenuDO.getMenuId(), roleMenuDO.getRoleId());
+            });
+            roleMenuCache = roleMenuCacheBuilder.build();
+            menuRoleCache = menuRoleCacheBuilder.build();
 //        });
     }
 
@@ -136,14 +136,14 @@ public class PermissionServiceImpl implements PermissionService {
     void initLocalCacheForUserRole() {
         // 注意：忽略自动多租户，因为要全局初始化缓存
 //        TenantUtils.executeIgnore(() -> {
-//            // 第一步：加载数据
-//            List<UserRoleDO> userRoles = userRoleMapper.selectList();
-//            log.info("[initLocalCacheForUserRole][缓存用户与角色，数量为:{}]", userRoles.size());
-//
-//            // 第二步：构建缓存。
-//            ImmutableMultimap.Builder<Long, Long> userRoleCacheBuilder = ImmutableMultimap.builder();
-//            userRoles.forEach(userRoleDO -> userRoleCacheBuilder.put(userRoleDO.getUserId(), userRoleDO.getRoleId()));
-//            userRoleCache = CollectionUtils.convertMultiMap2(userRoles, UserRoleDO::getUserId, UserRoleDO::getRoleId);
+            // 第一步：加载数据
+            List<UserRoleDO> userRoles = userRoleMapper.selectList();
+            log.info("[initLocalCacheForUserRole][缓存用户与角色，数量为:{}]", userRoles.size());
+
+            // 第二步：构建缓存。
+            ImmutableMultimap.Builder<Long, Long> userRoleCacheBuilder = ImmutableMultimap.builder();
+            userRoles.forEach(userRoleDO -> userRoleCacheBuilder.put(userRoleDO.getUserId(), userRoleDO.getRoleId()));
+            userRoleCache = CollectionUtils.convertMultiMap2(userRoles, UserRoleDO::getUserId, UserRoleDO::getRoleId);
 //        });
     }
 
